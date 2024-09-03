@@ -1,0 +1,71 @@
+/* Home.css */
+.top-services {
+    background-color: #f8f9fa; /* Color de fondo claro */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.top-service-card, .service-card {
+    background-color: #ffffff; /* Fondo blanco */
+    border: 1px solid #e0e0e0;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.top-service-card:hover, .service-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.top-service-card .card-title, .service-card .card-title {
+    color: #343a40; /* Texto oscuro */
+}
+
+.top-service-card .card-text, .service-card .card-text {
+    color: #6c757d; /* Texto gris */
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas antes de truncar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.top-service-card .btn-primary, .service-card .btn-primary {
+    background-color: #007bff; /* Azul Bootstrap */
+    border: none;
+    transition: background-color 0.2s;
+}
+
+.top-service-card .btn-primary:hover, .service-card .btn-primary:hover {
+    background-color: #0056b3; /* Azul oscuro */
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.container h1 {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: #343a40;
+    font-weight: 700;
+}
+
+.card-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas antes de truncar */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
