@@ -2,7 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const { graphqlHTTP } = require('express-graphql');
-const { buildSchema } = require('graphql')
+const { buildSchema } = require('graphql');
+const { Http2ServerResponse } = require('http2');
 
 const app = express();
 
@@ -68,8 +69,35 @@ app.use(
     })
 );
 
+// Administrar cuenta, solo el boceto
+app.use('/users/{id : int}', function getUsers(id) {
+    if ({id} != null) {
+        var user = {'name' : String, 'password' : String};
+        // var user = function getUserByID(); - Debería traer a un usuario para ver su perfil
+        return Http2ServerResponse(user)
+    }
+
+    //function getAllUsers(); - si no encuentra un parametro id, devuelve la lista total de usuarios (solo admin)
+
+    },
+    function changeUserData(name, password, email){
+        // var user = function getUserByID();
+        if (name !== '') {
+            //user.name = name;
+        }
+
+        if (password !== '') {
+            //user.password = password;
+        }
+
+        if (email !== '') {
+            //user.email = email;
+        }
+    }
+); 
+
 app.get('/', (req, res, next) => {
-    res.send('Hello World!');
+    res.send('Denied Access');
 })
 
 app.listen(4001, () => console.log("server on localhost 4001"));
