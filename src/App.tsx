@@ -1,14 +1,19 @@
-
+import { useReducer } from "react";
+import { AppRouter } from "./app/router/AppRouter";
+import { AuthContext } from "./app/views/auth/components/AuthContext";
+import { authReducer } from "./app/views/auth/components/AuthReducers";
+import "bootstrap/dist/css/bootstrap.min.css"
 
 function App() {
-  return (
-    <>
-    <h1>Uncreativity</h1> 
-    
-    <hr />
-    <h4> Bienvenido al curso</h4>
 
-    </>
+  const [user, dispatchUser ] = useReducer(authReducer, {});
+  
+  return (
+      <AuthContext.Provider value={{user, dispatchUser}}>
+        <AppRouter />
+      </AuthContext.Provider>
+
+
   );
 }
 

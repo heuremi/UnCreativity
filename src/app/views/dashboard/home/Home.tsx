@@ -17,7 +17,7 @@ export function Home(){
                     <Form className="d-flex search-bar">
                         <FormControl
                             type="search"
-                            placeholder="Buscar servicios por nombre"
+                            placeholder="Buscar Cursos."
                             className="me-2"
                             aria-label="Search"
                             value={searchTerm}
@@ -26,6 +26,7 @@ export function Home(){
                     </Form>
                 </Container>
             </Navbar> 
+            <h1 className="text-center mb-4">HOME</h1>
         </div>
     )
 
