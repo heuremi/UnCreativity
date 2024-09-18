@@ -6,7 +6,7 @@ export const initializeDataBase = async () => {
         await connection.authenticate()
         await Curso.sync({ alter: true})
 
-        console.log('Los modelos ORM se establecieron y se sincronizado correctamente')
+        console.log('Los modelos ORM se establecieron y se sincronizaron correctamente')
     } catch (error) {
         console.error('No se pudo conectar con la base de datos Curso: ', error)
     }
