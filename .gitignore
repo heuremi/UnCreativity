@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-/ms-curso/data
+ms-curso/data
 
 # dependencies
 /node_modules
