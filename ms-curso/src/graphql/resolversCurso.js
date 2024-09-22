@@ -1,61 +1,25 @@
-import { Curso } from '../db/models/Curso.js'
-import { Op } from 'sequelize'
+import { ServicioCurso } from "../services/servicio-curso.js";
 
-function filtrarCursos(filtro)
-{
-    const condiciones = {}
-    if(filtro?.id){
-        condiciones.id = filtro.id
-    }
-    if(filtro?.titulo){
-        condiciones.titulo = {[Op.substring]: filtro.titulo}
-    }
-    if(filtro?.autor){
-        condiciones.autor = {[Op.substring]: filtro.autor}
-    }
-    if(filtro?.categoria){
-        condiciones.categoria = filtro.categoria
-    }
-    if(filtro?.minRate || filtro?.maxRate){
-        const minRate = filtro?.minRate ?? 0;
-        const maxRate = filtro?.maxRate ?? 5;
-        condiciones.rate = {[Op.between]: [minRate, maxRate]}
-    }
-    const sizeFiltros = Object.keys(condiciones).length
-    return (sizeFiltros == 0 ) ? null : condiciones 
-}
+const servicioCurso = new ServicioCurso()
 
 export const resolvers = {
-    cursos: async ({filtro}) => {
-
-        const condiciones = filtrarCursos(filtro);
-        try {
-            if(condiciones === null) return await Curso.findAll()
-            else {
-                return await Curso.findAll({
-                    where: condiciones
-                })
-            }
-        } catch (error) {
-            throw new Error("Error obteniendo cursos")
-        }
+    cursos: async ({ filtro }) => {
+        return servicioCurso.findAllCursos(filtro)
     },
-
     curso: async ({ id }) => {
-        try {
-            return await Curso.findByPk(id);
-        } catch (error) {
-            throw new Error("Error obteniendo el curso")
-        }
+        return servicioCurso.findCursoById(id)
     },
 
     createCurso: async ({ id, titulo, autor, categoria, rate }) => {
-        try {
-            const curso = await Curso.create({ id, titulo, autor, categoria, rate })
-            return curso
-        } catch (error) {
-            throw new Error("Error creando el curso", error)
-        }
+        return servicioCurso.createCurso(id, titulo, autor, categoria, rate)
+    },
+
+    updateCurso: async ({ updateCurso }) => {
+        return servicioCurso.updateCurso(updateCurso)
+    },
+
+    deleteCurso: async ({ id }) => {
+        return servicioCurso.deleteCurso(id)
     }
 }
 
