@@ -1,7 +1,7 @@
 import { initializeDataBase } from "./db/index.js";
 import { app } from './server.js'
 
-const port = 3000
+const port = 3001
 
 app.listen(port, async () => {
     await initializeDataBase()
