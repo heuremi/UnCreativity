@@ -1,3 +1,4 @@
+import { date } from 'yup'
 import { Curso } from '../db/models/Curso.js'
 import { Op } from 'sequelize'
 
@@ -7,12 +8,21 @@ export class ServicioCurso {
         this.cursoModelo = Curso
     }
 
-    async createCurso(id, titulo, autor, categoria, rate) {
+    async createCurso(input) {
         try {
-            const curso = await this.cursoModelo.create({ id, titulo, autor, categoria, rate})
+            const curso = await this.cursoModelo.create(input)
             return curso
         } catch (error) {
-            throw new Error("Error creando el curso", error)
+            throw new Error(`Error creando el curso ${error.message}`)
+        }
+    }
+
+    async createCursos(arrayInput) {
+        try {
+            const cursos = await this.cursoModelo.bulkCreate(arrayInput)
+            return cursos 
+        } catch (error) {
+            throw new Error(`Error creando el curso ${error.message}`)
         }
     }
 
@@ -34,17 +44,15 @@ export class ServicioCurso {
                 })
             }
         } catch (error) {
-            throw new Error("Error obteniendo cursos")
+            throw new Error(`Error creando el curso ${error.message}`)
         }
     }
 
-    async updateCurso(updateCurso) {
-        console.log(updateCurso)
-        Object.keys(updateCurso).forEach(key => updateCurso[key] === undefined ? delete updateCurso[key] : {});
-        console.log(updateCurso)
+    async updateCurso(id, inputCurso) {
+        Object.keys(inputCurso).forEach(key => inputCurso[key] === undefined ? delete inputCurso[key] : {});
         try {
-            const curso = await this.cursoModelo.findByPk(updateCurso.id)
-            curso.update(updateCurso)
+            const curso = await this.cursoModelo.findByPk(id)
+            curso.update(inputCurso)
             return curso
         } catch (error) {
             throw new Error("Error al actualizar el curso")
@@ -75,13 +83,13 @@ function filtrarCursos(filtro)
     if(filtro?.autor){
         condiciones.autor = {[Op.substring]: filtro.autor}
     }
-    if(filtro?.categoria){
-        condiciones.categoria = filtro.categoria
+    if(filtro?.categorias){
+        condiciones.categorias = {[Op.overlap]: filtro.categorias}
     }
     if(filtro?.minRate || filtro?.maxRate){
         const minRate = filtro?.minRate ?? 0;
         const maxRate = filtro?.maxRate ?? 5;
-        condiciones.rate = {[Op.between]: [minRate, maxRate]}
+        condiciones.calificacion = {[Op.between]: [minRate, maxRate]}
     }
     const sizeFiltros = Object.keys(condiciones).length
     return (sizeFiltros == 0 ) ? null : condiciones 

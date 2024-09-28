@@ -7,25 +7,32 @@ export const schemaCurso = buildSchema(`
         autor: String
         minRate: Int
         maxRate: Int
-        categoria: String
+        categorias: [String]
     }
 
     input CursoInput {
-        id: Int!
-        titulo: String
-        autor: String
-        rate: Float
-        categoria: String
+        titulo: String!
+        subtitulo: String
+        descripcion: String!
+        calificacion: Float
+        autor: String!
+        idioma: String!
+        categorias: [String!]!
+        precio: Float!
+        imagenUrl: String!
     }
 
     type Curso {
         id: ID!
         titulo: String!
-        descripcion: String
-        autor: String
-        imagenUrl: String
-        rate: Float
-        categoria: String!
+        subtitulo: String
+        descripcion: String!
+        calificacion: Float
+        autor: String!
+        idioma: String!
+        categorias: [String!]!
+        precio: Float
+        imagenUrl: String!
     }
 
     type Query {
@@ -34,8 +41,9 @@ export const schemaCurso = buildSchema(`
     }
 
     type Mutation {
-        createCurso(id: ID!, titulo: String!, autor: String!, categoria: String!, rate: Float): Curso
-        updateCurso(updateCurso: CursoInput): Curso
+        createCurso(inputCurso : CursoInput!): Curso
+        createCursos(inputCursos : [CursoInput!]!) : [Curso]
+        updateCurso(id: ID!, inputCurso: CursoInput!): Curso
         deleteCurso(id: ID!): Curso
 
     }

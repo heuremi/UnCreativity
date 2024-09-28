@@ -10,12 +10,16 @@ export const resolvers = {
         return servicioCurso.findCursoById(id)
     },
 
-    createCurso: async ({ id, titulo, autor, categoria, rate }) => {
-        return servicioCurso.createCurso(id, titulo, autor, categoria, rate)
+    createCurso: async ({ inputCurso }) => {
+        return servicioCurso.createCurso(inputCurso)
     },
 
-    updateCurso: async ({ updateCurso }) => {
-        return servicioCurso.updateCurso(updateCurso)
+    createCursos: async ({ inputCursos }) => {
+        return servicioCurso.createCursos(inputCursos)
+    },
+    
+    updateCurso: async ({ id, inputCurso }) => {
+        return servicioCurso.updateCurso(id, inputCurso)
     },
 
     deleteCurso: async ({ id }) => {
