@@ -1,0 +1,14 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:13
+    restart: always
+    container_name: uncreativity-ms-usuario
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
