@@ -1,0 +1,782 @@
+[
+  {
+    "titulo": "Aprende a programar ahora! - curso de introducción a la programación desde CERO",
+    "descripcion": "Todos mis cursos con $100 de descuento el primer año aquí: ...",
+    "imagenUrl": "https://i.ytimg.com/vi/VxrIZGQfxmE/hqdefault.jpg",
+    "autor": "HolaMundo",
+    "precio": 7623.19,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "El CURSO Más Famoso para APRENDER a PROGRAMAR",
+    "descripcion": "",
+    "imagenUrl": "https://i.ytimg.com/vi/dLvhYiYftOw/hqdefault.jpg",
+    "autor": "MoureDev by Brais Moure",
+    "precio": 8040.64,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso de PROGRAMACIÓN DESDE CERO ✅ 2020 | Crea tus PRIMEROS PROGRMAS 🚀",
+    "descripcion": "Te ha dado curiosidad estudiar programación? En este curso podrás APRENDER PROGRAMACIÓN y crearás tus PRIMEROS ...",
+    "imagenUrl": "https://i.ytimg.com/vi/s43aiz5aNRQ/hqdefault.jpg",
+    "autor": "Code For IT",
+    "precio": 1830.01,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso de programación Python desde cero",
+    "descripcion": "Curso profesional de programación Python desde cero - En este curso aprenderás a programar y construir tus programas ...",
+    "imagenUrl": "https://i.ytimg.com/vi/mENHDQ8SLsI/hqdefault.jpg",
+    "autor": "La Geekipedia De Ernesto",
+    "precio": 1813.42,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Lógica de Programación 👩‍💻 Aprende a programar en 10 minutos",
+    "descripcion": "Comprende las bases de la lógica de programación y aprende a programar en 10 minutos. ¡Empieza GRATIS con mi ebook de ...",
+    "imagenUrl": "https://i.ytimg.com/vi/as1opL254NA/hqdefault.jpg",
+    "autor": "Programador X",
+    "precio": 7625.38,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "💻 ¿Por Donde EMPEZAR a APRENDER a PROGRAMAR en 2024?💻 | Cómo empezar en la programación en 2024",
+    "descripcion": "00:00 Introducción 00:52 Advertencia antes de ver el video 02:27 ¿Por qué quieres aprender a programar? 03:37 Elegir un ...",
+    "imagenUrl": "https://i.ytimg.com/vi/JKYFxKA4B68/hqdefault.jpg",
+    "autor": "Cegamer",
+    "precio": 745.98,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Aprender a programar Rust desde 0 | De 💩 a 👨‍💻",
+    "descripcion": "Curso para aprender a programar Rust desde 0 conmigo. Veremos todos los aspectos del lenguaje de programación Rust.",
+    "imagenUrl": "https://i.ytimg.com/vi/7eyndKGmjtI/hqdefault.jpg",
+    "autor": "Stan Tech",
+    "precio": 8549.63,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "todo mundo debería saber programar (español)",
+    "descripcion": "este video solo es un doblaje del original para que todos lo pudiéramos entender mejor espero les guste.",
+    "imagenUrl": "https://i.ytimg.com/vi/1bDK1-U1edE/hqdefault.jpg",
+    "autor": "JAVIER CASIMIRO",
+    "precio": 9154.22,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "🇺🇸✏️🌍 Escucha y Aprende: Cuentos Cortos para Desarrollar tu Listening en Inglés 👂🧠🇺🇸",
+    "descripcion": "Aprende Inglés de Forma Eficaz y Entretenida con Historias de la Vida Cotidiana! ¿Quieres mejorar tu inglés de manera práctica ...",
+    "imagenUrl": "https://i.ytimg.com/vi/ItTxeFAVmdU/hqdefault.jpg",
+    "autor": "Learn and Improve your English",
+    "precio": 3382.65,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "💻 Aprendiendo la lógica de la programación. Aprende a programar desde 0",
+    "descripcion": "",
+    "imagenUrl": "https://i.ytimg.com/vi/_Sp8pwd0LOs/hqdefault.jpg",
+    "autor": "Art0xdev",
+    "precio": 366.79,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "✅ 5 Páginas para APRENDER a PROGRAMAR GRATIS ✅ | ¿Cómo APRENDER a PROGRAMAR GRATIS DESDE CERO?",
+    "descripcion": "Páginas: W3Schools: https://www.w3schools.com/ FreecodeCamp: freecodecamp.org CodeCademy: ...",
+    "imagenUrl": "https://i.ytimg.com/vi/ykpRQIWrklA/hqdefault.jpg",
+    "autor": "Cegamer",
+    "precio": 1827.36,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "No pierdas el tiempo cuando aprendes a programar",
+    "descripcion": "Acceso a todos mis cursos: https://holamundo.io Mi música libre de copyright para youtube y twitch: En Spotify: ...",
+    "imagenUrl": "https://i.ytimg.com/vi/amDMZ5tSysY/hqdefault.jpg",
+    "autor": "HolaMundo",
+    "precio": 5289.02,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Cómo empezar en la PROGRAMACIÓN (Consejos, Sugerencias, Con cual lenguaje iniciar)",
+    "descripcion": "En este vídeo veremos los primeros pasos para iniciar en la PROGRAMACIÓN, y responder preguntas como ¿Con qué lenguaje ...",
+    "imagenUrl": "https://i.ytimg.com/vi/MEuZICEDLJo/hqdefault.jpg",
+    "autor": "Absolute",
+    "precio": 2356.36,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso de programación JAVA desde cero",
+    "descripcion": "Curso JAVA desde cero, Este es un curso gratuito y completo de programación en JAVA con bloc de notas.",
+    "imagenUrl": "https://i.ytimg.com/vi/L1oMLsiMusQ/hqdefault.jpg",
+    "autor": "La Geekipedia De Ernesto",
+    "precio": 1349.09,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "APRENDE a PROGRAMAR en C# Desde CERO ►[ Curso de C# ]◄",
+    "descripcion": "Curso de C# desde cero, veremos desde lo más básico hasta llegar a un nivel avanzado de este lenguaje.",
+    "imagenUrl": "https://i.ytimg.com/vi/8O7PopSscBE/hqdefault.jpg",
+    "autor": "TecnoBinaria",
+    "precio": 734.14,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Aprende a PROGRAMAR en JAVA desde CERO en 5 Minutos (Conocimientos Básicos)",
+    "descripcion": "En este vídeo vas a aprender a programar en JAVA desde cero en tan solo 1 vídeo. Conceptos básicos: ...",
+    "imagenUrl": "https://i.ytimg.com/vi/STVXkRO4LZY/hqdefault.jpg",
+    "autor": "Absolute",
+    "precio": 8625.7,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "¿Por qué la mayoría de las personas NO aprenden a programar?",
+    "descripcion": "Estás atrapado en un ciclo de cursos de programación interminables que no te llevan a ningún lado? En este video, te revelaré el ...",
+    "imagenUrl": "https://i.ytimg.com/vi/1d3qum2vjLI/hqdefault.jpg",
+    "autor": "otro más de sistemas",
+    "precio": 9629.71,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "7 Sitios para Aprender a Programar GRATIS y ONLINE desde CERO",
+    "descripcion": "Hoy os traigo 7 webs para aprender a programar gratis y online. Estas webs están orientadas para cualquier nivel y que la gente ...",
+    "imagenUrl": "https://i.ytimg.com/vi/_-bOOYOZoyQ/hqdefault.jpg",
+    "autor": "rafatatay",
+    "precio": 6718.5,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso Aprender a Programar en Java desde Cero",
+    "descripcion": "En esta lista se podrán ver todos los vídeos del Curso para Aprender a Programar en Java desde Cero.",
+    "imagenUrl": "https://i.ytimg.com/vi/QgSeDCmB-qQ/hqdefault.jpg",
+    "autor": "Empieza A Programar",
+    "precio": 8967.88,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "¿Cómo aprendería a programar, si tuviera que empezar de nuevo?",
+    "descripcion": "En este video, les dejo todos mis consejos, aprendizajes, y cosas que hubiera hecho diferente si hoy pudiera empezar de nuevo ...",
+    "imagenUrl": "https://i.ytimg.com/vi/MPxIbN9qAHs/hqdefault.jpg",
+    "autor": "Francisco Erramuspe",
+    "precio": 3372.49,
+    "idioma": "español",
+    "categorias": [
+      "informatica",
+      "lenguajes de programacion",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso Básico de Cocina",
+    "descripcion": "Bienvenidos al \"Curso Básico de Cocina\" del canal de \"El Cocinero en Casa\". Aquí os enseñaremos las técnicas básicas de ...",
+    "imagenUrl": "https://i.ytimg.com/vi/izN242KZYIA/hqdefault.jpg",
+    "autor": "El Cocinero en Casa",
+    "precio": 5210.44,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Vocabulario de cocina en español",
+    "descripcion": "",
+    "imagenUrl": "https://i.ytimg.com/vi/IWIZVh3d79s/hqdefault.jpg",
+    "autor": "Tio Spanish: aprender español online",
+    "precio": 6678.76,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Nivel 1. Introducción a la Gastronomía. Curso de Cocina Profesional.",
+    "descripcion": "OBJETIVO DE APRENDIZAJE: Integrar los principios básicos de la gastronomía a través del análisis de los antecedentes ...",
+    "imagenUrl": "https://i.ytimg.com/vi/IOyJzC6gUQE/hqdefault.jpg",
+    "autor": "Chef Machaen",
+    "precio": 9820.9,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "🏅CURSO DE COCINA PARA PRINCIPIANTES (Curso para aprender a cocinar)",
+    "descripcion": "TE GUSTA COCINAR? ❤️️¿Quieres aprender a cocinar en casa de forma fácil? Te presento TODO LO QUE NECESITAS ...",
+    "imagenUrl": "https://i.ytimg.com/vi/ieYc4Zb6SyU/hqdefault.jpg",
+    "autor": "David Guibert Chef",
+    "precio": 7007.81,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "APRENDE A COCINAR DESDE CERO - CURSO DE COCINA PARA PRINCIPIANTES",
+    "descripcion": "APRENDE A COCINAR DESDE CERO. En este vídeo doy inicio al primer CURSO DE COCINA PARA PRINCIPIANTES del canal.",
+    "imagenUrl": "https://i.ytimg.com/vi/WTJ6ZJiQ1Lk/hqdefault.jpg",
+    "autor": "Marianela Cooking",
+    "precio": 4444.57,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso de cocina gratis",
+    "descripcion": "Curso de cocina gratuito con 6 vídeos que te ayudarán a conocer de forma global los pilares fundamentales para vivir de la ...",
+    "imagenUrl": "https://i.ytimg.com/vi/29UH3k2JPIA/hqdefault.jpg",
+    "autor": "CookStorming",
+    "precio": 4124.13,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso de Cocina Básica",
+    "descripcion": "En este curso encontrarás lo básico para empezar el mundo de la cocina con un conocimiento técnico, y lo mejor es que es ...",
+    "imagenUrl": "https://i.ytimg.com/vi/wzXRY-bKMwg/hqdefault.jpg",
+    "autor": "Chef Carlos Villacis",
+    "precio": 2236.69,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Aprender español: Utensilios de cocina y mesa 🍴 (nivel intermedio)",
+    "descripcion": "Prueba gratis 10 lecciones de mis cursos online (con más de 200 lecciones y 2 clases de conversación en grupo al mes): ...",
+    "imagenUrl": "https://i.ytimg.com/vi/EaotxpNLDjw/hqdefault.jpg",
+    "autor": "Tu escuela de español",
+    "precio": 414.06,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "GUÍA COMPLETA ▶ GASTRONOMÍA de CÓRDOBA (ESPAÑA) 🇪🇸 🌏 Platos típicos, comer, cocina, recetas...",
+    "descripcion": "Guía gastronómica con información muy completa de la gastronomía de la Provincia de Córdoba. Platos, ingredientes y recetas ...",
+    "imagenUrl": "https://i.ytimg.com/vi/h4B97hi2Y00/hqdefault.jpg",
+    "autor": "Así es el mundo",
+    "precio": 6366.77,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "vocabulario de español | vocabulario de la casa en español - en la cocina",
+    "descripcion": "vocabulario de español | vocabulario de la casa en español - en la cocina .. Aquí puedes Descargar la mejor APLICACIÓN para ...",
+    "imagenUrl": "https://i.ytimg.com/vi/7lHs6t8jICg/hqdefault.jpg",
+    "autor": "Yassine Academy | ياسين أكاديمي",
+    "precio": 8798.04,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "TE VOY A ENSEÑAR 7 TÉCNICAS CULINARIAS QUE TODO COCINERO DEBE SABER | GIACOMO BOCCHIO",
+    "descripcion": "El día de hoy tenemos una clase de técnicas básicas de cocina. Les voy a enseñar 7 tips culinarios indispensables para ser ...",
+    "imagenUrl": "https://i.ytimg.com/vi/FXZkvjSf05Y/hqdefault.jpg",
+    "autor": "Giacomo Bocchio",
+    "precio": 1501.36,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "The kitchen in Spanish - Vocabulary",
+    "descripcion": "Let's learn kitchen vocabulary in Spanish. This video shows you some of the most used words in this room, including furniture, ...",
+    "imagenUrl": "https://i.ytimg.com/vi/Gj6IjvErE2w/hqdefault.jpg",
+    "autor": "PROFE Spanish",
+    "precio": 3451.97,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Tips básicos para aprender a cocinar l Métodos de cocción y cortes l Tastemade Español",
+    "descripcion": "Por algún lado hay que empezar! Y nosotros te dejamos algunos tips de recetas fáciles para que te introduzcas en la cocina con ...",
+    "imagenUrl": "https://i.ytimg.com/vi/FgnNgfwXGCw/hqdefault.jpg",
+    "autor": "Tastemade Español",
+    "precio": 5763.23,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Cursos de Cocina",
+    "descripcion": "Compartiendo los secretos de la cocina Peruana.",
+    "imagenUrl": "https://i.ytimg.com/vi/B1HQYQkFq3I/hqdefault.jpg",
+    "autor": "Cecilia Tupac",
+    "precio": 3355.54,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "CURSO de COCINA MEXICANA online GRATIS 🌶",
+    "descripcion": "AQUI VERAS DIFERENTES RECETAS MEXICANAS MUY DELICIOSAS Y SENCILLAS . SUSCRIBETE Y DALE LIKE . COMENTA ...",
+    "imagenUrl": "https://i.ytimg.com/vi/T07sM87dz1s/hqdefault.jpg",
+    "autor": "YOYDE",
+    "precio": 5793.15,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Aprender español: Los alimentos 🍎🧀🍩(nivel básico)",
+    "descripcion": "Prueba gratis 10 lecciones de mis cursos online (con más de 200 lecciones y 2 clases de conversación en grupo al mes): ...",
+    "imagenUrl": "https://i.ytimg.com/vi/OhSjoQofCiw/hqdefault.jpg",
+    "autor": "Tu escuela de español",
+    "precio": 7111.94,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "21 Trucos De Cocina Que Aprendí En Restaurantes",
+    "descripcion": "Aprende más con mi curso de cocina online: https://www.avozmechef.es/courses/Cocina-de-base MATERIAL QUE UTILIZO O ...",
+    "imagenUrl": "https://i.ytimg.com/vi/7BljXvdvFKk/hqdefault.jpg",
+    "autor": "Alfredo Vozmediano",
+    "precio": 6184.32,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Aprende a cocinar pizza en Cooking Land - Cocina para niños",
+    "descripcion": "Descubre con tus hijos cómo cocinar pizza y conoce el origen y los nutrientes de este delicioso plato. Este vídeo de cocina para ...",
+    "imagenUrl": "https://i.ytimg.com/vi/O06f_4iGELQ/hqdefault.jpg",
+    "autor": "Smile and Learn - Español",
+    "precio": 2777.63,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Curso Online Nueva Cocina Tradicional Española con Clara Villalón - Presentación del curso",
+    "descripcion": "Esta es la presentación del curso online Nueva Cocina Tradicional Española La cocina tradicional, una cocina que vuelve a estar ...",
+    "imagenUrl": "https://i.ytimg.com/vi/5aZ3uKu9kx8/hqdefault.jpg",
+    "autor": "Aprende con Scoolinary",
+    "precio": 2771.83,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "COCINA PARA NIÑOS ‍🍳🍉 Verbos, vocabulario y recetas 👩🏻‍🍳 Recopilación",
+    "descripcion": "Vídeo educativo para niños en el que aprenderán un montón de cosas relacionadas con la cocina. Esta recopilación incluye ...",
+    "imagenUrl": "https://i.ytimg.com/vi/kPIrV54ZuZU/hqdefault.jpg",
+    "autor": "Smile and Learn - Español",
+    "precio": 9314.65,
+    "idioma": "español",
+    "categorias": [
+      "cocina",
+      "basico",
+      "español"
+    ]
+  },
+  {
+    "titulo": "Learn to Draw",
+    "descripcion": "Learn to draw, sketch and more in this series of videos which explains the methods and techniques involved in learning this great ...",
+    "imagenUrl": "https://i.ytimg.com/vi/ewMksAbgdBI/hqdefault.jpg",
+    "autor": "SchaeferArt",
+    "precio": 509.86,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Learning How to Draw",
+    "descripcion": "Get the full drawing basics course - https://proko.com/drawing Drawing is a visual language that can be learned just like any other ...",
+    "imagenUrl": "https://i.ytimg.com/vi/tx5kJvI14Jg/hqdefault.jpg",
+    "autor": "Proko",
+    "precio": 8651.85,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Beginner&#39;s Drawing Course – 40 Episodes! (2020)",
+    "descripcion": "",
+    "imagenUrl": "https://i.ytimg.com/vi/6QOboH_wKL4/hqdefault.jpg",
+    "autor": "MarkowskyArt",
+    "precio": 2394.65,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Drawing Lessons for Beginners",
+    "descripcion": "Important tutorials for anyone wanting to learn how to draw with pencils.",
+    "imagenUrl": "https://i.ytimg.com/vi/mzzvCGfKZR8/hqdefault.jpg",
+    "autor": "Art of Wei",
+    "precio": 318.23,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Drawing Lessons for Beginners",
+    "descripcion": "This is a beginners drawing lesson playlist. I try and keep my drawings very short and simple. If your looking for simple and easy ...",
+    "imagenUrl": "https://i.ytimg.com/vi/UQxQi4q0zEA/hqdefault.jpg",
+    "autor": "Cartooning Club How to Draw",
+    "precio": 2386.7,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "The Learning To Draw Series",
+    "descripcion": "",
+    "imagenUrl": "https://i.ytimg.com/vi/Wz6DrQeQ5rI/hqdefault.jpg",
+    "autor": "Brad's Art School",
+    "precio": 5218.16,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "The Ultimate Drawing course from beginner to advanced",
+    "descripcion": "",
+    "imagenUrl": "https://i.ytimg.com/vi/Fmp9oRthtSg/hqdefault.jpg",
+    "autor": "Infinitus Learning",
+    "precio": 7496.58,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "How to start drawing (for beginners)",
+    "descripcion": "I'm often asked how someone can start learning to draw from the very beginning, so this video is those people! There are certainly ...",
+    "imagenUrl": "https://i.ytimg.com/vi/XeIR7P82aPU/hqdefault.jpg",
+    "autor": "pikat",
+    "precio": 8507.96,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "👉How to drawing in English number &quot;7&quot;❤️",
+    "descripcion": "",
+    "imagenUrl": "https://i.ytimg.com/vi/mMWel3o6MXk/hqdefault.jpg",
+    "autor": "Handwriting Learn and Solution",
+    "precio": 239.23,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "LEARN TO DRAW FROM 0 to 100! | Roadmap| DrawlikeaSir",
+    "descripcion": "A video on how to start drawing from the very very start - and where to start with your art! :] Most important thing though: This is just ...",
+    "imagenUrl": "https://i.ytimg.com/vi/1jjmOF1hQqI/hqdefault.jpg",
+    "autor": "Draw like a Sir",
+    "precio": 7343.98,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Learn How To Draw Pt 1: Lines, Lines, Lines",
+    "descripcion": "If you want to learn to draw but you've been putting it off or you just don't know where to start....start here! In Lesson 1 we start with ...",
+    "imagenUrl": "https://i.ytimg.com/vi/ing1x95WZ_I/hqdefault.jpg",
+    "autor": "The Pencil Room Online",
+    "precio": 1965.13,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Learn How to Draw for Beginners - Episode 1",
+    "descripcion": "My Digital Art for Beginners Course: http://bradsartschool.com What do you need to start drawing and learn art and illustration?",
+    "imagenUrl": "https://i.ytimg.com/vi/Wz6DrQeQ5rI/hqdefault.jpg",
+    "autor": "Brad's Art School",
+    "precio": 6446.28,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Learn English Alphabet A-E with TWO EXAMPLE Words | coloring and drawing for Kids Draw ABC for Kids",
+    "descripcion": "Learn English Alphabet Letters with Two Example Words | coloring and drawing for Kids | Draw ABC for toddlers Part 1 Let's draw ...",
+    "imagenUrl": "https://i.ytimg.com/vi/cnY4D3a9QXQ/hqdefault.jpg",
+    "autor": "Toy Monkey Art and Learn",
+    "precio": 2365.66,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "How To Draw A Cute Ice Cream Cone",
+    "descripcion": "Be careful today's lesson may get you really hungry! We're learning how to draw a cute ice cream cone. We hope you're going to ...",
+    "imagenUrl": "https://i.ytimg.com/vi/UW6H5dAPuhY/hqdefault.jpg",
+    "autor": "Art for Kids Hub",
+    "precio": 8012.71,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "DRAW 🖼🖊 Learn English Verbs | English Comprehensible Input Easy Beginner Lesson",
+    "descripcion": "English teachers Kristian and Luke from @everydayenglishwithluke talk about drawing pictures. These lessons are based on AUA ...",
+    "imagenUrl": "https://i.ytimg.com/vi/NhS3AvYOe8Y/hqdefault.jpg",
+    "autor": "English Comprehensible Input for ESL Beginners",
+    "precio": 2806.1,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Learn Alphabets | Lets Draw Alphabets | Easy Drawing Step By Step | #howtodraw #drawingforkids",
+    "descripcion": "Hi Kids, Learn and Draw with @ChikiDoodle and keep watching for many more easy drawing videos for kids. Learn Drawing ...",
+    "imagenUrl": "https://i.ytimg.com/vi/0NBvvuPh2Jc/hqdefault.jpg",
+    "autor": "Chiki Doodle - Learn How To Draw",
+    "precio": 8031.87,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Learn English Alphabet A-J with TWO EXAMPLE Words | coloring and drawing for Kids Draw ABC for Kids",
+    "descripcion": "Learn English Alphabet Letters with Two Example Words A-J | coloring and drawing for Kids | Draw ABC for toddlers Part 2 The ...",
+    "imagenUrl": "https://i.ytimg.com/vi/8FbKn4mXVzI/hqdefault.jpg",
+    "autor": "Toy Monkey Art and Learn",
+    "precio": 210.9,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "I&#39;ll teach you to draw! How to Draw #1: The Essential First Steps Most Beginners Miss",
+    "descripcion": "No matter your level of talent or experience, you can learn to draw and I am going to teach you how, It also starts with this intro to ...",
+    "imagenUrl": "https://i.ytimg.com/vi/XAQ6K3DbEt4/hqdefault.jpg",
+    "autor": "Sketchbook Skool",
+    "precio": 3049.22,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "Learn to draw",
+    "descripcion": "hello,welcome to my channel Learn to draw , i am Mr. Da Sam (owner of រៀន​គូរ​ )​ ​I am very excited to channel will ...",
+    "imagenUrl": "https://yt3.ggpht.com/4Z51PHVtHf23qmCD1mB_rS75T6nd-7eLkQLKSptN2IY943xjUCqzoTqQxnW2bknNRO4qdFvG=s800-c-k-c0xffffffff-no-rj-mo",
+    "autor": "Learn to draw",
+    "precio": 4685.92,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  },
+  {
+    "titulo": "CAN ART NOOBS LEARN TO DRAW IN 1 HOUR?",
+    "descripcion": "In this episode I teach noobs how to draw in 1 hour, can they defeat the odds or will I be defeated by noobs. My art book: ...",
+    "imagenUrl": "https://i.ytimg.com/vi/5eKEkO2IJ4s/hqdefault.jpg",
+    "autor": "SamDoesArts",
+    "precio": 6629.48,
+    "idioma": "ingles",
+    "categorias": [
+      "drawing",
+      "graphic design",
+      "design"
+    ]
+  }
+]
