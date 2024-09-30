@@ -6,6 +6,7 @@ import { Container, Navbar } from "react-bootstrap";
 import { Home } from "../views/dashboard/home/Home";
 import { useContext } from "react";
 import { SessionProvider } from 'next-auth/react'; 
+import { Profile } from "../views/dashboard/home/Profile";
 
 interface Context{
     dispachUser?: any;
@@ -32,6 +33,9 @@ export function AppRouter(){
                             <Navbar />
                             <Container className="mb-4">
                                 <Route path='/dashboard/home' component={Home} />
+                                <Route path='/dashboard/profile' component={Profile} />
+                                
+
                                 </Container>
                         </>
                      )}        

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Container, Row, Col, Card, Button, InputGroup, FormControl, Dropdown, Modal } from 'react-bootstrap';
 import { Search, Filter, ChevronDown } from 'lucide-react';
+import { Navbar } from '../../auth/components/Navbar';
 
 interface Course {
   id: number;
@@ -47,7 +48,9 @@ export function Home() {
     );
 
   return (
+
     <Container>
+      <Navbar />
         {/* Buscar y filtrar */}
         <div className="my-4">
         <InputGroup className="mb-3">
