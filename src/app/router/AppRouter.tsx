@@ -7,6 +7,8 @@ import { Home } from "../views/dashboard/home/Home";
 import { useContext } from "react";
 import { SessionProvider } from 'next-auth/react'; 
 import { Profile } from "../views/dashboard/home/Profile";
+import { Recover } from "../views/auth/login/Recover";
+
 
 interface Context{
     dispachUser?: any;
@@ -27,6 +29,8 @@ export function AppRouter(){
 
                     <Route path='/auth/login' component={AuthRouter} />
                     <Route path ='/auth/register' component={Register} />
+                    <Route path='/auth/recover' component={Recover} />
+
                 
                      {(user?.loggedIn || user) && (
                         <>

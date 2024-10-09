@@ -1,0 +1,33 @@
+/* General container styling */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-height: 100vh;
+    box-sizing: border-box;
+  }
+  
+  /* Auth Card styling */
+  .auth-card-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+  }
+  
+  .auth-card {
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 2rem;
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .auth-card-wrapper {
+      max-width: 90%;
+    }
+  }
+  

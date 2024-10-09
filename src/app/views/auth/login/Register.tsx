@@ -6,6 +6,8 @@ import { MyTextInput } from "../components/MyTextInput";
 import { Link, useHistory } from "react-router-dom";
 import { AuthCard } from "../components/AuthCard";
 
+import './Register.css';
+
 
 export const Register = () => {
     const history = useHistory();

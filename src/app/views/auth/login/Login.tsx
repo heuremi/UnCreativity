@@ -6,7 +6,6 @@ import passwordIcon from '../../../icons/password.svg'
 import { AuthContext } from "../components/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
-
 export function Login(){
     const {distpachUser }: any = useContext(AuthContext);
     const [ auth, setAuth ] = useState({ email: '', password: ''})
@@ -96,7 +95,8 @@ export function Login(){
         </div>
 
         <div className="mt-3 mb-3 text-center">
-          <Link to="/recover">¿Olvidaste la contraseña?</Link>
+          <h6>¿Olvidaste la contraseña?</h6>
+          <Link to="/auth/recover">Recuperar contraseña</Link>
         </div>
 
         <div className="mt-3 mb-3 text-center">
