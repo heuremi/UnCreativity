@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Importa Link
 import './Recover.css';
 
 export function Recover() {
@@ -25,6 +26,9 @@ export function Recover() {
                 />
                 <button type="submit">Recuperar</button>
             </form>
+            <div className="back-button">
+                <Link to="/auth/login">Volver a la pantalla principal</Link> {/* Ajusta la ruta según corresponda */}
+            </div>
         </div>
     );
 }
