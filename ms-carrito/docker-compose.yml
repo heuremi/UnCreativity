@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres:13
+    container_name: postgres-container
+    environment:
+      POSTGRES_DB: carrito_db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    networks:
+      - backend 
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5435:5432"
+
+volumes:
+  db-data:
+
+networks:
+  backend:
+    driver: bridge
+
+
