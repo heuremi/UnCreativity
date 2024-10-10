@@ -6,7 +6,6 @@ import (
 	"carrito/internal/repository"
 	"carrito/internal/service"
 	"carrito/internal/utils"
-	"log"
 	"net/http"
 	"time"
 
@@ -22,13 +21,12 @@ func main() {
 	cursoCarritoRepository := repository.NewCursoCarritoImpl(db)
 
 	carritoService, err := service.NewCarritoServiceImpl(carritoRepository, validate)
-	if err != nil {
-		log.Fatal("error al inicializar el carrito servicio: %v", err)
-	}
+	utils.ErrorPanic(err)
 	cursoCarritoService, err := service.NewCursoCarritoServiceImpl(cursoCarritoRepository, validate)
+	utils.ErrorPanic(err)
 
 	carritoController := controller.NewCarritoController(carritoService)
-	cursoCarritoController := controller.NewCursoCarritoController(cursoCarritoService)
+	cursoCarritoController := controller.NewCursoCarritoController(cursoCarritoService, carritoService)
 	routes := CarritoRouter(carritoController, cursoCarritoController)
 
 	server := &http.Server{
@@ -38,7 +36,6 @@ func main() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
-
 	err = server.ListenAndServe()
 	utils.ErrorPanic(err)
 }

@@ -1,11 +1,16 @@
 package service
 
 import (
+	customerrors "carrito/internal/errors"
 	"carrito/internal/model"
 	"carrito/internal/repository"
 	"carrito/internal/request"
 	"carrito/internal/response"
+	"carrito/rabbit/emit"
+	"context"
 	"errors"
+	"fmt"
+	"time"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -38,6 +43,27 @@ func (c *CursoCarritoServiceImpl) Add(cursoCarrito request.CreateCursoCarritoReq
 	err = c.Validate.Struct(cursoCarrito)
 	if err != nil {
 		return err
+	}
+
+	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
+	defer cancel()
+	valido, err := emit.SendCursoValidation(ctx, cursoCarrito.IdCurso)
+	if err != nil {
+		return err
+	}
+	if !valido {
+		return &customerrors.CursoNotFoundError{
+			Msg: fmt.Sprintf("No se pudo encontrar el curso con id: %d", cursoCarrito.IdCurso),
+		}
+	}
+
+	cursos, _ := c.FindByCarrito(cursoCarrito.IdCarrito)
+	for _, cursoResponse := range cursos {
+		if cursoResponse.IdCurso == cursoCarrito.IdCurso {
+			return &customerrors.CursoConflictError{
+				Msg: fmt.Sprintf("Conflicto con el curso con id: %d , Ya existe en el carrito", cursoCarrito.IdCurso),
+			}
+		}
 	}
 
 	modelo := model.CursoCarrito{

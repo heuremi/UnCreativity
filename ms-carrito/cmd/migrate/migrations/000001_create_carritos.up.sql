@@ -1,7 +1,0 @@
-CREATE EXTENSION IF NOT EXISTS citext;
-
-CREATE TABLE IF NOT EXISTS carritos (
-    id BIGSERIAL PRIMARY KEY,
-    email_cliente citext NOT NULL,
-    total NUMERIC(10,3) NOT NULL
-);
