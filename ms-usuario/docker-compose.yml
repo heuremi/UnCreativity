@@ -7,8 +7,16 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+      POSTGRES_DB: user_db
+    networks:
+      - backend
     ports:
       - "5434:5432"
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - db-data-users:/var/lib/postgresql/data
+volumes:
+  db-data-users:
+
+networks:
+  backend:
+    driver: bridge

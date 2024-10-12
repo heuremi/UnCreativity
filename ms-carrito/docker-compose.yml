@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:13
-    container_name: postgres-container
+    container_name: uncreativity-ms-carrito
     environment:
       POSTGRES_DB: carrito_db
       POSTGRES_USER: user
@@ -9,12 +9,12 @@ services:
     networks:
       - backend 
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data-carrito:/var/lib/postgresql/data
     ports:
       - "5435:5432"
 
 volumes:
-  db-data:
+  db-data-carrito:
 
 networks:
   backend:

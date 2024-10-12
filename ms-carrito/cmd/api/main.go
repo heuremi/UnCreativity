@@ -6,6 +6,7 @@ import (
 	"carrito/internal/repository"
 	"carrito/internal/service"
 	"carrito/internal/utils"
+	cursoscarrito "carrito/rabbit/cursos_carrito"
 	"net/http"
 	"time"
 
@@ -13,6 +14,8 @@ import (
 )
 
 func main() {
+
+	cursoscarrito.ConsumeCursosCarrito()
 
 	db := db.DatabaseConnection()
 	validate := validator.New()
