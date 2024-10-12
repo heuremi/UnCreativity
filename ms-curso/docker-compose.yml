@@ -1,14 +1,21 @@
-version: '3'
 services:
-  postgres:
+  db:
     image: postgres:13
-    restart: always
-    container_name: postgres_container
+    container_name: uncreativity-ms-curso
     environment:
+      POSTGRES_DB: curso_db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: mydb
+    networks:
+      - backend 
+    volumes:
+      - db-data-curso:/var/lib/postgresql/data
     ports:
       - "5433:5432"
-    volumes:
-      - ./data:/var/lib/postgresql/data
+
+volumes:
+  db-data-curso:
+
+networks:
+  backend:
+    driver: bridge

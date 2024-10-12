@@ -6,7 +6,7 @@ import (
 	"carrito/internal/repository"
 	"carrito/internal/request"
 	"carrito/internal/response"
-	"carrito/rabbit/emit"
+	validatecurso "carrito/rabbit/curso_validate"
 	"context"
 	"errors"
 	"fmt"
@@ -47,7 +47,7 @@ func (c *CursoCarritoServiceImpl) Add(cursoCarrito request.CreateCursoCarritoReq
 
 	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
 	defer cancel()
-	valido, err := emit.SendCursoValidation(ctx, cursoCarrito.IdCurso)
+	valido, err := validatecurso.SendCursoValidation(ctx, cursoCarrito.IdCurso)
 	if err != nil {
 		return err
 	}
