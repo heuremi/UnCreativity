@@ -2,7 +2,6 @@ package repository
 
 import (
 	"carrito/internal/model"
-	"carrito/internal/request"
 	"errors"
 
 	"gorm.io/gorm"
@@ -11,6 +10,7 @@ import (
 type CarritoRepository interface {
 	FindAll() ([]model.Carrito, error)
 	FindById(carritoId int) (carrito model.Carrito, err error)
+	FindBySessionId(sessionId string) (carrito model.Carrito, err error)
 	Save(carrito model.Carrito) error
 	Update(carrito model.Carrito) error
 	Delete(carritoId int) error
@@ -22,6 +22,15 @@ type CarritoRepositoryImpl struct {
 
 func NewCarritoRepositoryImpl(Db *gorm.DB) CarritoRepository {
 	return &CarritoRepositoryImpl{Db: Db}
+}
+
+// FindBySessionId implements CarritoRepository.
+func (c *CarritoRepositoryImpl) FindBySessionId(sessionId string) (carrito model.Carrito, err error) {
+	results := c.Db.Where("session_id = ?", sessionId).Find(&carrito)
+	if results.Error != nil {
+		return model.Carrito{}, results.Error
+	}
+	return carrito, nil
 }
 
 func (c CarritoRepositoryImpl) FindAll() (carritos []model.Carrito, err error) {
@@ -53,10 +62,9 @@ func (c *CarritoRepositoryImpl) Save(carrito model.Carrito) error {
 }
 
 func (c *CarritoRepositoryImpl) Update(carrito model.Carrito) error {
-	var data = request.UpdateCarritoRequest{
-		Id:           carrito.Id,
-		EmailCliente: carrito.EmailCliente,
-		PrecioTotal:  carrito.PrecioTotal,
+	var data = model.Carrito{
+		Id:        carrito.Id,
+		SessionId: carrito.SessionId,
 	}
 
 	result := c.Db.Model(&carrito).Updates(data)

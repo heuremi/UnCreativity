@@ -1,25 +1,25 @@
 
-export async function consumeCursosCarrito(channel, correlationId, replyTo, signal) {
+export async function consumeCursosCarrito(channel, correlationId, replyTo) {
 
     return new Promise((resolve, reject) => {
 
         setTimeout(() => {
             reject("se demoro mucho")
-        }, 1000);
+        }, 10000);
 
         channel.assertQueue(replyTo, {
             exclusive: false
         })
-        queue = replyTo
+        const queue = replyTo
         console.log("[Y] Esperando mensajes en: %s", queue)
         channel.bindQueue(queue, "cursos_carrito", replyTo)
  
         channel.consume(queue, (msg) => {
             const sendCorrelationId = msg.properties.correlationId
             if( sendCorrelationId == correlationId) {
+                console.log("pasa")
                 const data = JSON.parse(msg.content)
                 channel.ack(msg)
-                channel.cancel(msg.fields.consumerTag)
                 resolve(data)
             }
         })

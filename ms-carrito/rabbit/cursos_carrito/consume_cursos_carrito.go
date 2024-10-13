@@ -2,13 +2,15 @@ package cursoscarrito
 
 import (
 	"carrito/internal/env"
+	"carrito/internal/response"
+	"carrito/internal/service"
 	"encoding/json"
 	"log"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-func ConsumeCursosCarrito() {
+func ConsumeCursosCarrito(cursoCarritoService service.CursoCarritoService) {
 
 	conn, err := amqp.Dial(env.GetString("RabbitMQ_URL", "amqp://guest:guest@localhost:5672/"))
 	if err != nil {
@@ -75,20 +77,30 @@ func ConsumeCursosCarrito() {
 	go func() {
 		for msg := range msgs {
 			if msg.CorrelationId != "" && msg.ReplyTo != "" {
-				log.Printf("Se esta procesando el correlationId: %s", msg.CorrelationId)
-				log.Printf("ReplyTo: %s", msg.ReplyTo)
-				cursosCarrito := &DataCursosCarrito{
-					CarritoId: 1,
-					CursosId:  []int{1, 2, 3, 4},
+
+				var body BodyRequest
+				valid := true
+				err := json.Unmarshal(msg.Body, &body)
+				if err != nil || (body == BodyRequest{}) {
+					valid = false
 				}
+
+				cursos, err := cursoCarritoService.FindByCarrito(body.CarritoId)
+				if err != nil {
+					valid = false
+				}
+
+				cursosCarrito := &DataCursosCarrito{
+					Valid:     valid,
+					CarritoId: body.CarritoId,
+					CursosId:  cursos,
+				}
+				log.Print(cursosCarrito)
 				data, err := json.Marshal(cursosCarrito)
 				if err == nil {
-					log.Print("se esta enviando??")
 					errSend := SendCursosCarrito(msg.CorrelationId, msg.ReplyTo, data)
 					if errSend != nil {
 						log.Printf("Error: %s", errSend.Error())
-					} else {
-						log.Print("Es nuilo")
 					}
 				}
 			} else {
@@ -96,11 +108,16 @@ func ConsumeCursosCarrito() {
 			}
 		}
 	}()
-	log.Printf("[*] Esperando mensajes.")
+	log.Printf("[*] Esperando mensajes en: %s", q.Name)
 	<-forever
 }
 
+type BodyRequest struct {
+	CarritoId int `json:"carrito_id"`
+}
+
 type DataCursosCarrito struct {
-	CarritoId int   `json:"carrito_id"`
-	CursosId  []int `json:"cursos_id"`
+	Valid     bool                     `json:"valid"`
+	CarritoId int                      `json:"carrito_id"`
+	CursosId  []response.CursoResponse `json:"cursos_id"`
 }

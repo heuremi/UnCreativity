@@ -16,6 +16,7 @@ type CarritoService interface {
 	Update(carrito request.UpdateCarritoRequest) error
 	Delete(carritoId int) error
 	FindById(carritoId int) (carrito response.CarritoResponse, err error)
+	FindBySessionId(sessionId string) (carrito response.CarritoResponse, err error)
 	FindAll() (carritos []response.CarritoResponse, err error)
 }
 
@@ -44,10 +45,12 @@ func (c *CarritoServiceImpl) Create(carrito request.CreateCarritoRequest) (err e
 	}
 
 	modelo := model.Carrito{
-		EmailCliente: carrito.EmailCliente,
-		PrecioTotal:  carrito.PrecioTotal,
+		SessionId: carrito.SessionId,
 	}
-	c.CarritoRepository.Save(modelo)
+	err = c.CarritoRepository.Save(modelo)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -71,9 +74,8 @@ func (c *CarritoServiceImpl) FindAll() (carritos []response.CarritoResponse, err
 
 	for _, value := range result {
 		carrito := response.CarritoResponse{
-			Id:           value.Id,
-			EmailCliente: value.EmailCliente,
-			PrecioTotal:  value.PrecioTotal,
+			Id:        value.Id,
+			SessionId: value.SessionId,
 		}
 		carritos = append(carritos, carrito)
 	}
@@ -88,9 +90,21 @@ func (c *CarritoServiceImpl) FindById(carritoId int) (carrito response.CarritoRe
 	}
 
 	res := response.CarritoResponse{
-		Id:           data.Id,
-		EmailCliente: data.EmailCliente,
-		PrecioTotal:  data.PrecioTotal,
+		Id:        data.Id,
+		SessionId: data.SessionId,
+	}
+	return res, nil
+}
+
+func (c *CarritoServiceImpl) FindBySessionId(sessionId string) (carrito response.CarritoResponse, err error) {
+	data, err := c.CarritoRepository.FindBySessionId(sessionId)
+	if err != nil {
+		return response.CarritoResponse{}, err
+	}
+
+	res := response.CarritoResponse{
+		Id:        data.Id,
+		SessionId: data.SessionId,
 	}
 	return res, nil
 }
@@ -103,8 +117,7 @@ func (c *CarritoServiceImpl) Update(carrito request.UpdateCarritoRequest) error 
 		return err
 	}
 
-	data.EmailCliente = carrito.EmailCliente
-	data.PrecioTotal = carrito.PrecioTotal
+	data.SessionId = carrito.SessionId
 	c.CarritoRepository.Update(data)
 	return nil
 }

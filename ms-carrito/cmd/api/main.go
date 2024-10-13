@@ -6,6 +6,9 @@ import (
 	"carrito/internal/repository"
 	"carrito/internal/service"
 	"carrito/internal/utils"
+
+	//carritovalidate "carrito/rabbit/carrito_validate"
+	carritovalidate "carrito/rabbit/carrito_validate"
 	cursoscarrito "carrito/rabbit/cursos_carrito"
 	"net/http"
 	"time"
@@ -14,8 +17,6 @@ import (
 )
 
 func main() {
-
-	cursoscarrito.ConsumeCursosCarrito()
 
 	db := db.DatabaseConnection()
 	validate := validator.New()
@@ -27,6 +28,9 @@ func main() {
 	utils.ErrorPanic(err)
 	cursoCarritoService, err := service.NewCursoCarritoServiceImpl(cursoCarritoRepository, validate)
 	utils.ErrorPanic(err)
+
+	go cursoscarrito.ConsumeCursosCarrito(cursoCarritoService)
+	carritovalidate.ConsumeCarritoValidate(carritoService, cursoCarritoService)
 
 	carritoController := controller.NewCarritoController(carritoService)
 	cursoCarritoController := controller.NewCursoCarritoController(cursoCarritoService, carritoService)
