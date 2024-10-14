@@ -44,7 +44,7 @@ export const schemaCliente = buildSchema(`
     }
 
     type Mutation {
-        createCliente(datosCliente: ClienteInput): Cliente
+        createCliente(datosCliente: ClienteInput!): Cliente
         updateCliente(datosActualizarCliente: UpdateClienteInput): Cliente
         deleteCliente(email: String!): Cliente
     }

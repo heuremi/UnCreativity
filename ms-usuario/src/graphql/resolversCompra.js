@@ -12,8 +12,13 @@ export const resolversCompra = {
         return servicioCompra.findCompraById(id);
     },
 
-    createCompra: async ({ id, email_cliente, curso_id, fecha }) => {
-        return servicioCompra.createCompra(id, email_cliente, curso_id, fecha);
+    createCompra: async ({ datosCompra }) => {
+        return servicioCompra.createCompra(
+            datosCompra.id, 
+            datosCompra.emailCliente, 
+            datosCompra.cursoId, 
+            datosCompra.fecha
+        );
     },
 
     updateCompra: async ({ updateCompra }) => {

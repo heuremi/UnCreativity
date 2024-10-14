@@ -7,12 +7,12 @@ export class ServicioCompra {
         this.modeloCompra = Compra;
     };
 
-    async createCompra(id, email_cliente, curso_id, fecha) {
+    async createCompra(id, emailCliente, cursoId, fecha) {
         try {
-            const compra = await this.modeloCompra.create({ id, email_cliente, curso_id, fecha });
+            const compra = await this.modeloCompra.create({ emailCliente, cursoId, fecha });
             return compra;
         } catch (error) {
-            throw new Error("Error creando la compra", error);
+            throw new Error(`Error creando la compra: ${error.message}`);
         }
     };
 
