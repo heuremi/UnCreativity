@@ -12,7 +12,6 @@ type ErrorResponse struct {
 }
 
 type CarritoResponse struct {
-	Id           int     `json:"id"`
-	EmailCliente string  `json:"email_cliente"`
-	PrecioTotal  float64 `json:"precio_total"`
+	Id        int    `json:"carrito_id"`
+	SessionId string `json:"session_id"`
 }

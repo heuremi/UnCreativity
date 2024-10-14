@@ -1,18 +1,55 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
+var validator = require('validator');
 const { WebpayPlus } = require('transbank-sdk');
 
 import { asyncHandler } from "../../utils/async-handler.js"
+import { emitValidarCarrito } from '../../rabbit/validar-carrito/emit-validar-carrito.js';
+import { emitCompraValida } from '../../rabbit/procesar-compra/emit-compra-valida.js';
 
 export const create = asyncHandler(async (req, res) => {
-    if (req.body?.id_carrito === undefined ) {
-        res.status(400).send("carrito_id no encontrado")
+
+    const { amount, email, session_id } = req.body
+    if (!amount || !email || !session_id) {
+        res.status(400).json({
+          success: false,
+          message: `${!amount ? 'amount' : (!email ? 'email' : 'session_id')} is required`,
+        });
         return
     }
-    const buyOrder = "O-" + Math.floor(Math.random() * 10000) + 1; // debe ser único
-    const sessionId = "S-" + req.body.id_carrito // por ahora el id del carrito
-    const amount = 1000
+    if(!(validator.isEmail(email))) {
+        res.status(400).json({
+          success: false,
+          message: 'email must be valid'
+        })
+        return
+    }
+    const valid = true // await emitValidarCarrito({session_id: session_id}) 
+    if (valid === null) { // No se pudo conectar con ms-carrito
+        res.status(500).json({
+            success: false,
+            message: "Internal error"
+        })
+        return 
+    }
+    if ( valid.valid == false ) { // Se pudo conectar con ms-carrito, pero sesion_id invalido (no se encontro)
+        res.status(404).json({
+            success: false,
+            message: "session_id not found in ms-carrito"
+        })
+        return 
+    }
+    if ( valid.cantidad_cursos < 1) { // Carrito vacio
+        res.status(404).json({
+            success: false,
+            message: `carrito vacio`
+        })
+        return
+     }
+
+    const buyOrder = email;
+    const sessionId = session_id // por ahora el session_id
     const returnUrl = "http://localhost:3002/webpay-plus/commit"
 
     const createResponse = await (new WebpayPlus.Transaction()).create(
@@ -24,11 +61,15 @@ export const create = asyncHandler(async (req, res) => {
 
     const token = createResponse.token
     const url = createResponse.url
-
     const paymentUrl = `${url}?token_ws=${token}`
-    console.log(paymentUrl)
-    res.redirect(paymentUrl);
-})
+
+    res.status(200).json({
+        success: true,
+        returnUrl: returnUrl,
+        urlWebpay: paymentUrl,
+        token: token
+    })
+})  
 
 
 export const commit = asyncHandler(async (req, res) => {
@@ -44,7 +85,7 @@ export const commit = asyncHandler(async (req, res) => {
 
   const token = params.token_ws
   const tbkToken = params.TBK_TOKEN
-  const tbkOrdenCompra = params.TBK_ORDER_COMPRA
+  const tbkOrdenCompra = params.TBK_ORDEN_COMPRA
   const tbkIdSesion = params.TBK_ID_SESION
 
 
@@ -54,21 +95,30 @@ export const commit = asyncHandler(async (req, res) => {
   if (token && !tbkToken) { //Flujo 1 (Flujo Normal)
     const commitResponse = await (new WebpayPlus.Transaction()).commit(token)
     if (commitResponse.response_code === 0) { // Logica para avisar que la compra fue efectiva
+        emitCompraValida(commitResponse) 
         res.status(200).json(commitResponse)
-        return
+    } else { // No acepatada por el banco?
+        res.status(402).json({
+          message : "cancelado por el banco"
+        })
     }
-  }
-  else if (!token && tbkToken) { // Flujo 2
+  } 
+  else if (!tbkToken && tbkIdSesion && tbkOrdenCompra) { // Flujo 2
     // Logica para avisar pago anulado por tiempo de espera
+    res.status(408).json({
+      message: 'transaccion anulada por tiempo de espera máximo'
+    }) 
   }
-  else if (token && tbkToken) { // Flujo 3 
+  else if (tbkToken && tbkOrdenCompra && tbkIdSesion) { // Flujo 3 
     // Logica para avisar pago anulado por el usuario
+    res.status(499).json({
+      message: 'transaccion anulada por el usuario'
+    })
   }
-  else { // Flujo 4
-    // Error inseperado
+  else {
+    res.status(500).json({
+      message: 'Internal Error'
+    })
   }
-
-  res.send("Compra Finalizada")
-
 })
 
