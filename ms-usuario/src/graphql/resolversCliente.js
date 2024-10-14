@@ -4,23 +4,36 @@ const servicioCliente = new ServicioCliente();
 
 export const resolversCliente = {
 
-    clientes: async (_, { filtro }) => {
+    clientes: async ({ filtro }) => {
+        console.log(filtro)
         return servicioCliente.findAllClientes(filtro);
     },
 
-    cliente: async (_, { email }) => {
+    cliente: async ({ email }) => {
+        console.log(email)
         return servicioCliente.findClienteByEmail(email);
     },
 
-    createCliente: async (_, { email, nombre, apellido, rut, telefono, admin_S, clave }) => {
-        return servicioCliente.createCliente(email, nombre, apellido, rut, telefono, admin_S, clave);
+    createCliente: async ({ datosCliente }) => {
+        console.log(datosCliente)
+        return servicioCliente.createCliente(
+            datosCliente.email, 
+            datosCliente.nombre, 
+            datosCliente.apellido, 
+            datosCliente.rut, 
+            datosCliente.telefono, 
+            datosCliente.admin_S, 
+            datosCliente.clave
+        );
     },
 
-    updateCliente: async (_, { updateCliente }) => {
+    updateCliente: async ({ updateCliente }) => {
+        console.log(updateCliente)
         return servicioCliente.updateCliente(updateCliente);
     },
 
-    deleteCliente: async (_, { email }) => {
+    deleteCliente: async ({ email }) => {
+        console.log(email)
         return servicioCliente.deleteCliente(email);
     }
 };

@@ -3,7 +3,7 @@ import { buildSchema } from 'graphql'
 export const schemaCompra = buildSchema(`
     
     type Compra {
-        id: ID!
+        id: ID
         emailCliente: String!
         cursoId: ID!
         fecha: String!
@@ -17,7 +17,7 @@ export const schemaCompra = buildSchema(`
     }
 
     input CompraInput {
-        id: Int!
+        id: Int
         emailCliente: String!
         cursoId: ID!
         fecha: String!
@@ -36,7 +36,7 @@ export const schemaCompra = buildSchema(`
     }
 
     type Mutation {
-        createCompra(datosCompra: CompraInput): Compra
+        createCompra(datosCompra: CompraInput!): Compra
         updateCompra(datosActualizarCompra: UpdateCompraInput): Compra
         deleteCompra(id: ID!): Compra
 

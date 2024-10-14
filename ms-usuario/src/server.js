@@ -15,8 +15,8 @@ app.use(bodyParser.raw());
 app.use("/webpay-plus/", webpayPlusRouter)
 
 app.use('/graphql', graphqlHTTP({
-    schema: schemaCliente, schemaCompra,
-    rootValue: resolversCliente, resolversCompra,
+    schema: schemaCompra, schemaCliente,
+    rootValue: resolversCompra, resolversCliente,
     graphiql: true,
 }));
 
