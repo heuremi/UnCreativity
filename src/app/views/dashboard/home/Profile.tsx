@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import './Profile.css';
 
 export interface ProfileData {
     fullName: string;
@@ -9,7 +10,6 @@ export interface ProfileData {
     id: string;
     phoneNumber: string;
 }
-
 
 export function Profile() {
     const [profileData, setProfileData] = useState<ProfileData>({
@@ -43,12 +43,12 @@ export function Profile() {
     };
 
     return (
-        <Container className="mt-5">
+        <Container className="profile-container mt-5">
             <Row className="justify-content-center">
                 <Col md={8}>
-                    <Card>
+                    <Card className="profile-card">
                         <Card.Body>
-                            <h2 className="text-center mb-4">Perfil de Usuario</h2>
+                            <h2 className="text-center mb-4 profile-title">Perfil de Usuario</h2>
                             <Form onSubmit={handleSubmit}>
                                 <Row className="mb-3">
                                     <Col>
@@ -60,6 +60,7 @@ export function Profile() {
                                                 value={profileData.name}
                                                 onChange={handleChange}
                                                 required
+                                                className="profile-input"
                                             />
                                         </Form.Group>
                                     </Col>
@@ -74,6 +75,7 @@ export function Profile() {
                                                 value={profileData.lastName}
                                                 onChange={handleChange}
                                                 required
+                                                className="profile-input"
                                             />
                                         </Form.Group>
                                     </Col>
@@ -88,8 +90,9 @@ export function Profile() {
                                                 value={profileData.email}
                                                 onChange={handleChange}
                                                 readOnly // Esto hace que el campo sea de solo lectura
-                                                style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Ejemplo de estilo visual
+                                                style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Estilo visual
                                                 required
+                                                className="profile-input"
                                             />
                                         </Form.Group>
                                     </Col>
@@ -104,6 +107,7 @@ export function Profile() {
                                                 value={profileData.id}
                                                 onChange={handleChange}
                                                 required
+                                                className="profile-input"
                                             />
                                         </Form.Group>
                                     </Col>
@@ -111,20 +115,21 @@ export function Profile() {
                                 <Row className="mb-3">
                                     <Col>
                                         <Form.Group>
-                                            <Form.Label><strong>Telefóno</strong></Form.Label>
+                                            <Form.Label><strong>Teléfono</strong></Form.Label>
                                             <Form.Control
                                                 type="text"
                                                 name="phoneNumber"
                                                 value={profileData.phoneNumber}
                                                 onChange={handleChange}
                                                 required
+                                                className="profile-input"
                                             />
                                         </Form.Group>
                                     </Col>
                                 </Row>
                                 <Row className="mb-3">
                                     <Col>
-                                        <Button type="submit" className="w-100 btn btn-primary">
+                                        <Button type="submit" className="w-100 btn btn-primary profile-button">
                                             Guardar Perfil
                                         </Button>
                                     </Col>

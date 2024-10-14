@@ -1,0 +1,33 @@
+/* Profile.css */
+
+.profile-container {
+    max-width: 1000px; /* Aumenta el ancho máximo */
+    margin: 0 auto; /* Centramos el contenedor */
+    padding: 20px; /* Espaciado interno */
+}
+
+.profile-card {
+    border-radius: 10px; /* Esquinas redondeadas */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    padding: 40px; /* Aumenta el espaciado interno del card */
+}
+
+.profile-title {
+    font-size: 2rem; /* Tamaño del título */
+    color: #333; /* Color del texto */
+}
+
+.profile-input {
+    border-radius: 5px; /* Esquinas redondeadas para entradas */
+    border: 1px solid #ccc; /* Bordes suaves */
+}
+
+.profile-button {
+    background-color: #007bff; /* Color del botón */
+    color: #ffffff; /* Color del texto del botón */
+    transition: background-color 0.3s; /* Transición suave para el hover */
+}
+
+.profile-button:hover {
+    background-color: #0056b3; /* Color en hover */
+}
