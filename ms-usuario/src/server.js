@@ -14,9 +14,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.raw());
 app.use("/webpay-plus/", webpayPlusRouter)
 
-app.use('/graphql', graphqlHTTP({
-    schema: schemaCompra, schemaCliente,
-    rootValue: resolversCompra, resolversCliente,
+app.use('/graphql/usuario', graphqlHTTP({
+    schema: schemaCliente,
+    rootValue: resolversCliente,
+    graphiql: true,
+}));
+
+app.use('/graphql/compra', graphqlHTTP({
+    schema: schemaCompra,
+    rootValue: resolversCompra,
     graphiql: true,
 }));
 
