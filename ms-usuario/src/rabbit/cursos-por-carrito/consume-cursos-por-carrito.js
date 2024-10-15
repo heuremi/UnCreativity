@@ -17,7 +17,6 @@ export async function consumeCursosCarrito(channel, correlationId, replyTo) {
         channel.consume(queue, (msg) => {
             const sendCorrelationId = msg.properties.correlationId
             if( sendCorrelationId == correlationId) {
-                console.log("pasa")
                 const data = JSON.parse(msg.content)
                 channel.ack(msg)
                 resolve(data)

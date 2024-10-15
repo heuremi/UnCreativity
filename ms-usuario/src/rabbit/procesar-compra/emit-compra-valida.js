@@ -7,23 +7,29 @@
 -- Transacción finalizada. 
 */
 
+
 import { emitValidarCarrito } from "../validar-carrito/emit-validar-carrito.js"
 import { emitCursosPorCarrito } from "../cursos-por-carrito/emit-cursos-por-carrito.js"
 import { ServicioCompra } from "../../services/servicio-compra.js"
+import { sendEmail } from "./send-email.js"
 
 export async function emitCompraValida(commitResponse)  {
 
-    const servicioCompra = new ServicioCompra()
-    const { session_id, transaction_date, buy_order } = commitResponse
-    const email = buy_order // TEMP
-    console.log("email: ", email)
-    const { carrito_id } =  1 //await emitValidarCarrito( {session_id: session_id})
-    const cursos = await emitCursosPorCarrito( {carrito_id: 1 })
-
-    let i = 0
-    for (let curso in cursos ) {
-        servicioCompra.createCompra(i, email, curso, '2024-10-12')
-        i += 1
+    try {
+        const servicioCompra = new ServicioCompra()
+        const { session_id, transaction_date, buy_order } = commitResponse
+        const email = "cristian.nettle@alumnos.ucn.cl" //buy_order // TEMP
+        const { carrito_id } =  await emitValidarCarrito( {session_id: session_id})
+        const cursos = await emitCursosPorCarrito( {carrito_id: carrito_id })
+        let i = 0
+        for (let curso in cursos.cursos_id ) {
+            console.log(cursos.cursos_id[curso])
+            await servicioCompra.createCompra(i, email, cursos.cursos_id[curso], '2024-10-12')
+            i += 1
+        }
+        sendEmail(email)
+    }catch(err) {
+        console.log(err.message)
     }
 }
 

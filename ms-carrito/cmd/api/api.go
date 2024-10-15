@@ -6,8 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CarritoRouter(carritoController *controller.CarritoController, cursoCarritoController *controller.CursoCarritoController) *gin.Engine {
-	service := gin.Default()
+func CarritoRouter(service *gin.Engine, carritoController *controller.CarritoController, cursoCarritoController *controller.CursoCarritoController)  {
 
 	router := service.Group("/carrito")
 
@@ -22,5 +21,4 @@ func CarritoRouter(carritoController *controller.CarritoController, cursoCarrito
 	router.DELETE("/curso-carrito", cursoCarritoController.DeleteCursoCarrito)
 	router.DELETE("/:id/curso", cursoCarritoController.DeleteAllCursosByCarritoId)
 
-	return service
 }

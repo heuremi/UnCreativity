@@ -1,19 +1,24 @@
 import { date } from 'yup'
 import { Curso } from '../db/models/Curso.js'
-import { Op } from 'sequelize'
+import { Op, Sequelize } from 'sequelize'
 
 export class ServicioCurso {
 
     constructor(){
         this.cursoModelo = Curso
     }
-
     async createCurso(input) {
         try {
             const curso = await this.cursoModelo.create(input)
             return curso
         } catch (error) {
-            throw new Error(`Error creando el curso ${error.message}`)
+            if (error instanceof Sequelize.ValidationError) {
+                throw new Error(`Error de Validación: ${error.message}`)
+            } else if ( error instanceof Sequelize.DatabaseError) {
+                throw new Error(`Error con la base de datos: ${error.nessage}`)
+            } else {
+                throw new Error(`Error inesperado: ${error.message}`)
+            }
         }
     }
 
@@ -22,7 +27,13 @@ export class ServicioCurso {
             const cursos = await this.cursoModelo.bulkCreate(arrayInput)
             return cursos 
         } catch (error) {
-            throw new Error(`Error creando el curso ${error.message}`)
+            if (error instanceof Sequelize.ValidationError) {
+                throw new Error(`Error de Validación: ${error.message}`)
+            } else if ( error instanceof Sequelize.DatabaseError) {
+                throw new Error(`Error con la base de datos: ${error.nessage}`)
+            } else {
+                throw new Error(`Error inesperado: ${error.message}`)
+            }
         }
     }
 
@@ -30,7 +41,13 @@ export class ServicioCurso {
         try {
             return await this.cursoModelo.findByPk(id);
         } catch (error) {
-            throw new Error("Erro obteniendo el curso con id: ", id)
+            if (error instanceof Sequelize.ValidationError) {
+                throw new Error(`Error de Validación: ${error.message} con el id ${id}`)
+            } else if ( error instanceof Sequelize.DatabaseError) {
+                throw new Error(`Error con la base de datos: ${error.nessage} con el id ${id}`)
+            } else {
+                throw new Error(`Error inesperado: ${error.message} con el id ${id}`)
+            }
         }
     }
 
@@ -44,7 +61,13 @@ export class ServicioCurso {
                 })
             }
         } catch (error) {
-            throw new Error(`Error creando el curso ${error.message}`)
+            if (error instanceof Sequelize.ValidationError) {
+                throw new Error(`Error de Validación: ${error.message}`)
+            } else if ( error instanceof Sequelize.DatabaseError) {
+                throw new Error(`Error con la base de datos: ${error.nessage}`)
+            } else {
+                throw new Error(`Error inesperado: ${error.message}`)
+            }
         }
     }
 
@@ -55,7 +78,13 @@ export class ServicioCurso {
             curso.update(inputCurso)
             return curso
         } catch (error) {
-            throw new Error("Error al actualizar el curso")
+            if (error instanceof Sequelize.ValidationError) {
+                throw new Error(`Error de Validación: ${error.message} con el id ${id}`)
+            } else if ( error instanceof Sequelize.DatabaseError) {
+                throw new Error(`Error con la base de datos: ${error.nessage} con el id ${id}`)
+            } else {
+                throw new Error(`Error inesperado: ${error.message} con el id ${id}`)
+            }
         }
     }
 
@@ -66,7 +95,13 @@ export class ServicioCurso {
             curso.save()
             return curso
         } catch (error) {
-            throw new Error("Error al actualizar el curso")
+            if (error instanceof Sequelize.ValidationError) {
+                throw new Error(`Error de Validación: ${error.message} con el id ${id}`)
+            } else if ( error instanceof Sequelize.DatabaseError) {
+                throw new Error(`Error con la base de datos: ${error.nessage} con el id ${id}`)
+            } else {
+                throw new Error(`Error inesperado: ${error.message} con el id ${id}`)
+            }
         }
     }
 }

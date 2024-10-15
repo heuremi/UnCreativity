@@ -48,9 +48,24 @@ export const create = asyncHandler(async (req, res) => {
         return
      }
 
-    const buyOrder = email;
+    const buyOrder = "1" //email; // por ahora 
     const sessionId = session_id // por ahora el session_id
     const returnUrl = "http://localhost:3002/webpay-plus/commit"
+
+    if (buyOrder.length >= 26) { 
+      res.status(500).json({
+        success: false,
+        message: "INTERNAL ERROR, buy_order excede los 26 caracteres"
+      })
+      return 
+    }
+    if (sessionId.length >= 61) {
+      res.status(500).json({
+        success: false,
+        message: "INTERNAL ERROR, sessionId excede los 26 caracteres"
+      })
+      return 
+    }
 
     const createResponse = await (new WebpayPlus.Transaction()).create(
         buyOrder,
@@ -73,7 +88,7 @@ export const create = asyncHandler(async (req, res) => {
 
 
 export const commit = asyncHandler(async (req, res) => {
-    //Flujos:
+  //Flujos:
   //1. Flujo normal (OK): solo llega token_ws
   //2. Timeout (más de 10 minutos en el formulario de Transbank): llegan TBK_ID_SESION y TBK_ORDEN_COMPRA
   //3. Pago abortado (con botón anular compra en el formulario de Webpay): llegan TBK_TOKEN, TBK_ID_SESION, TBK_ORDEN_COMPRA
@@ -115,7 +130,7 @@ export const commit = asyncHandler(async (req, res) => {
       message: 'transaccion anulada por el usuario'
     })
   }
-  else {
+  else { // Flujo 4 error inesperado
     res.status(500).json({
       message: 'Internal Error'
     })
