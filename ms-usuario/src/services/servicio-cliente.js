@@ -18,9 +18,18 @@ export class ServicioCliente {
 
     async findClienteByEmail(email) {
         try {
-            return await this.modeloCliente.findByPk(email);
+            const cliente = await this.modeloCliente.findOne({ where: { email } });
+        
+            if (!cliente) {
+                console.log(`No se encontró ningún cliente con el email: ${email}`);
+                return null;
+            }
+        
+            console.log("Cliente encontrado:", cliente);
+            return cliente;
         } catch (error) {
-            throw new Error("Error obteniendo el cliente con correo: ", email);
+        console.error("Error obteniendo el cliente con correo:", email, error);
+        throw error;
         }
     };
 

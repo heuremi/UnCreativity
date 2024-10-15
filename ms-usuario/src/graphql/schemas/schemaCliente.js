@@ -47,5 +47,6 @@ export const schemaCliente = buildSchema(`
         createCliente(datosCliente: ClienteInput!): Cliente
         updateCliente(datosActualizarCliente: UpdateClienteInput): Cliente
         deleteCliente(email: String!): Cliente
+        login(email: String!, clave: String!): Boolean
     }
 `);

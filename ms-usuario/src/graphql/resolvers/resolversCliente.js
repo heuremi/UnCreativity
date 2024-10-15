@@ -1,4 +1,4 @@
-import { ServicioCliente } from "../services/servicio-cliente.js";
+import { ServicioCliente } from "../../services/servicio-cliente.js";
 
 const servicioCliente = new ServicioCliente();
 
@@ -35,6 +35,22 @@ export const resolversCliente = {
     deleteCliente: async ({ email }) => {
         console.log(email)
         return servicioCliente.deleteCliente(email);
-    }
+    },
+
+    login: async ({ email, clave}) => {
+        const usuario = await servicioCliente.findClienteByEmail(email);
+
+        if (!usuario) {
+            console.log('Usuario no encontrado.');
+            return false;
+        }
+
+        if (usuario.clave !== clave) {
+            console.log('Contraseña incorrecta.');
+            return false;
+        }
+
+        return true;
+    },
 };
 

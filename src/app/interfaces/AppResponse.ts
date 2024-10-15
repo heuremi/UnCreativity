@@ -2,6 +2,8 @@ export interface ApiResponse{
     date: any[],
     success: boolean,
     status: number,
-    message: string
-
+    message: string,
+    data: {
+        login: boolean;
+    };
 }

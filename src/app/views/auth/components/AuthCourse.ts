@@ -4,7 +4,17 @@ import { unCreaticourse } from "./UnCreaticourse";
 
 
 export class AuthCourse{
-    public static async login(obj: User): Promise<ApiResponse>{
-        return (await unCreaticourse.post('/login', obj)).data
+    public static async login(email: String, password: String): Promise<ApiResponse>{
+        const query = `
+        mutation {
+            login(
+                email: "${email}"
+                clave: "${password}"
+            
+            )
+        }
+        `;
+        console.log(`login enviado: user = ${email}, pass = ${password}`);
+        return (await unCreaticourse.post('/usuario', { query })).data
     }
 }

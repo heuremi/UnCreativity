@@ -7,31 +7,36 @@ import { AuthContext } from "../components/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 
 export function Login(){
-    const {distpachUser }: any = useContext(AuthContext);
+    const { dispatchUser } : any = useContext(AuthContext);
     const [ auth, setAuth ] = useState({ email: '', password: ''})
     const history = useHistory();
 
 
     const handleSubmit =async (e:React.ChangeEvent<HTMLFormElement>) =>{
-        try{
-            e.preventDefault();
-            const resp = await AuthCourse.login(auth);
-            console.log(resp)
-            if(resp.success){
-                sessionStorage.setItem('user', JSON.stringify({...resp.date, loggedIn: true}))
-                distpachUser({type:'login', payload:resp.date})
-                history.replace('/dashboard/home')
-            }
-        } catch (error){
+      e.preventDefault();
+      console.log("Datos enviados:", auth);
+      try{
+          console.log("Pres");
+          const resp = await AuthCourse.login(auth.email, auth.password);
+          console.log(resp)
+          if (resp.data.login) {
+            sessionStorage.setItem('user', JSON.stringify({ ...resp.date, loggedIn: true }));
+            dispatchUser({ type: 'login', payload: resp.date });
+            history.replace('/dashboard/home');
+        } else {
+            console.log('Credenciales incorrectas');
         }
+      } catch (error){
+        console.error('Error en el login:', error);
+      }
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLFormElement | HTMLInputElement>) => {
-        setAuth({
-          ...auth,
-          [e.target.name]: e.target.value
-        })
-    }
+      const handleChange = (e: React.ChangeEvent<HTMLFormElement | HTMLInputElement>) => {
+          setAuth({
+            ...auth,
+            [e.target.name]: e.target.value
+          })
+      }
         
     return(
         <div>
@@ -50,7 +55,7 @@ export function Login(){
           <input
             autoFocus
             className="form-control txt-input"
-            name="correo"
+            name="email"
             type="email"
             placeholder="pepito@alumnos.com"
             onChange={ e => handleChange(e) }
@@ -66,7 +71,7 @@ export function Login(){
           </div>
           <input
             className="form-control txt-input"
-            name="contraseña"
+            name="password"
             type="password"
             placeholder="******"
             onChange={ e => handleChange(e) }
