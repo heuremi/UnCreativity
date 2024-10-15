@@ -38,7 +38,7 @@ export const resolversCliente = {
     },
 
     login: async ({ email, clave}) => {
-        const usuario = await servicioCliente.findClienteByEmail(email);
+        const usuario = servicioCliente.findClienteByEmail((u) => u.email === email);
 
         if (!usuario) {
             console.log('Usuario no encontrado.');

@@ -1,4 +1,9 @@
-/* Home.css */
+.container h1 {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    color: #343a40;
+    font-weight: 700;
+}
 
 .navbar {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

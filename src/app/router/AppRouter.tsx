@@ -27,7 +27,9 @@ export function AppRouter(){
         <SessionProvider session={null}>
             <Router>
                 <Switch>
-
+                    <Route exact path="/">
+                        <Redirect to='/dashboard/home' />
+                    </Route>
                     <Route path='/auth/login' component={AuthRouter} />
                     <Route path ='/auth/register' component={Register} />
                     <Route path='/auth/recover' component={Recover} />

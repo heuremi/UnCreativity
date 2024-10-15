@@ -34,6 +34,7 @@ export class ServicioCliente {
     };
 
     async findAllClientes(filtros) {
+        console.log(filtros);
         const condiciones = filtrarClientes(filtros);
         try {
             if(condiciones === null) {
