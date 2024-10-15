@@ -10,17 +10,17 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoService service.CursoCarritoService) {
+func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoService service.CursoCarritoService) error {
 
 	conn, err := amqp.Dial(env.GetString("RabbitMQ_URL", "amqp://guest:guest@localhost:5672/"))
 	if err != nil {
-		log.Fatal("fallo al conectarse con rabbit")
+		return err
 	}
 	defer conn.Close()
 
 	ch, err := conn.Channel()
 	if err != nil {
-		log.Fatal("Fallo al conectarse con el canal")
+		return err
 	}
 
 	err = ch.ExchangeDeclare(
@@ -33,7 +33,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 		nil,
 	)
 	if err != nil {
-		log.Fatal("Fallo al declarar el exchange")
+		return err
 	}
 
 	q, err := ch.QueueDeclare(
@@ -45,7 +45,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 		nil,
 	)
 	if err != nil {
-		log.Fatal("Fallo al declarar el queue")
+		return err
 	}
 
 	err = ch.QueueBind(
@@ -56,7 +56,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 		nil,
 	)
 	if err != nil {
-		log.Fatal("Error al bindear el queue")
+		return err
 	}
 
 	msgs, err := ch.Consume(
@@ -69,7 +69,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 		nil,
 	)
 	if err != nil {
-		log.Fatal("Fallo al consumir en el canal")
+		return err
 	}
 
 	forever := make(chan struct{})
@@ -114,6 +114,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 	}()
 	log.Printf("[*] Esperando mensajes en: %s", q.Name)
 	<-forever
+	return nil
 }
 
 type BodyRequest struct {

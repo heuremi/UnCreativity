@@ -1,10 +1,9 @@
 import { useState } from 'react';
-
 import axios from 'axios';
-import { Container, Row, Col, Card, Button, InputGroup, FormControl, Dropdown, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, InputGroup, FormControl, Dropdown, Modal, Navbar } from 'react-bootstrap';
 import { Search, Filter, ChevronDown } from 'lucide-react';
-import { Navbar } from '../../auth/components/Navbar';
 import './Home.css';
+import { useHistory } from 'react-router-dom';
 
 interface Course {
   id: number;
@@ -23,6 +22,8 @@ export function Home() {
   const [sortOrder, setSortOrder] = useState("asc");
   const [showModal, setShowModal] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const history = useHistory();
 
   const courses: Course[] = [
     { id: 1, title: "Introduction to React", subtitle: "Learn React Basics", description: "A comprehensive introduction to React, covering components, state, and props.", instructor: "Jane Doe", language: "Typescript", rating: 4.5, category: "Web Development" },
@@ -51,97 +52,134 @@ export function Home() {
     );
 
   return (
+    
+      <div>
+        <Navbar />
+          <Container>
+            {/* Buscar y filtrar */}
+            <div className="my-4">
+              <InputGroup className="mb-3">
+                <InputGroup.Text>
+                  <Search size={20} />
+                </InputGroup.Text>
+                <FormControl
+                  placeholder="Search courses..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </InputGroup>
+        
 
-    <Container>
-      <Navbar />
-        {/* Buscar y filtrar */}
-        <div className="my-4">
-        <InputGroup className="mb-3">
-            <InputGroup.Text>
-            <Search size={20} />
-            </InputGroup.Text>
-            <FormControl
-            placeholder="Search courses..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            />
-        </InputGroup>
-
-        <div className="d-flex align-items-center mb-3">
+          <div className="d-flex align-items-center mb-3">
             {/* Dropdown para filtrar */}
             <Dropdown className="me-2">
-            <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+              <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
                 <Filter size={20} /> {selectedCategory} <ChevronDown size={20} />
-            </Dropdown.Toggle>
+              </Dropdown.Toggle>
 
-            <Dropdown.Menu>
+              <Dropdown.Menu>
                 {categories.map((category) => (
-                <Dropdown.Item key={category} onClick={() => setSelectedCategory(category)}>
+                  <Dropdown.Item key={category} onClick={() => setSelectedCategory(category)}>
                     {category}
-                </Dropdown.Item>
+                  </Dropdown.Item>
                 ))}
-            </Dropdown.Menu>
+              </Dropdown.Menu>
             </Dropdown>
-
+            
             <Button
-            variant="outline-secondary"
-            onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+              variant="outline-secondary"
+              onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
             >
-            Sort {sortOrder === "asc" ? "A-Z" : "Z-A"}
+              Sort {sortOrder === "asc" ? "A-Z" : "Z-A"}
             </Button>
+          </div>
         </div>
-        </div>
+        
+  
+        {/* Listado de cursos */}
+        <Row>
+          {filteredAndSortedCourses.map((course) => (
+            <Col key={course.id} xs={12} md={4} className="mb-4">
+              <Card>
+                <Card.Body>
+                  <Card.Title>{course.title}</Card.Title>
+                  <Card.Text>{course.subtitle}</Card.Text>
+                  <Card.Text>Categoría: {course.category}</Card.Text>
+                  <Card.Text>Profesor: {course.instructor}</Card.Text>
+                  <Card.Text>Lenguaje: {course.language}</Card.Text>
+                  <Card.Text>Calificación: {course.rating.toFixed(1)}</Card.Text>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setSelectedCourse(course);
+                      setShowModal(true);
+                    }}
+                  >
+                    Ver Detalles
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
 
-      {/* Listado de cursos */}
-      <Row>
-        {filteredAndSortedCourses.map((course) => (
-          <Col key={course.id} xs={12} md={4} className="mb-4">
-            <Card>
-              <Card.Body>
-                <Card.Title>{course.title}</Card.Title>
-                <Card.Text>{course.subtitle}</Card.Text>
-                <Card.Text>Categoría: {course.category}</Card.Text>
-                <Card.Text>Profesor: {course.instructor}</Card.Text>
-                <Card.Text>Lenguaje: {course.language}</Card.Text>
-                <Card.Text>Calificación: {course.rating.toFixed(1)}</Card.Text>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    setSelectedCourse(course);
-                    setShowModal(true);
-                  }}
-                >
-                  Ver Detalles
-                </Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+        {/* Detalle de los cursos */}
+        {selectedCourse && (
+          <Modal show={showModal} onHide={() => setShowModal(false)}>
+            <Modal.Header closeButton>
+              <Modal.Title>{selectedCourse.title}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p><strong>Categoría:</strong> {selectedCourse.category}</p>
+              <p><strong>Descripción:</strong> {selectedCourse.description}</p>
+              <p><strong>Profesor:</strong> {selectedCourse.instructor}</p>
+              <p><strong>Lenguaje:</strong> {selectedCourse.language}</p>
+              <p><strong>Calificación:</strong> {selectedCourse.rating.toFixed(1)} / 5</p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={() => setShowModal(false)}>
+                Cerrar
+              </Button>
+              <Button variant="primary" onClick={() => setShowLoginPrompt(true)}>
+                Comprar
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        )}
 
-      {/* Detalle de los cursos */}
-      {selectedCourse && (
-        <Modal show={showModal} onHide={() => setShowModal(false)}>
+        {/* Modal de inicio de sesión/invitado */}
+        <Modal show={showLoginPrompt} onHide={() => setShowLoginPrompt(false)}>
           <Modal.Header closeButton>
-            <Modal.Title>{selectedCourse.title}</Modal.Title>
+            <Modal.Title>Iniciar Sesión o Continuar como Invitado</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p><strong>Categoría:</strong> {selectedCourse.category}</p>
-            <p><strong>Descripción:</strong> {selectedCourse.description}</p>
-            <p><strong>Profesor:</strong> {selectedCourse.instructor}</p>
-            <p><strong>Lenguaje:</strong> {selectedCourse.language}</p>
-            <p><strong>Calificación:</strong> {selectedCourse.rating.toFixed(1)} / 5</p>
+            <p>¿Quieres iniciar sesión o continuar como invitado?</p>
+            <Button variant="secondary" onClick={() => history.push('/auth/login')}>
+              Iniciar Sesión
+            </Button>
+            <div className="mt-3">
+              <strong>O ingresa tu correo como invitado:</strong>
+              <FormControl
+                type="email"
+                placeholder="email@example.com"
+                className="mt-2"
+              />
+              <Button variant="primary" className="mt-2" onClick={() => alert("Curso enviado al correo.")}>
+                Enviar
+              </Button>
+            </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setShowModal(false)}>
+            <Button variant="secondary" onClick={() => setShowLoginPrompt(false)}>
               Cerrar
-            </Button>
-            <Button variant="primary" onClick={() => alert(`Enrolled in ${selectedCourse.title}`)}>
-              Comprar
             </Button>
           </Modal.Footer>
         </Modal>
-      )}
-    </Container>
+
+
+
+      </Container>
+
+      </div>
   );
 }

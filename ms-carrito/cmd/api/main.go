@@ -6,13 +6,15 @@ import (
 	"carrito/internal/repository"
 	"carrito/internal/service"
 	"carrito/internal/utils"
+	"carrito/rabbit"
 
 	//carritovalidate "carrito/rabbit/carrito_validate"
-	carritovalidate "carrito/rabbit/carrito_validate"
-	cursoscarrito "carrito/rabbit/cursos_carrito"
+
 	"net/http"
 	"time"
 
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -29,12 +31,23 @@ func main() {
 	cursoCarritoService, err := service.NewCursoCarritoServiceImpl(cursoCarritoRepository, validate)
 	utils.ErrorPanic(err)
 
-	go cursoscarrito.ConsumeCursosCarrito(cursoCarritoService)
-	carritovalidate.ConsumeCarritoValidate(carritoService, cursoCarritoService)
-
 	carritoController := controller.NewCarritoController(carritoService)
 	cursoCarritoController := controller.NewCursoCarritoController(cursoCarritoService, carritoService)
-	routes := CarritoRouter(carritoController, cursoCarritoController)
+
+	routes := gin.Default()
+	routes.Use(cors.Default()) // "*"
+	CarritoRouter(routes, carritoController, cursoCarritoController)
+
+	// CORS da problemas si se hace despues primero definir CORS y luego las rutas
+	/*
+		routes.Use(cors.New(cors.Config{
+			AllowOrigins:     []string{"http://localhost:3000"},
+			AllowMethods:     []string{"PUT", "GET", "POST", "DELETE"},
+			AllowHeaders:     []string{"Origin"},
+			ExposeHeaders:    []string{"Content-Length"},
+			AllowCredentials: true,
+		}))
+	*/
 
 	server := &http.Server{
 		Addr:           ":8080",
@@ -43,6 +56,7 @@ func main() {
 		WriteTimeout:   10 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+	rabbit.InitConsumer(carritoService, cursoCarritoService)
 	err = server.ListenAndServe()
 	utils.ErrorPanic(err)
 }

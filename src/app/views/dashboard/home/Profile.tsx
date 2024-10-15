@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import './Profile.css';
+//import './Profile.css';
 
 export interface ProfileData {
     fullName: string;
@@ -43,12 +43,12 @@ export function Profile() {
     };
 
     return (
-        <Container className="profile-container mt-5">
+        <Container className= "mt-5">
             <Row className="justify-content-center">
-                <Col md={8}>
-                    <Card className="profile-card">
+                <Col md={12}>
+                    <Card className="p-6">
                         <Card.Body>
-                            <h2 className="text-center mb-4 profile-title">Perfil de Usuario</h2>
+                            <h2 className="text-center mb-4">Perfil de Usuario</h2>
                             <Form onSubmit={handleSubmit}>
                                 <Row className="mb-3">
                                     <Col>
@@ -60,7 +60,6 @@ export function Profile() {
                                                 value={profileData.name}
                                                 onChange={handleChange}
                                                 required
-                                                className="profile-input"
                                             />
                                         </Form.Group>
                                     </Col>
@@ -75,7 +74,7 @@ export function Profile() {
                                                 value={profileData.lastName}
                                                 onChange={handleChange}
                                                 required
-                                                className="profile-input"
+            
                                             />
                                         </Form.Group>
                                     </Col>
@@ -92,7 +91,7 @@ export function Profile() {
                                                 readOnly // Esto hace que el campo sea de solo lectura
                                                 style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Estilo visual
                                                 required
-                                                className="profile-input"
+                                                
                                             />
                                         </Form.Group>
                                     </Col>
@@ -107,7 +106,7 @@ export function Profile() {
                                                 value={profileData.id}
                                                 onChange={handleChange}
                                                 required
-                                                className="profile-input"
+                                                
                                             />
                                         </Form.Group>
                                     </Col>
@@ -122,14 +121,14 @@ export function Profile() {
                                                 value={profileData.phoneNumber}
                                                 onChange={handleChange}
                                                 required
-                                                className="profile-input"
+                                            
                                             />
                                         </Form.Group>
                                     </Col>
                                 </Row>
                                 <Row className="mb-3">
                                     <Col>
-                                        <Button type="submit" className="w-100 btn btn-primary profile-button">
+                                        <Button type="submit" className="w-100 btn btn-primary">
                                             Guardar Perfil
                                         </Button>
                                     </Col>
