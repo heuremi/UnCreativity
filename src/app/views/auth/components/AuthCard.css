@@ -1,10 +1,11 @@
 /* General container styling */
 .container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center;  
     padding: 2rem;
-    min-height: 100vh;
+    min-height: 100px;
     box-sizing: border-box;
   }
   

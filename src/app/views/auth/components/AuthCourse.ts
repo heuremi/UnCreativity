@@ -11,6 +11,7 @@ interface RegisterData {
   
 export class AuthCourse{
     public static async login(email: String, password: String): Promise<ApiResponse>{
+        console.log(`em: ${email}, pass: ${password}`)
         const query = `
             mutation {
                 login(
