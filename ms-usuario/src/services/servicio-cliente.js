@@ -17,6 +17,7 @@ export class ServicioCliente {
     };
 
     async findClienteByEmail(email) {
+        console.log("emial:", email)
         try {
             const cliente = await this.modeloCliente.findOne({ where: { email } });
         
@@ -32,7 +33,7 @@ export class ServicioCliente {
         throw error;
         }
     };
-
+ 
     async findAllClientes(filtros) {
         console.log(filtros);
         const condiciones = filtrarClientes(filtros);

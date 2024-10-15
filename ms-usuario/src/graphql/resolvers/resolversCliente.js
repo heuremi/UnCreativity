@@ -5,13 +5,11 @@ const servicioCliente = new ServicioCliente();
 export const resolversCliente = {
 
     clientes: async ({ filtro }) => {
-        console.log(filtro)
         return servicioCliente.findAllClientes(filtro);
     },
 
     cliente: async ({ email }) => {
-        console.log(email)
-        return servicioCliente.findClienteByEmail(email);
+        return servicioCliente.findClienteByEmail(email); 
     },
 
     createCliente: async ({ datosCliente }) => {
@@ -38,8 +36,11 @@ export const resolversCliente = {
     },
 
     login: async ({ email, clave}) => {
-        const usuario = servicioCliente.findClienteByEmail((u) => u.email === email);
-
+        console.log("email: ", email)
+        console.log("clave:", clave)
+        const usuario = await servicioCliente.findClienteByEmail(email);
+        console.log("us: ",usuario?.dataValues?.clave)
+        console.log(usuario?.dataValues?.email)
         if (!usuario) {
             console.log('Usuario no encontrado.');
             return false;
