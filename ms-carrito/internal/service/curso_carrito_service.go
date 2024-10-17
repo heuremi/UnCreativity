@@ -10,6 +10,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -124,6 +125,7 @@ func (c *CursoCarritoServiceImpl) FindAll() (cursoCarritos []response.CursoCarri
 func (c *CursoCarritoServiceImpl) FindByCarrito(carritoId int) (cursos []response.CursoResponse, err error) {
 	data, err := c.CursoCarritoRepository.FindByCarrito(carritoId)
 	if err != nil {
+		log.Printf("%s", err.Error())
 		return []response.CursoResponse{}, err
 	}
 

@@ -1,12 +1,16 @@
 package main
 
 import (
+	"carrito/docs"
 	"carrito/internal/controller"
 	"carrito/internal/db"
 	"carrito/internal/repository"
 	"carrito/internal/service"
 	"carrito/internal/utils"
 	"carrito/rabbit"
+
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	//carritovalidate "carrito/rabbit/carrito_validate"
 
@@ -36,6 +40,8 @@ func main() {
 
 	routes := gin.Default()
 	routes.Use(cors.Default()) // "*"
+	docs.SwaggerInfo.BasePath = ""
+	routes.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	CarritoRouter(routes, carritoController, cursoCarritoController)
 
 	// CORS da problemas si se hace despues primero definir CORS y luego las rutas
