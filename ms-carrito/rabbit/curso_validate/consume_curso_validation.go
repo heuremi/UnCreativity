@@ -73,7 +73,7 @@ func ConsumeCursoValidation(ch *amqp.Channel, ctx context.Context, correlationId
 				return data.Valid, nil
 			}
 		case <-ctx.Done():
-			return false, errors.New("timeout for RPC response")
+			return false, errors.New("timeout for RPC response, no se pudo validar en ms-curso")
 		}
 	}
 }

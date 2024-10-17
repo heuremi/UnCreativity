@@ -1,0 +1,418 @@
+definitions:
+  request.CreateCarritoRequest:
+    properties:
+      session_id:
+        type: string
+    required:
+    - session_id
+    type: object
+  request.CreateCursoCarritoRequest:
+    properties:
+      id_carrito:
+        type: integer
+      id_curso:
+        type: integer
+    required:
+    - id_carrito
+    - id_curso
+    type: object
+  request.DeleteCursoCarritoRequest:
+    properties:
+      id_carrito:
+        type: integer
+      id_curso:
+        type: integer
+    required:
+    - id_carrito
+    - id_curso
+    type: object
+  request.UpdateCarritoRequest:
+    properties:
+      carrito_id:
+        type: integer
+      session_id:
+        type: string
+    required:
+    - carrito_id
+    - session_id
+    type: object
+  response.CarritoCreateResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/request.CreateCarritoRequest'
+      status:
+        type: string
+    type: object
+  response.CarritoFindAllResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/response.CarritoResponse'
+        type: array
+      status:
+        type: string
+    type: object
+  response.CarritoFindbyResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/response.CarritoResponse'
+      status:
+        type: string
+    type: object
+  response.CarritoResponse:
+    properties:
+      carrito_id:
+        type: integer
+      session_id:
+        type: string
+    type: object
+  response.CarritoUpdateResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
+  response.CursoCarritoCreateResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/request.CreateCursoCarritoRequest'
+      status:
+        type: string
+    type: object
+  response.CursoCarritoDeleteAllResponse:
+    properties:
+      code:
+        type: integer
+      data: {}
+      status:
+        type: string
+    type: object
+  response.CursoCarritoDeleteOneResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/request.DeleteCursoCarritoRequest'
+      status:
+        type: string
+    type: object
+  response.CursoCarritoFindAllResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/response.CursoCarritoResponse'
+        type: array
+      status:
+        type: string
+    type: object
+  response.CursoCarritoFindbyResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        items:
+          $ref: '#/definitions/response.CursoResponse'
+        type: array
+      status:
+        type: string
+    type: object
+  response.CursoCarritoResponse:
+    properties:
+      id_carrito:
+        type: integer
+      id_curso:
+        type: integer
+    type: object
+  response.CursoResponse:
+    properties:
+      id_curso:
+        type: integer
+    type: object
+  response.ErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /carrito:
+    get:
+      consumes:
+      - application/json
+      description: get carritos
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CarritoFindAllResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Devuelve todos los carritos de la base de datos
+      tags:
+      - carritos
+    post:
+      consumes:
+      - application/json
+      description: Agrega un carrito a la base de datos
+      parameters:
+      - description: Carrito a crear
+        in: body
+        name: carrito
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateCarritoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CarritoCreateResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Crea un carrito
+      tags:
+      - carritos
+  /carrito/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Elimina un carrito a partir del ID
+      parameters:
+      - description: ID del carrito
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CarritoUpdateResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Elimina un carrito
+      tags:
+      - carritos
+    get:
+      consumes:
+      - application/json
+      description: Busca un carrito por ID
+      parameters:
+      - description: CARRITO ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CarritoFindbyResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Devuelve por ID un único carrito
+      tags:
+      - carritos
+    patch:
+      consumes:
+      - application/json
+      description: Actualiza un carrito ya existente
+      parameters:
+      - description: carrito a modificar
+        in: body
+        name: carrito
+        required: true
+        schema:
+          $ref: '#/definitions/request.UpdateCarritoRequest'
+      - description: ID del carrito
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CarritoUpdateResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Actualiza un carrito
+      tags:
+      - carritos
+  /carrito/{id}/cursos:
+    delete:
+      consumes:
+      - application/json
+      description: Agrega un curso a un carrito mediante body
+      parameters:
+      - description: CARRITO ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CursoCarritoDeleteAllResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Agrega un curso a un carrito
+      tags:
+      - carritos
+    get:
+      consumes:
+      - application/json
+      description: Busca cursos por id carrito
+      parameters:
+      - description: CARRITO ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CursoCarritoFindbyResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Devuelve los cursos que tiene un carrito por ID
+      tags:
+      - carritos
+  /carrito/cursos:
+    delete:
+      consumes:
+      - application/json
+      description: Para un carrito se eliminar un curso
+      parameters:
+      - description: Curso a eliminar de un carrito
+        in: body
+        name: curso-carrito
+        required: true
+        schema:
+          $ref: '#/definitions/request.DeleteCursoCarritoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CursoCarritoDeleteOneResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Elemina un curso de un carrito
+      tags:
+      - carritos
+    get:
+      consumes:
+      - application/json
+      description: get cursos para cada carrito
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CursoCarritoFindAllResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Devuelve para todos los carritos, los cursos que contiene
+      tags:
+      - carritos
+    post:
+      consumes:
+      - application/json
+      description: Agrega un curso a un carrito mediante body
+      parameters:
+      - description: Curso a agregar a un carrito
+        in: body
+        name: curso-carrito
+        required: true
+        schema:
+          $ref: '#/definitions/request.CreateCursoCarritoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.CursoCarritoCreateResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: Agrega un curso a un carrito
+      tags:
+      - carritos
+swagger: "2.0"

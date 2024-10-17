@@ -1,10 +1,20 @@
 package response
 
-type Response struct {
-	Code   int         `json:"code"`
-	Status string      `json:"status"`
-	Data   interface{} `json:"data,omitempty"`
+import "carrito/internal/request"
+
+type Response[T any] struct {
+	Code   int    `json:"code"`
+	Status string `json:"status"`
+	Data   T      `json:"data,omitempty"`
 }
+
+// Alias
+
+type CarritoFindAllResponse = Response[[]CarritoResponse]
+type CarritoFindbyResponse = Response[CarritoResponse]
+type CarritoCreateResponse = Response[request.CreateCarritoRequest]
+type CarritoUpdateResponse = Response[error]
+type CarritoDeleteResponse = Response[CarritoResponse]
 
 type ErrorResponse struct {
 	Code    int    `json:"code"`

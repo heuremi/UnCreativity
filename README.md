@@ -1,3 +1,8 @@
+# Instalar Rabbitmq
+### en este directorio escribir en la cmd (necesitan instalar docker):
+# `docker-compose up -d`
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
