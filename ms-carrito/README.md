@@ -4,7 +4,7 @@
 ## Dependencias del repositorio:
 ### Base de datos postgresql, en el inicio del proyecto ms-carrito/:
 ## `docker-compose up -d`
-### Instalar Rabbitmq parla comuniación entre microservicios.
+### Instalar Rabbitmq para la comuniación entre microservicios.
 
 # Para iniciar el microservicio, en el directorio principal ejecutar:
 
