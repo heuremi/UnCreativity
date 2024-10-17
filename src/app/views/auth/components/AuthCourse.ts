@@ -5,6 +5,8 @@ interface RegisterData {
     email: string;
     name: string;
     lastName: string;
+    rut: string,
+    phoneNumber: string,
     password1: string;
     password2: string;
 }

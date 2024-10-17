@@ -18,6 +18,8 @@ export const Register = () => {
           name: '',
           lastName: '',
           email: '',
+          rut: '',
+          phoneNumber: '',
           password1: '',
           password2: ''
         }}
@@ -30,6 +32,8 @@ export const Register = () => {
               name: values.name,
               lastName: values.lastName,
               email: values.email,
+              rut: values.rut,
+              phoneNumber: values.phoneNumber,
               password1: values.password1,
               password2: values.password2,
             });
@@ -57,6 +61,12 @@ export const Register = () => {
           email: Yup.string()
             .email('Revise el formato del correo')
             .required('Requerido'),
+          rut: Yup.string()
+            .min(9, 'El rut no coincide en caracteres')
+            .required('Requerido'),  
+          phoneNumber: Yup.string()
+            .min(8, 'Numero de telefono no existente')
+            .required('Requerido'),  
           password1: Yup.string()
             .min(6, 'Mínimo de 6 caracteres')
             .required('Requerido'),
@@ -70,6 +80,8 @@ export const Register = () => {
             <MyTextInput label="Nombre" name="name" placeholder="Nombre" />
             <MyTextInput label="Apellido" name="lastName" placeholder="Apellido" />
             <MyTextInput label="Correo" name="email" type="email" placeholder="ejemplo@correo.com" />
+            <MyTextInput label="Rut" name="rut" placeholder="9.999.999-9" />
+            <MyTextInput label="Telefono" name="phoneNumber" placeholder="9 99999999" />
             <MyTextInput label="Contraseña" name="password1" type="password" placeholder="*****" />
             <MyTextInput label="Confirmar contraseña" name="password2" type="password" placeholder="*****" />
 

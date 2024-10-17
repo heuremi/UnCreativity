@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
-import { Container, Row, Col, Card, Button, InputGroup, FormControl, Dropdown, Modal, Navbar } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Dropdown, Modal, FormControl } from 'react-bootstrap';
 import { Search, Filter, ChevronDown } from 'lucide-react';
 import './Home.css';
 import { useHistory } from 'react-router-dom';
+import { Navbar } from '../../auth/components/Navbar'; // Asegúrate de que la ruta sea correcta
 
 interface Course {
   id: number;
@@ -52,50 +52,32 @@ export function Home() {
     );
 
   return (
-    
-      <div>
-        <Navbar />
-          <Container>
-            {/* Buscar y filtrar */}
-            <div className="my-4">
-              <InputGroup className="mb-3">
-                <InputGroup.Text>
-                  <Search size={20} />
-                </InputGroup.Text>
-                <FormControl
-                  placeholder="Search courses..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </InputGroup>
-        
+    <div>
+      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Container>
+        <div className="d-flex align-items-center mb-3">
+          <Dropdown className="me-2">
+            <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+              <Filter size={20} /> {selectedCategory} <ChevronDown size={20} />
+            </Dropdown.Toggle>
 
-          <div className="d-flex align-items-center mb-3">
-            {/* Dropdown para filtrar */}
-            <Dropdown className="me-2">
-              <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
-                <Filter size={20} /> {selectedCategory} <ChevronDown size={20} />
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                {categories.map((category) => (
-                  <Dropdown.Item key={category} onClick={() => setSelectedCategory(category)}>
-                    {category}
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
-            
-            <Button
-              variant="outline-secondary"
-              onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
-            >
-              Sort {sortOrder === "asc" ? "A-Z" : "Z-A"}
-            </Button>
-          </div>
+            <Dropdown.Menu>
+              {categories.map((category) => (
+                <Dropdown.Item key={category} onClick={() => setSelectedCategory(category)}>
+                  {category}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          
+          <Button
+            variant="outline-secondary"
+            onClick={() => setSortOrder(sortOrder === "asc" ? "desc" : "asc")}
+          >
+            Sort {sortOrder === "asc" ? "A-Z" : "Z-A"}
+          </Button>
         </div>
-        
-  
+
         {/* Listado de cursos */}
         <Row>
           {filteredAndSortedCourses.map((course) => (
@@ -175,11 +157,7 @@ export function Home() {
             </Button>
           </Modal.Footer>
         </Modal>
-
-
-
       </Container>
-
-      </div>
+    </div>
   );
 }

@@ -12,7 +12,7 @@
 .search-bar {
     width: 100%;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 'auto';
 }
 
 .container h1 {
@@ -22,9 +22,25 @@
     font-weight: 700;
 }
 
+.card {
+    width: 300px; /* Establece un ancho fijo */
+    height: 400px; /* Establece una altura fija */
+    overflow: hidden; /* Oculta el contenido que exceda el tamaño */
+    display: flex; /* Usar flexbox para alinear el contenido */
+    flex-direction: column; /* Organizar el contenido en columnas */
+}
+
+.card-body {
+    flex-grow: 1; /* Permite que el cuerpo de la tarjeta ocupe el espacio restante */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; /* Asegura que los elementos se distribuyan adecuadamente */
+}
+
 .card-text {
+    flex-grow: 1; /* Permite que el texto ocupe el espacio disponible */
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Número de líneas antes de truncar */
+    -webkit-line-clamp: 3; /* Limita a 3 líneas */
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

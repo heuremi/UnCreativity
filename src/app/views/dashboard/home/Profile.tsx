@@ -7,7 +7,7 @@ export interface ProfileData {
     email: string;
     name: string;
     lastName: string;
-    id: string;
+    rut: string;
     phoneNumber: string;
 }
 
@@ -17,7 +17,7 @@ export function Profile() {
         email: '',
         name: '',
         lastName: '',
-        id: '',
+        rut: '',
         phoneNumber: ''
     });
 
@@ -102,8 +102,8 @@ export function Profile() {
                                             <Form.Label><strong>Rut</strong></Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="id"
-                                                value={profileData.id}
+                                                name="rut"
+                                                value={profileData.rut}
                                                 onChange={handleChange}
                                                 required
                                                 
