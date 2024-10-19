@@ -111,6 +111,10 @@ func (c *CarritoServiceImpl) FindBySessionId(sessionId string) (carrito response
 
 // Update implements CarritoService.
 func (c *CarritoServiceImpl) Update(carrito request.UpdateCarritoRequest) error {
+	err := c.Validate.Struct(carrito)
+	if err != nil {
+		return err
+	}
 	data, err := c.CarritoRepository.FindById(carrito.Id)
 
 	if err != nil {

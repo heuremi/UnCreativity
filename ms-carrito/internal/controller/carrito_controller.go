@@ -70,7 +70,7 @@ func (controller *CarritoController) FindById(ctx *gin.Context) {
 	data, err := controller.CarritoService.FindById(id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
-			Code:    404,
+			Code:    500,
 			Message: err.Error(),
 		})
 		return
