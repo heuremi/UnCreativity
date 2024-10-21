@@ -8,7 +8,7 @@ import { useContext } from "react";
 import { SessionProvider } from 'next-auth/react'; 
 import { Profile } from "../views/dashboard/home/Profile";
 import { Recover } from "../views/auth/login/Recover";
-import { EditProfile } from "../views/auth/login/EditProfile";
+
 
 
 interface Context{
@@ -33,8 +33,6 @@ export function AppRouter(){
                     <Route path='/auth/login' component={AuthRouter} />
                     <Route path ='/auth/register' component={Register} />
                     <Route path='/auth/recover' component={Recover} />
-                    <Route path="/EditProfile" component={EditProfile} />
-
                 
                      {(user?.loggedIn || user) && (
                         <>
@@ -42,9 +40,7 @@ export function AppRouter(){
                             <Container className="mb-4">
                                 <Route path='/dashboard/home' component={Home} />
                                 <Route path='/dashboard/profile' component={Profile} />
-                                
-
-                                </Container>
+                            </Container>
                         </>
                      )}        
                     <Redirect to="/" />

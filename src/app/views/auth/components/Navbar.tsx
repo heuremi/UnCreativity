@@ -1,6 +1,6 @@
 import { Button, Container, Nav, Navbar as NavbarBs, InputGroup, FormControl } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { Search } from 'lucide-react'; // Asegúrate de que esta importación sea correcta
+import { Search } from 'lucide-react'; 
 
 interface NavbarProps {
     searchTerm: string;

@@ -3,7 +3,7 @@ import { Container, Row, Col, Card, Button, Dropdown, Modal, FormControl } from 
 import { Search, Filter, ChevronDown } from 'lucide-react';
 import './Home.css';
 import { useHistory } from 'react-router-dom';
-import { Navbar } from '../../auth/components/Navbar'; // Asegúrate de que la ruta sea correcta
+import { Navbar } from '../../auth/components/Navbar';
 
 interface Course {
   id: number;

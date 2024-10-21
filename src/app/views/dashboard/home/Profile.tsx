@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-//import './Profile.css';
+import './Profile.css'; 
 
 export interface ProfileData {
     fullName: string;
@@ -24,11 +24,13 @@ export function Profile() {
     useEffect(() => {
         const savedProfile = localStorage.getItem('userProfile');
         if (savedProfile) {
-            setProfileData(JSON.parse(savedProfile));
+            const parsedProfile = JSON.parse(savedProfile);
+            console.log('Perfil guardado:', parsedProfile);
+            setProfileData(parsedProfile);
         }
     }, []);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setProfileData(prevState => ({
             ...prevState,
@@ -40,17 +42,18 @@ export function Profile() {
         e.preventDefault();
         console.log('Profile Data:', profileData);
         localStorage.setItem('userProfile', JSON.stringify(profileData));
+        alert('Perfil guardado con éxito');
     };
 
     return (
-        <Container className= "mt-5">
+        <Container className="profile-container-5">
             <Row className="justify-content-center">
-                <Col md={12}>
-                    <Card className="p-6">
+                <Col md={10}>
+                    <Card className="card-4">
                         <Card.Body>
-                            <h2 className="text-center mb-4">Perfil de Usuario</h2>
+                            <h2 className="text-center perfil-1">Perfil de Usuario</h2>
                             <Form onSubmit={handleSubmit}>
-                                <Row className="mb-3">
+                                <Row className="boxtext-1">
                                     <Col>
                                         <Form.Group>
                                             <Form.Label><strong>Nombre</strong></Form.Label>
@@ -63,8 +66,6 @@ export function Profile() {
                                             />
                                         </Form.Group>
                                     </Col>
-                                </Row>
-                                <Row className="mb-3">
                                     <Col>
                                         <Form.Group>
                                             <Form.Label><strong>Apellidos</strong></Form.Label>
@@ -74,29 +75,12 @@ export function Profile() {
                                                 value={profileData.lastName}
                                                 onChange={handleChange}
                                                 required
-            
                                             />
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                <Row className="mb-3">
-                                    <Col>
-                                        <Form.Group>
-                                            <Form.Label><strong>Correo Electrónico</strong></Form.Label>
-                                            <Form.Control
-                                                type="email"
-                                                name="email"
-                                                value={profileData.email}
-                                                onChange={handleChange}
-                                                readOnly // Esto hace que el campo sea de solo lectura
-                                                style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Estilo visual
-                                                required
-                                                
-                                            />
-                                        </Form.Group>
-                                    </Col>
-                                </Row>
-                                <Row className="mb-3">
+
+                                <Row className="boxtext-1">
                                     <Col>
                                         <Form.Group>
                                             <Form.Label><strong>Rut</strong></Form.Label>
@@ -106,12 +90,9 @@ export function Profile() {
                                                 value={profileData.rut}
                                                 onChange={handleChange}
                                                 required
-                                                
                                             />
                                         </Form.Group>
                                     </Col>
-                                </Row>
-                                <Row className="mb-3">
                                     <Col>
                                         <Form.Group>
                                             <Form.Label><strong>Teléfono</strong></Form.Label>
@@ -121,15 +102,30 @@ export function Profile() {
                                                 value={profileData.phoneNumber}
                                                 onChange={handleChange}
                                                 required
-                                            
                                             />
                                         </Form.Group>
                                     </Col>
                                 </Row>
-                                <Row className="mb-3">
+
+                                <Row className="boxtext-1">
+                                    <Col>
+                                        <Form.Group>
+                                            <Form.Label><strong>Email</strong></Form.Label>
+                                            <Form.Control
+                                                type="email"
+                                                name="email"
+                                                value={profileData.email}
+                                                onChange={handleChange}
+                                                required
+                                            />
+                                        </Form.Group>
+                                    </Col>
+                                </Row>
+
+                                <Row className="boxtext-1">
                                     <Col>
                                         <Button type="submit" className="w-100 btn btn-primary">
-                                            Guardar Perfil
+                                            Editar Perfil
                                         </Button>
                                     </Col>
                                 </Row>
