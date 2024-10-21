@@ -7,7 +7,7 @@ export interface ProfileData {
     email: string;
     name: string;
     lastName: string;
-    rut: string;
+    password: string;
     phoneNumber: string;
 }
 
@@ -17,7 +17,7 @@ export function Profile() {
         email: '',
         name: '',
         lastName: '',
-        rut: '',
+        password: '', 
         phoneNumber: ''
     });
 
@@ -83,11 +83,11 @@ export function Profile() {
                                 <Row className="boxtext-1">
                                     <Col>
                                         <Form.Group>
-                                            <Form.Label><strong>Rut</strong></Form.Label>
+                                            <Form.Label><strong>Contraseña</strong></Form.Label> 
                                             <Form.Control
-                                                type="text"
-                                                name="rut"
-                                                value={profileData.rut}
+                                                type="password" 
+                                                name="password" 
+                                                value={profileData.password}
                                                 onChange={handleChange}
                                                 required
                                             />
