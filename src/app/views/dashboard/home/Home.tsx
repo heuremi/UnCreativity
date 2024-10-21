@@ -5,15 +5,17 @@ import './Home.css';
 import { useHistory } from 'react-router-dom';
 import { Navbar } from '../../auth/components/Navbar';
 
-interface Course {
+interface Curso {
   id: number;
-  title: string;
-  subtitle: string;
-  description: string;
-  instructor: string;
-  language: string;
-  rating: number;
-  category: string;
+  titulo: string;
+  subtitulo: string;
+  descripcion: string;
+  calificacion: number;
+  autor: string;
+  idioma: string;
+  categorias: string[];
+  precio: number;
+  imagenUrl: string;
 }
 
 export function Home() {
@@ -21,34 +23,34 @@ export function Home() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("asc");
   const [showModal, setShowModal] = useState(false);
-  const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
+  const [selectedCourse, setSelectedCourse] = useState<Curso | null>(null);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const history = useHistory();
 
-  const courses: Course[] = [
-    { id: 1, title: "Introduction to React", subtitle: "Learn React Basics", description: "A comprehensive introduction to React, covering components, state, and props.", instructor: "Jane Doe", language: "Typescript", rating: 4.5, category: "Web Development" },
-    { id: 2, title: "Advanced JavaScript", subtitle: "Master JS Concepts", description: "Dive deep into JavaScript, exploring advanced topics like closures, prototypes, and async programming.", instructor: "John Smith", language: "Javascript", rating: 4.8, category: "Programming" },
-    { id: 3, title: "UX Design Fundamentals", subtitle: "Create Intuitive Interfaces", description: "Learn the principles of user experience design and how to create user-friendly interfaces.", instructor: "Alice Johnson", language: "C++", rating: 4.2, category: "Design" },
-    { id: 4, title: "Data Science Basics", subtitle: "Start Your Data Journey", description: "An introduction to data science, covering statistics, Python, and basic machine learning concepts.", instructor: "Bob Williams", language: "R", rating: 4.6, category: "Data Science" },
-    { id: 5, title: "Mobile App Development", subtitle: "Build iOS and Android Apps", description: "Learn to develop mobile applications for both iOS and Android platforms using React Native.", instructor: "Charlie Brown", language: "Typescript", rating: 4.7, category: "Mobile Development" },
-    { id: 6, title: "Python for Beginners", subtitle: "Python Programming 101", description: "Start your programming journey with Python, covering basic syntax, data structures, and simple algorithms.", instructor: "Eva Green", language: "Python", rating: 4.4, category: "Programming" },
+  const cursos: Curso[] = [
+    { id: 1, titulo: "Introduction to React", subtitulo: "Learn React Basics", descripcion: "A comprehensive introduction to React, covering components, state, and props.", autor: "Jane Doe", idioma: "Typescript", calificacion: 4.5, categorias: ["Informática", "Programación", "Python"], precio: 30, imagenUrl: "ala" },
+    { id: 2, titulo: "Advanced JavaScript", subtitulo: "Master JS Concepts", descripcion: "Dive deep into JavaScript, exploring advanced topics like closures, prototypes, and async programming.", autor: "John Smith", idioma: "Javascript", calificacion: 4.8, categorias: ["Programming"], precio: 30, imagenUrl: "ala" },
+    { id: 3, titulo: "UX Design Fundamentals", subtitulo: "Create Intuitive Interfaces", descripcion: "Learn the principles of user experience design and how to create user-friendly interfaces.", autor: "Alice Johnson", idioma: "C++", calificacion: 4.2, categorias: ["Design"], precio: 30, imagenUrl: "ala" },
+    { id: 4, titulo: "Data Science Basics", subtitulo: "Start Your Data Journey", descripcion: "An introduction to data science, covering statistics, Python, and basic machine learning concepts.", autor: "Bob Williams", idioma: "R", calificacion: 4.6, categorias: ["Data Science"], precio: 30, imagenUrl: "ala" },
+    { id: 5, titulo: "Mobile App Development", subtitulo: "Build iOS and Android Apps", descripcion: "Learn to develop mobile applications for both iOS and Android platforms using React Native.", autor: "Charlie Brown", idioma: "Typescript", calificacion: 4.7, categorias: ["Mobile Development"], precio: 30, imagenUrl: "ala" },
+    { id: 6, titulo: "Python for Beginners", subtitulo: "Python Programming 101", descripcion: "Start your programming journey with Python, covering basic syntax, data structures, and simple algorithms.", autor: "Eva Green", idioma: "Python", calificacion: 4.4, categorias: ["Programming"], precio: 30, imagenUrl: "ala" },
   ];
 
-  const categories = ["All", "Web Development", "Programming", "Design", "Data Science", "Mobile Development"];
+  const localCategorias = ["All"];
 
-  const filteredAndSortedCourses = courses
+  const filteredAndSortedCourses = cursos
     .filter(course => {
-      const matchesSearchTerm = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.subtitle.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearchTerm = course.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.subtitulo.toLowerCase().includes(searchTerm.toLowerCase());
 
-      const matchesCategory = selectedCategory === "All" || course.category === selectedCategory;
+      const matchesCategory = selectedCategory === "All" || course.categorias.includes(selectedCategory); //probando
 
       return matchesSearchTerm && matchesCategory;
     })
     .sort((a, b) =>
       sortOrder === "asc"
-        ? a.title.localeCompare(b.title)
-        : b.title.localeCompare(a.title)
+        ? a.titulo.localeCompare(b.titulo)
+        : b.titulo.localeCompare(a.titulo)
     );
 
   return (
@@ -62,9 +64,9 @@ export function Home() {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
-              {categories.map((category) => (
-                <Dropdown.Item key={category} onClick={() => setSelectedCategory(category)}>
-                  {category}
+              {localCategorias.map((categorias) => (
+                <Dropdown.Item key={categorias} onClick={() => setSelectedCategory(categorias)}>
+                  {categorias}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
@@ -84,12 +86,12 @@ export function Home() {
             <Col key={course.id} xs={12} md={4} className="mb-4">
               <Card>
                 <Card.Body>
-                  <Card.Title>{course.title}</Card.Title>
-                  <Card.Text>{course.subtitle}</Card.Text>
-                  <Card.Text>Categoría: {course.category}</Card.Text>
-                  <Card.Text>Profesor: {course.instructor}</Card.Text>
-                  <Card.Text>Lenguaje: {course.language}</Card.Text>
-                  <Card.Text>Calificación: {course.rating.toFixed(1)}</Card.Text>
+                  <Card.Title>{course.titulo}</Card.Title>
+                  <Card.Text>{course.subtitulo}</Card.Text>
+                  <Card.Text>Categoría: {course.categorias.join(", ")}</Card.Text>
+                  <Card.Text>Autor: {course.autor}</Card.Text>
+                  <Card.Text>Idioma: {course.idioma}</Card.Text>
+                  <Card.Text>Calificación: {course.calificacion.toFixed(1)}</Card.Text>
                   <Button
                     variant="primary"
                     onClick={() => {
@@ -109,21 +111,21 @@ export function Home() {
         {selectedCourse && (
           <Modal show={showModal} onHide={() => setShowModal(false)}>
             <Modal.Header closeButton>
-              <Modal.Title>{selectedCourse.title}</Modal.Title>
+              <Modal.Title>{selectedCourse.titulo}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p><strong>Categoría:</strong> {selectedCourse.category}</p>
-              <p><strong>Descripción:</strong> {selectedCourse.description}</p>
-              <p><strong>Profesor:</strong> {selectedCourse.instructor}</p>
-              <p><strong>Lenguaje:</strong> {selectedCourse.language}</p>
-              <p><strong>Calificación:</strong> {selectedCourse.rating.toFixed(1)} / 5</p>
+              <p><strong>Categoría:</strong> {selectedCourse.categorias}</p>
+              <p><strong>Descripción:</strong> {selectedCourse.descripcion}</p>
+              <p><strong>Autor:</strong> {selectedCourse.autor}</p>
+              <p><strong>Idioma:</strong> {selectedCourse.idioma}</p>
+              <p><strong>Calificación:</strong> {selectedCourse.calificacion.toFixed(1)} / 5</p>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={() => setShowModal(false)}>
                 Cerrar
               </Button>
               <Button variant="primary" onClick={() => setShowLoginPrompt(true)}>
-                Comprar
+                Agregar al carrito
               </Button>
             </Modal.Footer>
           </Modal>
