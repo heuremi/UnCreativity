@@ -33,7 +33,7 @@ axios({
         }
     }
 }).then((res) => {
-    console.log(res)
+    console.log(res.status)
 }).catch((err) => {
-
+    console.log(err.message)
 });

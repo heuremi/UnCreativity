@@ -1,13 +1,17 @@
 
 import { consumeCursoValidation } from "./consume/consume_curso_validation.js";
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 
 export default async function InitializeConsumers() {
-
+    
     try {
-        consumeCursoValidation()
+        await consumeCursoValidation()
     } catch(error) {
-        console.log("Error")
+        console.log(error.message)
     }
+
 } 

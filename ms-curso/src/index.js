@@ -6,6 +6,6 @@ const port = 3001
 
 app.listen(port, async () => {
     await initializeDataBase()
+    await InitializeConsumers()
     console.log(`Servicio de curso se esta escuchando en: http://localhost:${port}`)
-    //InitializeConsumers()
 })
