@@ -2,7 +2,7 @@ import { connection } from '../config/index.js'
 
 import { DataTypes } from 'sequelize'
 
-const Curso = connection.define('curso', {
+const Curso = connection.define('cursos', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
