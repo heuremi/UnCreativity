@@ -115,9 +115,9 @@ export function Home() {
                 <Card.Body>
                   <Card.Title>{course.titulo}</Card.Title>
                   <Card.Text>{course.subtitulo}</Card.Text>
-                  <Card.Text>Categoría: {course.categorias.join(", ")}</Card.Text>
+                  <Card.Text>Categorías: {course.categorias.join(", ")}</Card.Text>
                   <Card.Text>Autor: {course.autor}</Card.Text>
-                  <Card.Text>Idioma: {course.idioma}</Card.Text>
+                  <Card.Text>Lenguaje: {course.idioma}</Card.Text>
                   <Card.Text>Calificación: {course.calificacion.toFixed(1)}</Card.Text>
                   <Button
                     variant="primary"
@@ -141,10 +141,10 @@ export function Home() {
               <Modal.Title>{selectedCourse.titulo}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p><strong>Categoría:</strong> {selectedCourse.categorias}</p>
+              <p><strong>Categorías:</strong> {selectedCourse.categorias.join(", ")}</p>
               <p><strong>Descripción:</strong> {selectedCourse.descripcion}</p>
               <p><strong>Autor:</strong> {selectedCourse.autor}</p>
-              <p><strong>Idioma:</strong> {selectedCourse.idioma}</p>
+              <p><strong>Lenguaje:</strong> {selectedCourse.idioma}</p>
               <p><strong>Calificación:</strong> {selectedCourse.calificacion.toFixed(1)} / 5</p>
             </Modal.Body>
             <Modal.Footer>
