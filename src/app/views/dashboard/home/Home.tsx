@@ -54,15 +54,6 @@ export function Home() {
   const [selectedCourse, setSelectedCourse] = useState<Curso | null>(null);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const history = useHistory();
-
-  /* const cursos: Curso[] = [
-    { id: 1, titulo: "Introduction to React", subtitulo: "Learn React Basics", descripcion: "A comprehensive introduction to React, covering components, state, and props.", autor: "Jane Doe", idioma: "Typescript", calificacion: 4.5, categorias: ["Informática", "Programación", "Python"], precio: 30, imagenUrl: "ala" },
-    { id: 2, titulo: "Advanced JavaScript", subtitulo: "Master JS Concepts", descripcion: "Dive deep into JavaScript, exploring advanced topics like closures, prototypes, and async programming.", autor: "John Smith", idioma: "Javascript", calificacion: 4.8, categorias: ["Programming"], precio: 30, imagenUrl: "ala" },
-    { id: 3, titulo: "UX Design Fundamentals", subtitulo: "Create Intuitive Interfaces", descripcion: "Learn the principles of user experience design and how to create user-friendly interfaces.", autor: "Alice Johnson", idioma: "C++", calificacion: 4.2, categorias: ["Design"], precio: 30, imagenUrl: "ala" },
-    { id: 4, titulo: "Data Science Basics", subtitulo: "Start Your Data Journey", descripcion: "An introduction to data science, covering statistics, Python, and basic machine learning concepts.", autor: "Bob Williams", idioma: "R", calificacion: 4.6, categorias: ["Data Science"], precio: 30, imagenUrl: "ala" },
-    { id: 5, titulo: "Mobile App Development", subtitulo: "Build iOS and Android Apps", descripcion: "Learn to develop mobile applications for both iOS and Android platforms using React Native.", autor: "Charlie Brown", idioma: "Typescript", calificacion: 4.7, categorias: ["Mobile Development"], precio: 30, imagenUrl: "ala" },
-    { id: 6, titulo: "Python for Beginners", subtitulo: "Python Programming 101", descripcion: "Start your programming journey with Python, covering basic syntax, data structures, and simple algorithms.", autor: "Eva Green", idioma: "Python", calificacion: 4.4, categorias: ["Programming"], precio: 30, imagenUrl: "ala" },
-  ]; */
   const [cursos, setCursos] = useState<Curso[]>([]);
   const localCategorias = ["All"];
 
@@ -78,7 +69,6 @@ export function Home() {
     .filter(course => {
       const matchesSearchTerm = course.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.subtitulo.toLowerCase().includes(searchTerm.toLowerCase());
-        getCursos();
 
       const matchesCategory = selectedCategory === "All" || course.categorias.includes(selectedCategory); //probando
 
