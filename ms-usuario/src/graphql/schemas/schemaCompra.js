@@ -4,28 +4,27 @@ export const schemaCompra = buildSchema(`
     
     type Compra {
         id: ID
-        emailCliente: String!
+        clienteId: ID!
         cursoId: ID!
         fecha: String!
     }
 
     input SearchCompraInput {
         id: ID
-        emailCliente: String
+        clienteId: ID
         cursoId: ID
         fecha: String
     }
 
     input CompraInput {
-        id: Int
-        emailCliente: String!
+        clienteId: ID!
         cursoId: ID!
         fecha: String!
     }
         
     input UpdateCompraInput {
-        id: Int!
-        emailCliente: String
+        id: ID!
+        clienteId: ID
         cursoId: ID
         fecha: String
     }
@@ -38,7 +37,7 @@ export const schemaCompra = buildSchema(`
     type Mutation {
         createCompra(datosCompra: CompraInput!): Compra
         updateCompra(datosActualizarCompra: UpdateCompraInput): Compra
-        deleteCompra(id: ID!): Compra
+        deleteCompra(id: ID!): Boolean
 
     }
 `);

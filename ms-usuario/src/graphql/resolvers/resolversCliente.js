@@ -8,50 +8,48 @@ export const resolversCliente = {
         return servicioCliente.findAllClientes(filtro);
     },
 
-    cliente: async ({ email }) => {
+    clienteByEmail: async ({ email }) => {
         return servicioCliente.findClienteByEmail(email); 
+    },
+
+    clienteById: async ({ id }) => {
+        return servicioCliente.findClienteById(id);
     },
 
     createCliente: async ({ datosCliente }) => {
         console.log(datosCliente)
-        return servicioCliente.createCliente(
-            datosCliente.email, 
-            datosCliente.nombre, 
-            datosCliente.apellido, 
-            datosCliente.rut, 
-            datosCliente.telefono, 
-            datosCliente.admin_S, 
-            datosCliente.clave
-        );
+        return servicioCliente.createCliente(datosCliente);
     },
 
     updateCliente: async ({ updateCliente }) => {
-        console.log(updateCliente)
         return servicioCliente.updateCliente(updateCliente);
     },
 
-    deleteCliente: async ({ email }) => {
-        console.log(email)
-        return servicioCliente.deleteCliente(email);
+    deleteCliente: async ({ id }) => {
+        console.log(id)
+        return servicioCliente.deleteCliente(id);
     },
 
     login: async ({ email, clave}) => {
-        console.log("email: ", email)
-        console.log("clave:", clave)
         const usuario = await servicioCliente.findClienteByEmail(email);
-        console.log("us: ",usuario?.dataValues?.clave)
-        console.log(usuario?.dataValues?.email)
         if (!usuario) {
             console.log('Usuario no encontrado.');
-            return false;
+            return {
+                success: false,
+                id: '',
+            };
         }
-
         if (usuario.clave !== clave) {
             console.log('Contraseña incorrecta.');
-            return false;
+            return {
+                success: false,
+                id: usuario.id,
+            };
         }
-
-        return true;
+        return {
+            success: true,
+            id: usuario.id,
+        };
     },
 };
 

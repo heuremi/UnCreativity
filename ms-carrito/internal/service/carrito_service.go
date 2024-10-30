@@ -45,7 +45,7 @@ func (c *CarritoServiceImpl) Create(carrito request.CreateCarritoRequest) (err e
 	}
 
 	modelo := model.Carrito{
-		SessionId: carrito.SessionId,
+		UsuarioId: carrito.UsuarioId,
 	}
 	err = c.CarritoRepository.Save(modelo)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *CarritoServiceImpl) FindAll() (carritos []response.CarritoResponse, err
 	for _, value := range result {
 		carrito := response.CarritoResponse{
 			Id:        value.Id,
-			SessionId: value.SessionId,
+			UsuarioId: value.UsuarioId,
 		}
 		carritos = append(carritos, carrito)
 	}
@@ -91,7 +91,7 @@ func (c *CarritoServiceImpl) FindById(carritoId int) (carrito response.CarritoRe
 
 	res := response.CarritoResponse{
 		Id:        data.Id,
-		SessionId: data.SessionId,
+		UsuarioId: data.UsuarioId,
 	}
 	return res, nil
 }
@@ -104,7 +104,7 @@ func (c *CarritoServiceImpl) FindBySessionId(sessionId string) (carrito response
 
 	res := response.CarritoResponse{
 		Id:        data.Id,
-		SessionId: data.SessionId,
+		UsuarioId: data.UsuarioId,
 	}
 	return res, nil
 }
@@ -121,7 +121,7 @@ func (c *CarritoServiceImpl) Update(carrito request.UpdateCarritoRequest) error 
 		return err
 	}
 
-	data.SessionId = carrito.SessionId
+	data.UsuarioId = carrito.UsuarioId
 	c.CarritoRepository.Update(data)
 	return nil
 }

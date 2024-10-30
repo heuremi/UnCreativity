@@ -64,7 +64,7 @@ func (c *CarritoRepositoryImpl) Save(carrito model.Carrito) error {
 func (c *CarritoRepositoryImpl) Update(carrito model.Carrito) error {
 	var data = model.Carrito{
 		Id:        carrito.Id,
-		SessionId: carrito.SessionId,
+		UsuarioId: carrito.UsuarioId,
 	}
 
 	result := c.Db.Model(&carrito).Updates(data)

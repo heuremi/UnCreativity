@@ -22,6 +22,6 @@ type ErrorResponse struct {
 }
 
 type CarritoResponse struct {
-	Id        int    `json:"carrito_id"`
-	SessionId string `json:"session_id"`
+	Id        int `json:"carrito_id"`
+	UsuarioId int `json:"usuario_id"`
 }

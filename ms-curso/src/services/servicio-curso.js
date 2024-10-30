@@ -13,7 +13,8 @@ export class ServicioCurso {
             return curso
         } catch (error) {
             if (error instanceof Sequelize.ValidationError) {
-                throw new Error(`Error de Validación: ${error.message}`)
+                const detallesErrores = error.errors.map((e) => e.message).join(", ");
+                throw new Error(`Error de validación al crear el cliente: ${detallesErrores}`);
             } else if ( error instanceof Sequelize.DatabaseError) {
                 throw new Error(`Error con la base de datos: ${error.nessage}`)
             } else {
