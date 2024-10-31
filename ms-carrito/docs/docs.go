@@ -42,44 +42,6 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "post": {
-                "description": "Agrega un carrito a la base de datos",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "carritos"
-                ],
-                "summary": "Crea un carrito",
-                "parameters": [
-                    {
-                        "description": "Carrito a crear",
-                        "name": "carrito",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CreateCarritoRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.CarritoCreateResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResponse"
-                        }
-                    }
-                }
             }
         },
         "/carrito/cursos": {
@@ -100,94 +62,6 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/response.CursoCarritoFindAllResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Agrega un curso a un carrito mediante body",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "carritos"
-                ],
-                "summary": "Agrega un curso a un carrito",
-                "parameters": [
-                    {
-                        "description": "Curso a agregar a un carrito",
-                        "name": "curso-carrito",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.CreateCursoCarritoRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.CursoCarritoCreateResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResponse"
-                        }
-                    },
-                    "409": {
-                        "description": "Conflict",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResponse"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResponse"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Para un carrito se eliminar un curso",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "carritos"
-                ],
-                "summary": "Elemina un curso de un carrito",
-                "parameters": [
-                    {
-                        "description": "Curso a eliminar de un carrito",
-                        "name": "curso-carrito",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.DeleteCursoCarritoRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/response.CursoCarritoDeleteOneResponse"
                         }
                     },
                     "500": {
@@ -241,24 +115,23 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
-            "delete": {
-                "description": "Elimina un carrito a partir del ID",
-                "consumes": [
-                    "application/json"
-                ],
+            }
+        },
+        "/cliente/{cliente_id}/carrito": {
+            "post": {
+                "description": "Agrega un carrito a la base de datos",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "carritos"
                 ],
-                "summary": "Elimina un carrito",
+                "summary": "Crea un carrito",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "ID del carrito",
-                        "name": "id",
+                        "description": "id cliente",
+                        "name": "cliente_id",
                         "in": "path",
                         "required": true
                     }
@@ -267,13 +140,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/response.CarritoUpdateResponse"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/response.ErrorResponse"
+                            "$ref": "#/definitions/response.CarritoCreateResponse"
                         }
                     },
                     "500": {
@@ -284,32 +151,20 @@ const docTemplate = `{
                     }
                 }
             },
-            "patch": {
-                "description": "Actualiza un carrito ya existente",
-                "consumes": [
-                    "application/json"
-                ],
+            "delete": {
+                "description": "Elimina un carrito a partir del ID del cliente",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "carritos"
                 ],
-                "summary": "Actualiza un carrito",
+                "summary": "Elimina un carrito",
                 "parameters": [
                     {
-                        "description": "carrito a modificar",
-                        "name": "carrito",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/request.UpdateCarritoRequest"
-                        }
-                    },
-                    {
                         "type": "integer",
-                        "description": "ID del carrito",
-                        "name": "id",
+                        "description": "ID del cliente",
+                        "name": "cliente_id",
                         "in": "path",
                         "required": true
                     }
@@ -336,24 +191,21 @@ const docTemplate = `{
                 }
             }
         },
-        "/carrito/{id}/cursos": {
+        "/cliente/{cliente_id}/carrito/curso": {
             "get": {
-                "description": "Busca cursos por id carrito",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Busca cursos por cliente id",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
                     "carritos"
                 ],
-                "summary": "Devuelve los cursos que tiene un carrito por ID",
+                "summary": "Devuelve los cursos que tiene un carrito por cliente ID",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "CARRITO ID",
-                        "name": "id",
+                        "description": "CLIENTE ID",
+                        "name": "cliente_id",
                         "in": "path",
                         "required": true
                     }
@@ -365,6 +217,12 @@ const docTemplate = `{
                             "$ref": "#/definitions/response.CursoCarritoFindbyResponse"
                         }
                     },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorResponse"
+                        }
+                    },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
@@ -372,24 +230,23 @@ const docTemplate = `{
                         }
                     }
                 }
-            },
+            }
+        },
+        "/cliente/{cliente_id}/carrito/curso/all": {
             "delete": {
-                "description": "Agrega un curso a un carrito mediante body",
-                "consumes": [
-                    "application/json"
-                ],
+                "description": "Elimina todos los cursos de un cliente",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "carritos"
+                    "cliente"
                 ],
-                "summary": "Agrega un curso a un carrito",
+                "summary": "Elimina todos los cursos a partir del id cliente",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "CARRITO ID",
-                        "name": "id",
+                        "description": "Cliente ID",
+                        "name": "cliente_id",
                         "in": "path",
                         "required": true
                     }
@@ -415,31 +272,117 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/cliente/{cliente_id}/carrito/curso/{curso_id}": {
+            "post": {
+                "description": "Agrega un curso a un carrito mediante body",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "carritos"
+                ],
+                "summary": "Agrega un curso a un carrito",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Cliente ID",
+                        "name": "cliente_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Curso ID",
+                        "name": "curso_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.CursoCarritoCreateResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorResponse"
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Para un carrito se eliminar un curso",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "carritos"
+                ],
+                "summary": "Elemina un curso de un carrito",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Cliente ID",
+                        "name": "cliente_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Curso ID",
+                        "name": "curso_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.CursoCarritoDeleteOneResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorResponse"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
-        "request.CreateCarritoRequest": {
-            "type": "object",
-            "required": [
-                "session_id"
-            ],
-            "properties": {
-                "session_id": {
-                    "type": "string"
-                }
-            }
-        },
         "request.CreateCursoCarritoRequest": {
             "type": "object",
             "required": [
-                "id_carrito",
-                "id_curso"
+                "carrito_id",
+                "curso_id"
             ],
             "properties": {
-                "id_carrito": {
+                "carrito_id": {
                     "type": "integer"
                 },
-                "id_curso": {
+                "curso_id": {
                     "type": "integer"
                 }
             }
@@ -447,30 +390,15 @@ const docTemplate = `{
         "request.DeleteCursoCarritoRequest": {
             "type": "object",
             "required": [
-                "id_carrito",
-                "id_curso"
-            ],
-            "properties": {
-                "id_carrito": {
-                    "type": "integer"
-                },
-                "id_curso": {
-                    "type": "integer"
-                }
-            }
-        },
-        "request.UpdateCarritoRequest": {
-            "type": "object",
-            "required": [
                 "carrito_id",
-                "session_id"
+                "curso_id"
             ],
             "properties": {
                 "carrito_id": {
                     "type": "integer"
                 },
-                "session_id": {
-                    "type": "string"
+                "curso_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -480,9 +408,7 @@ const docTemplate = `{
                 "code": {
                     "type": "integer"
                 },
-                "data": {
-                    "$ref": "#/definitions/request.CreateCarritoRequest"
-                },
+                "data": {},
                 "status": {
                     "type": "string"
                 }
@@ -525,8 +451,8 @@ const docTemplate = `{
                 "carrito_id": {
                     "type": "integer"
                 },
-                "session_id": {
-                    "type": "string"
+                "cliente_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -619,10 +545,10 @@ const docTemplate = `{
         "response.CursoCarritoResponse": {
             "type": "object",
             "properties": {
-                "id_carrito": {
+                "carrito_id": {
                     "type": "integer"
                 },
-                "id_curso": {
+                "curso_id": {
                     "type": "integer"
                 }
             }
@@ -630,7 +556,7 @@ const docTemplate = `{
         "response.CursoResponse": {
             "type": "object",
             "properties": {
-                "id_curso": {
+                "curso_id": {
                     "type": "integer"
                 }
             }

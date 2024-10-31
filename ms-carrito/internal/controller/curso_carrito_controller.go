@@ -27,7 +27,7 @@ func NewCursoCarritoController(
 	}
 }
 
-// @BasePath /carrito/cursos
+// @BasePath /carrito
 // @Summary Devuelve para todos los carritos, los cursos que contiene
 // @Description get cursos para cada carrito
 // @Tags carritos
@@ -53,21 +53,30 @@ func (controller *CursoCarritoController) FindAll(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, res)
 }
 
-// @BasePath /carrito
-// @Summary Devuelve los cursos que tiene un carrito por ID
-// @Description Busca cursos por id carrito
+// @BasePath /cliente
+// @Summary Devuelve los cursos que tiene un carrito por cliente ID
+// @Description Busca cursos por cliente id
 // @Tags carritos
-// @Param id path int true "CARRITO ID"
-// @Accept json
+// @Param cliente_id path int true "CLIENTE ID"
 // @Produce json
 // @Success 200 {object} response.CursoCarritoFindbyResponse
+// @Failure 404 {object} response.ErrorResponse
 // @Failure 500 {object} response.ErrorResponse
-// @Router /carrito/{id}/cursos [get]
-func (controller *CursoCarritoController) FindByCarrito(ctx *gin.Context) {
-	carritoId := ctx.Param("id")
-	id, _ := strconv.Atoi(carritoId)
+// @Router /cliente/{cliente_id}/carrito/curso [get]
+func (controller *CursoCarritoController) FindAllByClienteId(ctx *gin.Context) {
+	clienteIdString := ctx.Param("cliente_id")
+	clienteId, _ := strconv.Atoi(clienteIdString)
 
-	data, err := controller.CursoCarritoService.FindByCarrito(id)
+	carrito, err := controller.CarritoService.FindByClienteId(clienteId)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
+			Code:    404,
+			Message: "carrito not found",
+		})
+		return
+	}
+
+	data, err := controller.CursoCarritoService.FindByCarrito(carrito.Id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
 			Code:    500,
@@ -78,7 +87,7 @@ func (controller *CursoCarritoController) FindByCarrito(ctx *gin.Context) {
 	if len(data) == 0 {
 		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
 			Code:    404,
-			Message: "Carrito Empty or Not Found",
+			Message: "Carrito Empty",
 		})
 		return
 	}
@@ -91,28 +100,50 @@ func (controller *CursoCarritoController) FindByCarrito(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, res)
 }
 
-// @BasePath /carrito
+// @BasePath /cliente
 // @Summary Agrega un curso a un carrito
 // @Description Agrega un curso a un carrito mediante body
 // @Tags carritos
-// @Param curso-carrito body request.CreateCursoCarritoRequest true "Curso a agregar a un carrito"
-// @Accept json
+// @Param cliente_id path int true "Cliente ID"
+// @Param curso_id path int true "Curso ID"
 // @Produce json
 // @Success 200 {object} response.CursoCarritoCreateResponse
 // @Failure 404 {object} response.ErrorResponse
 // @Failure 409 {object} response.ErrorResponse
 // @Failure 500 {object} response.ErrorResponse
-// @Router /carrito/cursos [post]
+// @Router /cliente/{cliente_id}/carrito/curso/{curso_id} [post]
 func (controller *CursoCarritoController) Create(ctx *gin.Context) {
-	req := request.CreateCursoCarritoRequest{}
-	ctx.ShouldBindJSON(&req)
+	clienteIdString := ctx.Param("cliente_id")
+	cursoIdString := ctx.Param("curso_id")
 
-	_, err := controller.CarritoService.FindById(req.CarritoId)
+	clienteId, err := strconv.Atoi(clienteIdString)
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
-			Code:    404,
+		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
+			Code:    400,
 			Message: err.Error(),
 		})
+		return
+	}
+	cursoId, err := strconv.Atoi(cursoIdString)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
+			Code:    400,
+			Message: err.Error(),
+		})
+		return
+	}
+	carrito, err := controller.CarritoService.FindByClienteId(clienteId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
+			Code:    500,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	req := request.CreateCursoCarritoRequest{
+		CarritoId: carrito.Id,
+		CursoId:   cursoId,
 	}
 
 	err = controller.CursoCarritoService.Add(req)
@@ -146,21 +177,53 @@ func (controller *CursoCarritoController) Create(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, res)
 }
 
-// @BasePath /carrito
+// @BasePath /cliente
 // @Summary Elemina un curso de un carrito
 // @Description Para un carrito se eliminar un curso
 // @Tags carritos
-// @Param curso-carrito body request.DeleteCursoCarritoRequest true "Curso a eliminar de un carrito"
+// @Param cliente_id path int true "Cliente ID"
+// @Param curso_id path int true "Curso ID"
 // @Accept json
 // @Produce json
 // @Success 200 {object} response.CursoCarritoDeleteOneResponse
 // @Failure 500 {object} response.ErrorResponse
-// @Router /carrito/cursos [delete]
+// @Router /cliente/{cliente_id}/carrito/curso/{curso_id} [delete]
 func (controller *CursoCarritoController) DeleteCursoCarrito(ctx *gin.Context) {
-	req := request.DeleteCursoCarritoRequest{}
-	ctx.ShouldBindJSON(&req)
 
-	err := controller.CursoCarritoService.DeleteCursoCarrito(req)
+	clienteIdString := ctx.Param("cliente_id")
+	cursoIdString := ctx.Param("curso_id")
+
+	clienteId, err := strconv.Atoi(clienteIdString)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
+			Code:    400,
+			Message: err.Error(),
+		})
+		return
+	}
+	cursoId, err := strconv.Atoi(cursoIdString)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
+			Code:    400,
+			Message: err.Error(),
+		})
+		return
+	}
+	carrito, err := controller.CarritoService.FindByClienteId(clienteId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
+			Code:    500,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	req := request.DeleteCursoCarritoRequest{
+		CarritoId: carrito.Id,
+		CursoId:   cursoId,
+	}
+
+	err = controller.CursoCarritoService.DeleteCursoCarrito(req)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
 			Code:    500,
@@ -176,20 +239,19 @@ func (controller *CursoCarritoController) DeleteCursoCarrito(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, res)
 }
 
-// @BasePath /carrito
-// @Summary Agrega un curso a un carrito
-// @Description Agrega un curso a un carrito mediante body
-// @Tags carritos
-// @Param id path int true "CARRITO ID"
-// @Accept json
+// @BasePath /cliente
+// @Summary Elimina todos los cursos a partir del id cliente
+// @Description Elimina todos los cursos de un cliente
+// @Tags cliente
+// @Param cliente_id path int true "Cliente ID"
 // @Produce json
 // @Success 200 {object} response.CursoCarritoDeleteAllResponse
 // @Failure 404 {object} response.ErrorResponse
 // @Failure 500 {object} response.ErrorResponse
-// @Router /carrito/{id}/cursos [delete]
-func (controller *CursoCarritoController) DeleteAllCursosByCarritoId(ctx *gin.Context) {
-	carritoId := ctx.Param("id")
-	id, err := strconv.Atoi(carritoId)
+// @Router /cliente/{cliente_id}/carrito/curso/all [delete]
+func (controller *CursoCarritoController) DeleteAllCursosByClienteId(ctx *gin.Context) {
+	clienteIdString := ctx.Param("cliente_id")
+	clienteId, err := strconv.Atoi(clienteIdString)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
 			Code:    400,
@@ -198,7 +260,15 @@ func (controller *CursoCarritoController) DeleteAllCursosByCarritoId(ctx *gin.Co
 		return
 	}
 
-	_, err = controller.CursoCarritoService.FindByCarrito(id)
+	carrito, err := controller.CarritoService.FindByClienteId(clienteId)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
+			Code:    500,
+			Message: err.Error(),
+		})
+		return
+	}
+	_, err = controller.CursoCarritoService.FindByCarrito(carrito.Id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
 			Code:    404,
@@ -207,7 +277,7 @@ func (controller *CursoCarritoController) DeleteAllCursosByCarritoId(ctx *gin.Co
 		return
 	}
 
-	err = controller.CursoCarritoService.DeleteAllCursosByCarritoId(id)
+	err = controller.CursoCarritoService.DeleteAllCursosByCarritoId(carrito.Id)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
 			Code:    500,

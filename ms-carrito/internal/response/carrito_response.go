@@ -1,7 +1,5 @@
 package response
 
-import "carrito/internal/request"
-
 type Response[T any] struct {
 	Code   int    `json:"code"`
 	Status string `json:"status"`
@@ -12,7 +10,7 @@ type Response[T any] struct {
 
 type CarritoFindAllResponse = Response[[]CarritoResponse]
 type CarritoFindbyResponse = Response[CarritoResponse]
-type CarritoCreateResponse = Response[request.CreateCarritoRequest]
+type CarritoCreateResponse = Response[error]
 type CarritoUpdateResponse = Response[error]
 type CarritoDeleteResponse = Response[CarritoResponse]
 
