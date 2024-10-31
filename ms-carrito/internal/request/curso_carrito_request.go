@@ -1,11 +1,11 @@
 package request
 
 type CreateCursoCarritoRequest struct {
-	IdCarrito int `json:"id_carrito" validate:"required"`
-	IdCurso   int `json:"id_curso" validate:"required"`
+	CarritoId int `json:"carrito_id" validate:"required"`
+	CursoId   int `json:"curso_id" validate:"required"`
 }
 
 type DeleteCursoCarritoRequest struct {
-	IdCarrito int `json:"id_carrito" validate:"required"`
-	IdCurso   int `json:"id_curso" validate:"required"`
+	CarritoId int `json:"carrito_id" validate:"required"`
+	CursoId   int `json:"curso_id" validate:"required"`
 }

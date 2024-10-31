@@ -107,7 +107,7 @@ func (controller *CursoCarritoController) Create(ctx *gin.Context) {
 	req := request.CreateCursoCarritoRequest{}
 	ctx.ShouldBindJSON(&req)
 
-	_, err := controller.CarritoService.FindById(req.IdCarrito)
+	_, err := controller.CarritoService.FindById(req.CarritoId)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
 			Code:    404,
@@ -188,10 +188,17 @@ func (controller *CursoCarritoController) DeleteCursoCarrito(ctx *gin.Context) {
 // @Failure 500 {object} response.ErrorResponse
 // @Router /carrito/{id}/cursos [delete]
 func (controller *CursoCarritoController) DeleteAllCursosByCarritoId(ctx *gin.Context) {
-	carritoId := ctx.Param("carrito_id")
-	id, _ := strconv.Atoi(carritoId)
+	carritoId := ctx.Param("id")
+	id, err := strconv.Atoi(carritoId)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
+			Code:    400,
+			Message: err.Error(),
+		})
+		return
+	}
 
-	_, err := controller.CursoCarritoService.FindByCarrito(id)
+	_, err = controller.CursoCarritoService.FindByCarrito(id)
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, response.ErrorResponse{
 			Code:    404,
@@ -208,7 +215,6 @@ func (controller *CursoCarritoController) DeleteAllCursosByCarritoId(ctx *gin.Co
 		})
 		return
 	}
-
 	res := response.CursoCarritoDeleteAllResponse{
 		Code:   200,
 		Status: "OK",

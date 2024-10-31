@@ -16,7 +16,7 @@ type CarritoService interface {
 	Update(carrito request.UpdateCarritoRequest) error
 	Delete(carritoId int) error
 	FindById(carritoId int) (carrito response.CarritoResponse, err error)
-	FindBySessionId(sessionId string) (carrito response.CarritoResponse, err error)
+	FindByClienteId(clienteId int) (carrito response.CarritoResponse, err error)
 	FindAll() (carritos []response.CarritoResponse, err error)
 }
 
@@ -45,7 +45,7 @@ func (c *CarritoServiceImpl) Create(carrito request.CreateCarritoRequest) (err e
 	}
 
 	modelo := model.Carrito{
-		UsuarioId: carrito.UsuarioId,
+		ClienteId: carrito.ClienteId,
 	}
 	err = c.CarritoRepository.Save(modelo)
 	if err != nil {
@@ -75,7 +75,7 @@ func (c *CarritoServiceImpl) FindAll() (carritos []response.CarritoResponse, err
 	for _, value := range result {
 		carrito := response.CarritoResponse{
 			Id:        value.Id,
-			UsuarioId: value.UsuarioId,
+			ClienteId: value.ClienteId,
 		}
 		carritos = append(carritos, carrito)
 	}
@@ -91,20 +91,20 @@ func (c *CarritoServiceImpl) FindById(carritoId int) (carrito response.CarritoRe
 
 	res := response.CarritoResponse{
 		Id:        data.Id,
-		UsuarioId: data.UsuarioId,
+		ClienteId: data.ClienteId,
 	}
 	return res, nil
 }
 
-func (c *CarritoServiceImpl) FindBySessionId(sessionId string) (carrito response.CarritoResponse, err error) {
-	data, err := c.CarritoRepository.FindBySessionId(sessionId)
+func (c *CarritoServiceImpl) FindByClienteId(clienteId int) (carrito response.CarritoResponse, err error) {
+	data, err := c.CarritoRepository.FindByClienteId(clienteId)
 	if err != nil {
 		return response.CarritoResponse{}, err
 	}
 
 	res := response.CarritoResponse{
 		Id:        data.Id,
-		UsuarioId: data.UsuarioId,
+		ClienteId: data.ClienteId,
 	}
 	return res, nil
 }
@@ -121,7 +121,7 @@ func (c *CarritoServiceImpl) Update(carrito request.UpdateCarritoRequest) error 
 		return err
 	}
 
-	data.UsuarioId = carrito.UsuarioId
+	data.ClienteId = carrito.ClienteId
 	c.CarritoRepository.Update(data)
 	return nil
 }

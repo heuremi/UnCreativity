@@ -7,40 +7,51 @@ const { WebpayPlus } = require('transbank-sdk');
 import { asyncHandler } from "../../utils/async-handler.js"
 import { emitValidarCarrito } from '../../rabbit/validar-carrito/emit-validar-carrito.js';
 import { emitCompraValida } from '../../rabbit/procesar-compra/emit-compra-valida.js';
+import isPositiveInteger from '../../utils/is-integer.js';
 
 export const create = asyncHandler(async (req, res) => {
 
-    const { amount, email, session_id } = req.body
-    if (!amount || !email || !session_id) {
+    const { amount, cliente_id } = req.body
+    if (!amount || !cliente_id) {
         res.status(400).json({
           success: false,
-          message: `${!amount ? 'amount' : (!email ? 'email' : 'session_id')} is required`,
+          message: `${!amount ? 'amount' : 'cliente_id'} is required`,
         });
         return
     }
-    if(!(validator.isEmail(email))) {
+    if((typeof(cliente_id) !== 'number') || (typeof(amount) !== 'number')) {
+      res.status(400).json({
+        success: false,
+        message: `${(typeof(cliente_id) !== 'number') ? cliente_id : amount} debe ser de tipo int`,
+      });
+      return
+    }
+
+    if(!isPositiveInteger(amount) || !isPositiveInteger(cliente_id)) {
         res.status(400).json({
           success: false,
-          message: 'email must be valid'
-        })
+          message: `${!isPositiveInteger(amount) ? 'amount' : 'cliente_id'} debe ser un entero positivo`,
+        });
         return
     }
-    const valid = true // await emitValidarCarrito({session_id: session_id}) 
-    if (valid === null) { // No se pudo conectar con ms-carrito
+
+    const response = await emitValidarCarrito({ cliente_id }) 
+    console.log(response)
+    if (response === null) { // No se pudo conectar con ms-carrito
         res.status(500).json({
             success: false,
             message: "Internal error"
         })
         return 
     }
-    if ( valid.valid == false ) { // Se pudo conectar con ms-carrito, pero sesion_id invalido (no se encontro)
+    if ( response.valid == false ) { // Se pudo conectar con ms-carrito, pero sesion_id invalido (no se encontro)
         res.status(404).json({
             success: false,
-            message: "session_id not found in ms-carrito"
+            message: "cliente_id not found in ms-carrito"
         })
         return 
     }
-    if ( valid.cantidad_cursos < 1) { // Carrito vacio
+    if ( response.cantidad_cursos < 1) { // Carrito vacio
         res.status(404).json({
             success: false,
             message: `carrito vacio`
@@ -48,8 +59,8 @@ export const create = asyncHandler(async (req, res) => {
         return
      }
 
-    const buyOrder = "1" //email; // por ahora 
-    const sessionId = session_id // por ahora el session_id
+    const buyOrder = response.carrito_id.toString()
+    const sessionId = cliente_id.toString()
     const returnUrl = "http://localhost:3002/webpay-plus/commit"
 
     if (buyOrder.length >= 26) { 

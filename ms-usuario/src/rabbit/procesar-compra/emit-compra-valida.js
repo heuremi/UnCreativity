@@ -8,25 +8,35 @@
 */
 
 
-import { emitValidarCarrito } from "../validar-carrito/emit-validar-carrito.js"
+import { emitDeleteCursosPorCarrito } from "../delete-cursos-por-carrito/emit-delete-cursos-por-carrito.js"
 import { emitCursosPorCarrito } from "../cursos-por-carrito/emit-cursos-por-carrito.js"
 import { ServicioCompra } from "../../services/servicio-compra.js"
+import { ServicioCliente } from "../../services/servicio-cliente.js"
 import { sendEmail } from "./send-email.js"
+import { format } from 'date-fns';
 
 export async function emitCompraValida(commitResponse)  {
 
     try {
         const servicioCompra = new ServicioCompra()
-        const { session_id, transaction_date, buy_order } = commitResponse
-        const email = "cristian.nettle@alumnos.ucn.cl" //buy_order // TEMP
-        const { carrito_id } =  await emitValidarCarrito( {session_id: session_id})
+        const servicioCliente = new ServicioCliente()
+        const { session_id, transaction_date, buy_order} = commitResponse
+        const cliente_id = parseInt(session_id)
+        const carrito_id = parseInt(buy_order)
+        const { email } = await servicioCliente.findClienteById(cliente_id)
         const cursos = await emitCursosPorCarrito( {carrito_id: carrito_id })
-        let i = 0
+        const fecha = format(new Date(transaction_date), 'yyyy-MM-dd')
+        console.log(cursos)
         for (let curso in cursos.cursos_id ) {
             console.log(cursos.cursos_id[curso])
-            await servicioCompra.createCompra(i, email, cursos.cursos_id[curso], '2024-10-12')
-            i += 1
+            await servicioCompra.createCompra(
+            {
+                clienteId: cliente_id,
+                cursoId: cursos.cursos_id[curso],
+                fecha: fecha
+            })
         }
+        emitDeleteCursosPorCarrito( {carrito_id: carrito_id} )
         sendEmail(email)
     }catch(err) {
         console.log(err.message)

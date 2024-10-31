@@ -10,7 +10,7 @@ import (
 type CarritoRepository interface {
 	FindAll() ([]model.Carrito, error)
 	FindById(carritoId int) (carrito model.Carrito, err error)
-	FindBySessionId(sessionId string) (carrito model.Carrito, err error)
+	FindByClienteId(clienteId int) (carrito model.Carrito, err error)
 	Save(carrito model.Carrito) error
 	Update(carrito model.Carrito) error
 	Delete(carritoId int) error
@@ -24,9 +24,9 @@ func NewCarritoRepositoryImpl(Db *gorm.DB) CarritoRepository {
 	return &CarritoRepositoryImpl{Db: Db}
 }
 
-// FindBySessionId implements CarritoRepository.
-func (c *CarritoRepositoryImpl) FindBySessionId(sessionId string) (carrito model.Carrito, err error) {
-	results := c.Db.Where("session_id = ?", sessionId).Find(&carrito)
+// FindByClienteId implements CarritoRepository.
+func (c *CarritoRepositoryImpl) FindByClienteId(clienteId int) (carrito model.Carrito, err error) {
+	results := c.Db.Where("cliente_id = ?", clienteId).Find(&carrito)
 	if results.Error != nil {
 		return model.Carrito{}, results.Error
 	}
@@ -64,7 +64,7 @@ func (c *CarritoRepositoryImpl) Save(carrito model.Carrito) error {
 func (c *CarritoRepositoryImpl) Update(carrito model.Carrito) error {
 	var data = model.Carrito{
 		Id:        carrito.Id,
-		UsuarioId: carrito.UsuarioId,
+		ClienteId: carrito.ClienteId,
 	}
 
 	result := c.Db.Model(&carrito).Updates(data)

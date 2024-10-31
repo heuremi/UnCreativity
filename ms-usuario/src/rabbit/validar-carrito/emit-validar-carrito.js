@@ -19,7 +19,6 @@ export async function emitValidarCarrito(data) {
             {timeout : 5000}
         )
         
-        console.log("pasa por el chanel")
         channel = await connection.createChannel() 
         await channel.assertExchange(exchange, 'direct', {
             durable: false,

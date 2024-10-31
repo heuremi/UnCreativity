@@ -48,28 +48,28 @@ func (c *CursoCarritoServiceImpl) Add(cursoCarrito request.CreateCursoCarritoReq
 
 	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
 	defer cancel()
-	valido, err := validatecurso.SendCursoValidation(ctx, cursoCarrito.IdCurso)
+	valido, err := validatecurso.SendCursoValidation(ctx, cursoCarrito.CursoId)
 	if err != nil {
 		return err
 	}
 	if !valido {
 		return &customerrors.CursoNotFoundError{
-			Msg: fmt.Sprintf("No se pudo encontrar el curso con id: %d", cursoCarrito.IdCurso),
+			Msg: fmt.Sprintf("No se pudo encontrar el curso con id: %d", cursoCarrito.CursoId),
 		}
 	}
 
-	cursos, _ := c.FindByCarrito(cursoCarrito.IdCarrito)
+	cursos, _ := c.FindByCarrito(cursoCarrito.CarritoId)
 	for _, cursoResponse := range cursos {
-		if cursoResponse.IdCurso == cursoCarrito.IdCurso {
+		if cursoResponse.IdCurso == cursoCarrito.CursoId {
 			return &customerrors.CursoConflictError{
-				Msg: fmt.Sprintf("Conflicto con el curso con id: %d , Ya existe en el carrito", cursoCarrito.IdCurso),
+				Msg: fmt.Sprintf("Conflicto con el curso con id: %d , Ya existe en el carrito", cursoCarrito.CursoId),
 			}
 		}
 	}
 
 	modelo := model.CursoCarrito{
-		IdCarrito: cursoCarrito.IdCarrito,
-		IdCurso:   cursoCarrito.IdCurso,
+		CarritoId: cursoCarrito.CarritoId,
+		CursoId:   cursoCarrito.CursoId,
 	}
 	c.CursoCarritoRepository.Add(modelo)
 	return nil
@@ -93,8 +93,8 @@ func (c *CursoCarritoServiceImpl) DeleteCursoCarrito(cursoCarrito request.Delete
 	}
 
 	modelo := model.CursoCarrito{
-		IdCarrito: cursoCarrito.IdCarrito,
-		IdCurso:   cursoCarrito.IdCurso,
+		CarritoId: cursoCarrito.CarritoId,
+		CursoId:   cursoCarrito.CursoId,
 	}
 	err = c.CursoCarritoRepository.DeleteCursoCarrito(modelo)
 
@@ -113,8 +113,8 @@ func (c *CursoCarritoServiceImpl) FindAll() (cursoCarritos []response.CursoCarri
 
 	for _, value := range result {
 		cursoCarrito := response.CursoCarritoResponse{
-			IdCarrito: value.IdCarrito,
-			IdCurso:   value.IdCurso,
+			CarritoId: value.CarritoId,
+			CursoId:   value.CursoId,
 		}
 		cursoCarritos = append(cursoCarritos, cursoCarrito)
 	}

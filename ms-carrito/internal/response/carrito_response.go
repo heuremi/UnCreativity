@@ -23,5 +23,5 @@ type ErrorResponse struct {
 
 type CarritoResponse struct {
 	Id        int `json:"carrito_id"`
-	UsuarioId int `json:"usuario_id"`
+	ClienteId int `json:"cliente_id"`
 }

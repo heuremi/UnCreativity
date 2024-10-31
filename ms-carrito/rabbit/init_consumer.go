@@ -4,6 +4,7 @@ import (
 	"carrito/internal/service"
 	carritovalidate "carrito/rabbit/carrito_validate"
 	cursocarrito "carrito/rabbit/cursos_carrito"
+	deletecursos "carrito/rabbit/delete_cursos"
 	"log"
 	"time"
 )
@@ -25,6 +26,16 @@ func InitConsumer(carritoService service.CarritoService, cursoCarritoService ser
 			err := carritovalidate.ConsumeCarritoValidate(carritoService, cursoCarritoService)
 			if err != nil {
 				log.Printf("[Y] Error en Consume Carrito Validate: %s", err.Error())
+			}
+			time.Sleep(5 * time.Second)
+		}
+	}()
+
+	go func() {
+		for {
+			err := deletecursos.ConsumeDeleteCursos(cursoCarritoService)
+			if err != nil {
+				log.Printf("[Y] Error en Consume Delete cursos : %s", err.Error())
 			}
 			time.Sleep(5 * time.Second)
 		}
