@@ -25,9 +25,9 @@ export const resolversCliente = {
         );
     },
 
-    updateCliente: async ({ updateCliente }) => {
-        console.log(updateCliente)
-        return servicioCliente.updateCliente(updateCliente);
+    updateCliente: async ({ datosActualizarCliente }) => {
+        console.log("Datos recibidos en el resolver:", datosActualizarCliente);
+        return servicioCliente.updateCliente(datosActualizarCliente);
     },
 
     deleteCliente: async ({ email }) => {
