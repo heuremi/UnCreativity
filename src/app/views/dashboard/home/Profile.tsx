@@ -27,9 +27,13 @@ export function Profile() {
     useEffect(() => {
         const savedProfile = localStorage.getItem('userProfile');
         if (savedProfile) {
-            const parsedProfile = JSON.parse(savedProfile);
-            console.log('Perfil guardado:', parsedProfile);
-            setProfileData(parsedProfile);
+            try {
+                const parsedProfile = JSON.parse(savedProfile);
+                console.log('Perfil guardado:', parsedProfile);
+                setProfileData(parsedProfile);
+            } catch (error) {
+                console.error("Error al analizar JSON desde localStorage:", error);
+            }
         }
     }, []);
 
@@ -55,11 +59,16 @@ export function Profile() {
                 }
             }
         `;
-
+    
         try {
             const response = await axios.post('http://localhost:3002/graphql/usuario', { query });
-            console.log('Respuesta de actualización:', response.data);
-            alert('Perfil actualizado con éxito');
+            if (response.data && response.data.data) {
+                console.log('Respuesta de actualización:', response.data);
+                alert('Perfil actualizado con éxito');
+            } else {
+                console.error("Respuesta de la API no contiene datos válidos:", response.data);
+                alert('Hubo un error al actualizar el perfil');
+            }
         } catch (error: any) {
             if (error.response) {
                 console.error('Error del servidor:', error.response.data);
@@ -70,14 +79,6 @@ export function Profile() {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log('Profile Data:', profileData);
-        localStorage.setItem('userProfile', JSON.stringify(profileData));
-        updateProfile();
-        alert('Perfil guardado con éxito');
-    };
-
     return (
         <Container className="profile-container-5">
             <Row className="justify-content-center">
@@ -85,7 +86,7 @@ export function Profile() {
                     <Card className="card-4">
                         <Card.Body>
                             <h2 className="text-center perfil-1">Perfil de Usuario</h2>
-                            <Form onSubmit={handleSubmit}>
+                            <Form onSubmit={updateProfile}>
                                 <Row className="boxtext-1">
                                     <Col>
                                         <Form.Group>
