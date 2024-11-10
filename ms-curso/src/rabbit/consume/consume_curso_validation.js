@@ -27,16 +27,17 @@ export async function consumeCursoValidation() {
                 const data = JSON.parse(msg.content)
                 if(correlationId && replyTo)
                 {
-                    const curso = await servicioCurso.findCursoById(data.id_curso)
+                    const curso = await servicioCurso.findCursoById(data.curso_id)
                     console.log(curso)
                     const reply = {valid : (curso == null ? false : true)}
                     console.log(reply)
+                    channel.ack(msg)
                     sendCursoValidation(channel, Buffer.from(JSON.stringify(reply)), correlationId, replyTo)
                 }           
             }
             
         }, {
-            // opciones
+            noAck: false
         })
 
     }catch(error) {

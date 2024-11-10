@@ -3,16 +3,18 @@ import { buildSchema } from 'graphql'
 export const schemaCliente = buildSchema(`
 
     type Cliente {
+        id: ID!
         email: String!
-        nombre: String!
+        nombre: String
         apellido: String
-        rut: String!
+        rut: String
         telefono: String
-        admin_S: Boolean!
-        clave: String!
+        admin_S: Boolean
+        clave: String
     }
 
     input SearchClienteInput {
+        id: ID
         email: String
         nombre: String
         apellido: String
@@ -23,12 +25,12 @@ export const schemaCliente = buildSchema(`
 
     input ClienteInput {
         email: String!
-        nombre: String!
+        nombre: String
         apellido: String
-        rut: String!
+        rut: String
         telefono: String
-        admin_S: Boolean!
-        clave: String!
+        admin_S: Boolean
+        clave: String
     }
     
     input UpdateClienteInput {
@@ -39,15 +41,21 @@ export const schemaCliente = buildSchema(`
         clave: String
     }
 
+    type LoginResponse {
+        success: Boolean
+        id: Int!
+    }
+
     type Query {
         clientes(filtro: SearchClienteInput): [Cliente]
-        cliente(email: String!): Cliente
+        clienteByEmail(email: String!): Cliente
+        clienteById(id: ID!): Cliente
     }
 
     type Mutation {
         createCliente(datosCliente: ClienteInput!): Cliente
-        updateCliente(datosActualizarCliente: UpdateClienteInput): Cliente
-        deleteCliente(email: String!): Cliente
-        login(email: String!, clave: String!): Boolean
+        updateCliente(updateCliente: UpdateClienteInput): Cliente
+        deleteCliente(id: ID!): Boolean
+        login(email: String!, clave: String!): LoginResponse!
     }
 `);

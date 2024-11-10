@@ -3,8 +3,8 @@ package response
 import "carrito/internal/request"
 
 type CursoCarritoResponse struct {
-	IdCarrito int `json:"id_carrito"`
-	IdCurso   int `json:"id_curso"`
+	CarritoId int `json:"carrito_id"`
+	CursoId   int `json:"curso_id"`
 }
 
 type CursoCarritoFindAllResponse = Response[[]CursoCarritoResponse]
@@ -14,5 +14,5 @@ type CursoCarritoDeleteOneResponse = Response[request.DeleteCursoCarritoRequest]
 type CursoCarritoDeleteAllResponse = Response[error]
 
 type CursoResponse struct {
-	IdCurso int `json:"id_curso"`
+	IdCurso int `json:"curso_id"`
 }

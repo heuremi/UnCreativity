@@ -38,13 +38,16 @@ export const Register = () => {
               password2: values.password2,
             });
 
-            console.log('Respuesta del backend:', response);
+            const { createCliente, errors} = response.data
+            console.log(response.data)
+            console.log('Respuesta del backend:', createCliente);
+            console.log("REspoue: ", errors)
 
             if (response.success) {
               // Redirigir al dashboard si el registro fue exitoso
               history.push("/dashboard/home");
             } else {
-              alert('Error en el registro: ' + response.message);
+              alert('Error en el registro: ' + response.statusText);
             }
           } catch (error) {
             console.error('Error en el registro:', error);

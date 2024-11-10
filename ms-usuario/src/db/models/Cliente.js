@@ -3,14 +3,19 @@ import { connection } from '../config/index.js'
 import { DataTypes } from 'sequelize'
 
 const Cliente = connection.define('cliente', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        primaryKey: true
+        unique: true,
     },
     nombre: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     apellido: {
         type: DataTypes.STRING,
@@ -18,7 +23,7 @@ const Cliente = connection.define('cliente', {
     },
     rut: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     telefono: {
         type: DataTypes.STRING,
@@ -26,15 +31,17 @@ const Cliente = connection.define('cliente', {
     },
     admin_S: {
         type: DataTypes.BOOLEAN,
-        allowNull: false
+        allowNull: true,
+        defaultValue: false,
     },
     clave: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     estaDelete: {
         type: DataTypes.BOOLEAN,
-        allowNull: true
+        allowNull: true,
+        defaultValue: false,
     }
 },{
     tableName: 'clientes',

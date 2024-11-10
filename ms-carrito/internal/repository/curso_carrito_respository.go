@@ -35,7 +35,7 @@ func (c *CursoCarritoImpl) Add(cursoCarrito model.CursoCarrito) error {
 func (c *CursoCarritoImpl) DeleteAllCursosByCarritoId(carritoId int) error {
 	var cursoCarrito model.CursoCarrito
 
-	result := c.Db.Where("id_carrito = ?", carritoId).Delete(&cursoCarrito)
+	result := c.Db.Where("carrito_id = ?", carritoId).Delete(&cursoCarrito)
 	if result.Error != nil {
 		return result.Error
 	}
@@ -45,7 +45,7 @@ func (c *CursoCarritoImpl) DeleteAllCursosByCarritoId(carritoId int) error {
 // DeleteCursoCarrito implements CursoCarritoRepository.
 func (c *CursoCarritoImpl) DeleteCursoCarrito(cursoCarrito model.CursoCarrito) error {
 
-	result := c.Db.Where("carrito_id = ?", cursoCarrito.IdCarrito).Where("curso_id = ?", cursoCarrito.IdCurso).Delete(&cursoCarrito)
+	result := c.Db.Where("carrito_id = ?", cursoCarrito.CarritoId).Where("curso_id = ?", cursoCarrito.CursoId).Delete(&cursoCarrito)
 	if result.Error != nil {
 		return result.Error
 	}

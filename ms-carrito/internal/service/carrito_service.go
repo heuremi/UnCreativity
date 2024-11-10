@@ -3,20 +3,20 @@ package service
 import (
 	"carrito/internal/model"
 	"carrito/internal/repository"
-	"carrito/internal/request"
 	"carrito/internal/response"
+	"carrito/internal/utils"
 	"errors"
+	"fmt"
 
 	"github.com/go-playground/validator/v10"
 )
 
 // Interfaz
 type CarritoService interface {
-	Create(carrito request.CreateCarritoRequest) error
-	Update(carrito request.UpdateCarritoRequest) error
+	Create(cliente_id int) error
 	Delete(carritoId int) error
 	FindById(carritoId int) (carrito response.CarritoResponse, err error)
-	FindBySessionId(sessionId string) (carrito response.CarritoResponse, err error)
+	FindByClienteId(clienteId int) (carrito response.CarritoResponse, err error)
 	FindAll() (carritos []response.CarritoResponse, err error)
 }
 
@@ -37,15 +37,16 @@ func NewCarritoServiceImpl(carritoRepository repository.CarritoRepository, valid
 }
 
 // Create implements CarritoService.
-func (c *CarritoServiceImpl) Create(carrito request.CreateCarritoRequest) (err error) {
-	err = c.Validate.Struct(carrito)
+func (c *CarritoServiceImpl) Create(clienteId int) (err error) {
 
-	if err != nil {
-		return err
+	carrito, _ := c.FindByClienteId(clienteId)
+	fmt.Printf("%v", carrito)
+	if !utils.IsStructEmpty(carrito) {
+		return nil
 	}
 
 	modelo := model.Carrito{
-		SessionId: carrito.SessionId,
+		ClienteId: clienteId,
 	}
 	err = c.CarritoRepository.Save(modelo)
 	if err != nil {
@@ -75,7 +76,7 @@ func (c *CarritoServiceImpl) FindAll() (carritos []response.CarritoResponse, err
 	for _, value := range result {
 		carrito := response.CarritoResponse{
 			Id:        value.Id,
-			SessionId: value.SessionId,
+			ClienteId: value.ClienteId,
 		}
 		carritos = append(carritos, carrito)
 	}
@@ -91,37 +92,20 @@ func (c *CarritoServiceImpl) FindById(carritoId int) (carrito response.CarritoRe
 
 	res := response.CarritoResponse{
 		Id:        data.Id,
-		SessionId: data.SessionId,
+		ClienteId: data.ClienteId,
 	}
 	return res, nil
 }
 
-func (c *CarritoServiceImpl) FindBySessionId(sessionId string) (carrito response.CarritoResponse, err error) {
-	data, err := c.CarritoRepository.FindBySessionId(sessionId)
+func (c *CarritoServiceImpl) FindByClienteId(clienteId int) (carrito response.CarritoResponse, err error) {
+	data, err := c.CarritoRepository.FindByClienteId(clienteId)
 	if err != nil {
 		return response.CarritoResponse{}, err
 	}
 
 	res := response.CarritoResponse{
 		Id:        data.Id,
-		SessionId: data.SessionId,
+		ClienteId: data.ClienteId,
 	}
 	return res, nil
-}
-
-// Update implements CarritoService.
-func (c *CarritoServiceImpl) Update(carrito request.UpdateCarritoRequest) error {
-	err := c.Validate.Struct(carrito)
-	if err != nil {
-		return err
-	}
-	data, err := c.CarritoRepository.FindById(carrito.Id)
-
-	if err != nil {
-		return err
-	}
-
-	data.SessionId = carrito.SessionId
-	c.CarritoRepository.Update(data)
-	return nil
 }

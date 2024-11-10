@@ -9,7 +9,7 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
-func SendCursoValidation(ctx context.Context, idCurso int) (bool, error) {
+func SendCursoValidation(ctx context.Context, CursoId int) (bool, error) {
 	conn, err := amqp.Dial(env.GetString("RabbitMQ_URL", "amqp://guest:guest@localhost:5672/"))
 	if err != nil {
 		return false, err
@@ -37,7 +37,7 @@ func SendCursoValidation(ctx context.Context, idCurso int) (bool, error) {
 
 	uuid := uuid.New().String()
 	validation := &SendValidation{
-		IdCurso: idCurso,
+		CursoId: CursoId,
 	}
 	data, err := json.Marshal(validation)
 	if err != nil {
@@ -63,5 +63,5 @@ func SendCursoValidation(ctx context.Context, idCurso int) (bool, error) {
 }
 
 type SendValidation struct {
-	IdCurso int `json:"id_curso"`
+	CursoId int `json:"curso_id"`
 }

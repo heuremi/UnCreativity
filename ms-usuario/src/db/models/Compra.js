@@ -8,8 +8,8 @@ const Compra = connection.define('compra', {
         type: DataTypes.INTEGER,
         autoIncrement: true
     },
-    emailCliente: {
-        field: "email_cliente",
+    clienteId: {
+        field: "cliente_id",
         type: DataTypes.STRING,
         allowNull: false, 
     },
@@ -26,7 +26,7 @@ const Compra = connection.define('compra', {
 },{
     indexes: [
         {
-          fields: ['email_cliente', 'curso_id'],
+          fields: ['cliente_id', 'curso_id'],
           unique: true,
         }
     ],
@@ -37,7 +37,7 @@ const Compra = connection.define('compra', {
 });
  
 Cliente.hasMany(Compra, {
-    foreignKey: 'email_cliente',
-    sourceKey: 'email'
+    foreignKey: 'cliente_id',
+    sourceKey: 'id'
 });
 export { Compra } 

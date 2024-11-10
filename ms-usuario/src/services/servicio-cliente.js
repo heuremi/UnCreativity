@@ -1,5 +1,5 @@
 import { Cliente } from '../db/models/Cliente.js'
-import { Op } from 'sequelize'
+import { Op, Sequelize } from 'sequelize'
 
 export class ServicioCliente {
 
@@ -7,12 +7,19 @@ export class ServicioCliente {
         this.modeloCliente = Cliente;
     };
 
-    async createCliente(email, nombre, apellido, rut, telefono, admin_S, clave) {
+    async createCliente(datosCliente) {
         try {
-            const cliente = await this.modeloCliente.create({ email, nombre, apellido, rut, telefono, admin_S, clave });
+            const cliente = await this.modeloCliente.create(datosCliente);
             return cliente;
         } catch (error) {
-            throw new Error(`Error creando el cliente: ${error.message}`);
+            if (error instanceof Sequelize.ValidationError) {
+                const detallesErrores = error.errors.map((e) => e.message).join(", ");
+                throw new Error(`Error de validación al crear el cliente: ${detallesErrores}`);
+            } else if ( error instanceof Sequelize.DatabaseError) {
+                throw new Error(`Error con la base de datos: ${error.nessage}`)
+            } else {
+                throw new Error(`Error inesperado: ${error.message}`)
+            }
         }
     };
 
@@ -25,17 +32,29 @@ export class ServicioCliente {
                 console.log(`No se encontró ningún cliente con el email: ${email}`);
                 return null;
             }
+            return cliente;
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    async findClienteById(id) {
+        try {
+            const cliente = await this.modeloCliente.findOne({ where: { id } });
         
+            if (!cliente) {
+                console.log(`No se encontró ningún cliente con el id: ${id}`);
+                return null;
+            }
             console.log("Cliente encontrado:", cliente);
             return cliente;
         } catch (error) {
-        console.error("Error obteniendo el cliente con correo:", email, error);
+        console.error("Error obteniendo el cliente con id:", id, error);
         throw error;
         }
-    };
+    }
  
     async findAllClientes(filtros) {
-        console.log(filtros);
         const condiciones = filtrarClientes(filtros);
         try {
             if(condiciones === null) {
@@ -53,7 +72,7 @@ export class ServicioCliente {
     async updateCliente(updateCliente) {
         Object.keys(updateCliente).forEach(key => updateCliente[key] === undefined ? delete updateCliente[key] : {});
         try {
-            const cliente = await this.modeloCliente.findByPk(updateCliente.email);
+            const cliente = await this.modeloCliente.findByPk(updateCliente.id);
             if(!cliente){
                 throw new Error("Cliente no encontrado");
             }
@@ -64,12 +83,14 @@ export class ServicioCliente {
         }
     };
 
-    async deleteCliente(email) {
+    async deleteCliente(id) {
         try {
-            const cliente = await this.modeloCliente.findByPk(email);
-            cliente.estaDelete = true;
-            cliente.save();
-            return cliente;
+            const cliente = await this.modeloCliente.findByPk(id);
+            if(!cliente) {
+                return false
+            }
+            await cliente.destroy()
+            return true
         } catch (error) {
             throw new Error("Error al eliminar cliente");
         }
@@ -79,6 +100,9 @@ export class ServicioCliente {
 function filtrarClientes(filtro)
 {
     const condiciones = {};
+    if(filtro?.id) {
+        condiciones.id = filtro.id;
+    }
     if(filtro?.email){
         condiciones.email = {[Op.substring]: filtro.email};
     }

@@ -6,20 +6,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CarritoRouter(service *gin.Engine, carritoController *controller.CarritoController, cursoCarritoController *controller.CursoCarritoController)  {
+func CarritoRouter(service *gin.Engine, carritoController *controller.CarritoController, cursoCarritoController *controller.CursoCarritoController) {
 
-	router := service.Group("/carrito")
+	router1 := service.Group("")
 
-	router.GET("", carritoController.FindAll)
-	router.GET("/:id", carritoController.FindById)
+	router1.GET("/carrito", carritoController.FindAll)
+	router1.GET("/carrito/:id", carritoController.FindById)
+	router1.GET("/carrito/curso", cursoCarritoController.FindAll)
+
+	router := service.Group("/cliente/:cliente_id/carrito")
+
+	router.GET("", carritoController.FindByClienteId)
 	router.POST("", carritoController.Create)
-	router.PATCH("/:id", carritoController.Update)
-	router.DELETE("/:id", carritoController.Delete)
+	router.DELETE("", carritoController.Delete)
 
-	router.GET("/cursos", cursoCarritoController.FindAll)
-	router.GET("/:id/cursos", cursoCarritoController.FindByCarrito)
-	router.POST("/cursos", cursoCarritoController.Create)
-	router.DELETE("/cursos", cursoCarritoController.DeleteCursoCarrito)
-	router.DELETE("/:id/curso", cursoCarritoController.DeleteAllCursosByCarritoId)
+	router.GET("/curso", cursoCarritoController.FindAllByClienteId)
+	router.POST("/curso/:curso_id", cursoCarritoController.Create)
+	router.DELETE("/curso/:curso_id", cursoCarritoController.DeleteCursoCarrito)
+	router.DELETE("/curso/all", cursoCarritoController.DeleteAllCursosByClienteId)
 
 }

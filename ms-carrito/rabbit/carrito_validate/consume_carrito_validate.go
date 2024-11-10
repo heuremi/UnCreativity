@@ -85,7 +85,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 					log.Print(err.Error())
 					valid = false
 				}
-				carrito, err := carritoService.FindBySessionId(body.SessionId)
+				carrito, err := carritoService.FindByClienteId(body.ClienteId)
 				if err != nil || (carrito == response.CarritoResponse{}) {
 					valid = false
 				}
@@ -118,7 +118,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 }
 
 type BodyRequest struct {
-	SessionId string `json:"session_id"`
+	ClienteId int `json:"cliente_id"`
 }
 
 type DataCarritoValidate struct {

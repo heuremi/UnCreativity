@@ -5,28 +5,24 @@ const servicioCompra = new ServicioCompra();
 export const resolversCompra = {
 
     compras: async ({ filtro }) => {
-        return servicioCompra.findAllCompras(filtro);
+        return await servicioCompra.findAllCompras(filtro);
     },
 
     compra: async ({ id }) => {
-        return servicioCompra.findCompraById(id);
+        return await servicioCompra.findCompraById(id);
     },
 
     createCompra: async ({ datosCompra }) => {
-        return servicioCompra.createCompra(
-            datosCompra.id, 
-            datosCompra.emailCliente, 
-            datosCompra.cursoId, 
-            datosCompra.fecha
-        );
+        console.log(datosCompra)
+        return await servicioCompra.createCompra( datosCompra );
     },
 
     updateCompra: async ({ updateCompra }) => {
-        return servicioCompra.updateCompra(updateCompra);
+        return await servicioCompra.updateCompra(updateCompra);
     },
 
     deleteCompra: async ({ id }) => {
-        return servicioCompra.deleteCompra(id);
+        return await servicioCompra.deleteCompra(id);
     }
 };
 

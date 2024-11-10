@@ -7,9 +7,9 @@ export class ServicioCompra {
         this.modeloCompra = Compra;
     };
 
-    async createCompra(id, emailCliente, cursoId, fecha) {
+    async createCompra(datosCompra) {
         try {
-            const compra = await this.modeloCompra.create({ emailCliente, cursoId, fecha });
+            const compra = await this.modeloCompra.create(datosCompra);
             return compra;
         } catch (error) {
             throw new Error(`Error creando la compra: ${error.message}`);
@@ -54,10 +54,10 @@ export class ServicioCompra {
     async deleteCompra(id) {
         try {
             const Compra = await this.modeloCompra.findByPk(id);
-            Compra.destroy();
-            return;
+            await Compra.destroy();
+            return true;
         } catch (error) {
-            throw new Error("Error al eliminar la compra");
+            return false;
         }
     }
 };
@@ -68,11 +68,11 @@ function filtrarCompras(filtro)
     if(filtro?.id){
         condiciones.id = filtro.id;
     }
-    if(filtro?.email_cliente){
-        condiciones.email_cliente = {[Op.substring]: filtro.email_cliente};
+    if(filtro?.clienteId){
+        condiciones.clienteId = filtro.clienteId;
     }
-    if(filtro?.curso_id){
-        condiciones.curso_id = filtro.curso_id;
+    if(filtro?.cursoId){
+        condiciones.cursoId = filtro.cursoId;
     }
     if(filtro?.fecha){
         condiciones.fecha = {[Op.substring]: filtro.fecha};
