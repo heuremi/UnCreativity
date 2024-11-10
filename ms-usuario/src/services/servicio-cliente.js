@@ -24,6 +24,7 @@ export class ServicioCliente {
     };
 
     async findClienteByEmail(email) {
+        console.log("email:", email)
         try {
             const cliente = await this.modeloCliente.findOne({ where: { email } });
         
@@ -72,10 +73,13 @@ export class ServicioCliente {
         Object.keys(updateCliente).forEach(key => updateCliente[key] === undefined ? delete updateCliente[key] : {});
         try {
             const cliente = await this.modeloCliente.findByPk(updateCliente.id);
-            cliente.update(updateCliente);
+            if(!cliente){
+                throw new Error("Cliente no encontrado");
+            }
+            await cliente.update(updateCliente);
             return cliente;
         } catch (error) {
-            throw new Error("Error al actualizar el cliente");
+            throw new Error(`Error al actualizar el cliente: ${error.message}`);
         }
     };
 

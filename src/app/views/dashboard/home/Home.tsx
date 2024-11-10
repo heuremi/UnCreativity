@@ -58,7 +58,7 @@ export function Home() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const history = useHistory();
   const [cursos, setCursos] = useState<Curso[]>([]);
-  const localCategorias = ["All"];
+  const [localCategorias, setCategorias] = useState<string[]>(["All"]);
 
 
   useEffect(() => {
@@ -73,14 +73,32 @@ export function Home() {
     async function fetchCursos() {
       const data = await getCursos(); 
       setCursos(data);
+
+      // Cambio, aqui se guardan las categorías únicas existentes
+      const categoriasUnicas = new Set<string>();
+      data.forEach(curso => {
+        curso.categorias.forEach(categoria => { 
+          if (!categoriasUnicas.has(categoria)){
+            categoriasUnicas.add(categoria)
+          }
+        });
+      });
+
+      // aHORA tODO eMPIEZA cON mAYÚSCULAS pQ a lA rEMI lE dA tOC tqm remi
+      const categoriasCapitalizadas = Array.from(categoriasUnicas).map(categoria =>
+        categoria.charAt(0).toUpperCase() + categoria.slice(1).toLowerCase()
+      );
+
+      setCategorias(["All", ...Array.from(categoriasCapitalizadas)]);
     }
     fetchCursos();
   }, []);
 
   const filteredAndSortedCourses = cursos
     .filter(course => {
-      const matchesSearchTerm = course.titulo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        course.subtitulo.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearchTerm = 
+        (course.titulo && course.titulo.toLowerCase().includes(searchTerm.toLowerCase())) ||
+        (course.subtitulo && course.subtitulo.toLowerCase().includes(searchTerm.toLowerCase()));
 
       const matchesCategory = selectedCategory === "All" || course.categorias.includes(selectedCategory); //probando
 

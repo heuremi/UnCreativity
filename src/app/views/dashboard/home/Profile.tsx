@@ -1,32 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import './Profile.css'; 
 
 export interface ProfileData {
-    fullName: string;
     email: string;
-    name: string;
-    lastName: string;
-    password: string;
-    phoneNumber: string;
+    nombre: string;
+    apellido: string;
+    rut: string;
+    telefono: string;
+    admin_S: boolean;
+    clave: string;
 }
 
 export function Profile() {
     const [profileData, setProfileData] = useState<ProfileData>({
-        fullName: '',
         email: '',
-        name: '',
-        lastName: '',
-        password: '', 
-        phoneNumber: ''
+        nombre: '',
+        apellido: '',
+        rut: '',
+        telefono: '', 
+        admin_S: false,
+        clave: ''
     });
 
     useEffect(() => {
         const savedProfile = localStorage.getItem('userProfile');
         if (savedProfile) {
-            const parsedProfile = JSON.parse(savedProfile);
-            console.log('Perfil guardado:', parsedProfile);
-            setProfileData(parsedProfile);
+            try {
+                const parsedProfile = JSON.parse(savedProfile);
+                console.log('Perfil guardado:', parsedProfile);
+                setProfileData(parsedProfile);
+            } catch (error) {
+                console.error("Error al analizar JSON desde localStorage:", error);
+            }
         }
     }, []);
 
@@ -38,11 +45,38 @@ export function Profile() {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        console.log('Profile Data:', profileData);
-        localStorage.setItem('userProfile', JSON.stringify(profileData));
-        alert('Perfil guardado con éxito');
+    const updateProfile = async () => {
+        const query = `
+            mutation {
+                updateCliente(datosActualizarCliente: {
+                    email: "${profileData.email}",
+                    nombre: "${profileData.nombre}",
+                    apellido: "${profileData.apellido}",
+                    telefono: "${profileData.telefono}",
+                    clave: "${profileData.clave}"
+                }) {
+                    email
+                }
+            }
+        `;
+    
+        try {
+            const response = await axios.post('http://localhost:3002/graphql/usuario', { query });
+            if (response.data && response.data.data) {
+                console.log('Respuesta de actualización:', response.data);
+                alert('Perfil actualizado con éxito');
+            } else {
+                console.error("Respuesta de la API no contiene datos válidos:", response.data);
+                alert('Hubo un error al actualizar el perfil');
+            }
+        } catch (error: any) {
+            if (error.response) {
+                console.error('Error del servidor:', error.response.data);
+            } else {
+                console.error('Error en la solicitud:', error.message);
+            }
+            alert('Hubo un error al actualizar el perfil');
+        }
     };
 
     return (
@@ -52,15 +86,15 @@ export function Profile() {
                     <Card className="card-4">
                         <Card.Body>
                             <h2 className="text-center perfil-1">Perfil de Usuario</h2>
-                            <Form onSubmit={handleSubmit}>
+                            <Form onSubmit={updateProfile}>
                                 <Row className="boxtext-1">
                                     <Col>
                                         <Form.Group>
                                             <Form.Label><strong>Nombre</strong></Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="name"
-                                                value={profileData.name}
+                                                name="nombre"
+                                                value={profileData.nombre}
                                                 onChange={handleChange}
                                                 required
                                             />
@@ -68,11 +102,11 @@ export function Profile() {
                                     </Col>
                                     <Col>
                                         <Form.Group>
-                                            <Form.Label><strong>Apellidos</strong></Form.Label>
+                                            <Form.Label><strong>Apellido</strong></Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="lastName"
-                                                value={profileData.lastName}
+                                                name="apellido"
+                                                value={profileData.apellido}
                                                 onChange={handleChange}
                                                 required
                                             />
@@ -86,8 +120,8 @@ export function Profile() {
                                             <Form.Label><strong>Contraseña</strong></Form.Label> 
                                             <Form.Control
                                                 type="password" 
-                                                name="password" 
-                                                value={profileData.password}
+                                                name="clave" 
+                                                value={profileData.clave}
                                                 onChange={handleChange}
                                                 required
                                             />
@@ -98,8 +132,8 @@ export function Profile() {
                                             <Form.Label><strong>Teléfono</strong></Form.Label>
                                             <Form.Control
                                                 type="text"
-                                                name="phoneNumber"
-                                                value={profileData.phoneNumber}
+                                                name="telefono"
+                                                value={profileData.telefono}
                                                 onChange={handleChange}
                                                 required
                                             />
@@ -125,7 +159,7 @@ export function Profile() {
                                 <Row className="boxtext-1">
                                     <Col>
                                         <Button type="submit" className="w-100 btn btn-primary">
-                                            Editar Perfil
+                                            Guardar cambios
                                         </Button>
                                     </Col>
                                 </Row>
