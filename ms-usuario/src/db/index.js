@@ -5,8 +5,8 @@ import { Compra } from './models/index.js';
 export const initializeDataBase = async () => {
     try {
         await connection.authenticate();
-        await Cliente.sync({ alter: true});
-        await Compra.sync({ alter: true});
+        await Cliente.sync({ force: true});
+        await Compra.sync({ force: true});
 
         console.log('Los modelos ORM se establecieron y se sincronizaron correctamente');
     } catch (error) {

@@ -36,7 +36,7 @@ export const resolversCliente = {
             console.log('Usuario no encontrado.');
             return {
                 success: false,
-                id: '',
+                id: -1,
             };
         }
         if (usuario.clave !== clave) {

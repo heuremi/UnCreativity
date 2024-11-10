@@ -131,6 +131,8 @@ func (controller *CarritoController) Create(ctx *gin.Context) {
 		return
 	}
 
+	
+
 	err = controller.CarritoService.Create(clienteId)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{

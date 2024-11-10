@@ -16,13 +16,17 @@ export function Login(){
     e.preventDefault();
     try{
         const resp = await AuthCourse.login(auth.email, auth.password);
+        const { login } = resp.data;
+        
         console.log(resp)
-        if (resp.data.login) {
-          sessionStorage.setItem('user', JSON.stringify({ ...resp.date, loggedIn: true }));
-          dispatchUser({ type: 'login', payload: resp.date });
+        if (resp.data.login.success) {
+          sessionStorage.setItem('user', JSON.stringify({ id: login.id, loggedIn: true })); // (cristian) cambie esto pero no se si esta bueno
+          dispatchUser({ type: 'login', payload: login.id });
           history.replace('/dashboard/home');
-      } else {
+      } else if (login.id !== -1) {
           console.log('Credenciales incorrectas');
+      } else {
+          console.log("Usuario no existe")
       }
     } catch (error){
       console.error('Error en el login:', error);

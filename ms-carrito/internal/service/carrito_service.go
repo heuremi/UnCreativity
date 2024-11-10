@@ -4,7 +4,9 @@ import (
 	"carrito/internal/model"
 	"carrito/internal/repository"
 	"carrito/internal/response"
+	"carrito/internal/utils"
 	"errors"
+	"fmt"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -36,6 +38,12 @@ func NewCarritoServiceImpl(carritoRepository repository.CarritoRepository, valid
 
 // Create implements CarritoService.
 func (c *CarritoServiceImpl) Create(clienteId int) (err error) {
+
+	carrito, _ := c.FindByClienteId(clienteId)
+	fmt.Printf("%v", carrito)
+	if !utils.IsStructEmpty(carrito) {
+		return nil
+	}
 
 	modelo := model.Carrito{
 		ClienteId: clienteId,

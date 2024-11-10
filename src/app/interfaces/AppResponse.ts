@@ -1,9 +1,8 @@
-export interface ApiResponse{
+export interface ApiResponse<T = any>{
     date: any[],
     success: boolean,
     status: number,
-    message: string,
-    data: {
-        login: boolean;
-    };
+    statusText: string,
+    data: T
 }
+

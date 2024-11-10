@@ -5,6 +5,7 @@ import './Home.css';
 import { useHistory } from 'react-router-dom';
 import { Navbar } from '../../auth/components/Navbar';
 import axios from 'axios';
+import { ApiCartResponse, CartService } from '../../../../services/CartService';
 
 interface Curso {
   id: number;
@@ -47,6 +48,8 @@ async function getCursos() : Promise<Curso[]> {
 }
 
 export function Home() {
+
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState("asc");
@@ -57,9 +60,18 @@ export function Home() {
   const [cursos, setCursos] = useState<Curso[]>([]);
   const localCategorias = ["All"];
 
+
+  useEffect(() => {
+    async function prueba(){
+      const response = await CartService.GetCourses(17) as ApiCartResponse<number[]>
+      console.log(response.Data)
+    }
+    prueba()
+  }, []);
+
   useEffect(() => {
     async function fetchCursos() {
-      const data = await getCursos();
+      const data = await getCursos(); 
       setCursos(data);
     }
     fetchCursos();

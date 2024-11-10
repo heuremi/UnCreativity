@@ -43,7 +43,7 @@ export const schemaCliente = buildSchema(`
 
     type LoginResponse {
         success: Boolean
-        id: ID!
+        id: Int!
     }
 
     type Query {
