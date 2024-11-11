@@ -14,13 +14,19 @@ export function Login(){
 
   const handleSubmit =async (e:React.ChangeEvent<HTMLFormElement>) =>{
     e.preventDefault();
+    
     try{
         const resp = await AuthCourse.login(auth.email, auth.password);
         const { login } = resp.data;
         
+        //print sessionStorage, pa probar
+        Object.keys(sessionStorage).forEach(key => {
+          console.log(`${key}: ${sessionStorage.getItem(key)}`);
+        });
+        
         console.log(resp)
         if (resp.data.login.success) {
-          sessionStorage.setItem('user', JSON.stringify({ id: login.id, loggedIn: true })); // (cristian) cambie esto pero no se si esta bueno
+          sessionStorage.setItem('user', JSON.stringify({ id: login.id, email:auth.email, loggedIn: true })); // (cristian) cambie esto pero no se si esta bueno
           dispatchUser({ type: 'login', payload: login.id });
           history.replace('/dashboard/home');
       } else if (login.id !== -1) {

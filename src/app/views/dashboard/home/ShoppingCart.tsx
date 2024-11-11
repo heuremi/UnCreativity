@@ -1,22 +1,36 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Importa Link para la navegación
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './ShoppingCart.css';
 
 interface CartItem {
   id: number;
-  name: string;
-  price: number;
+  titulo: string;
+  descripcion: string;
+  autor: string;
+  imagenUrl: string;
+  precio: number;
 }
 
 const ShoppingCart: React.FC = () => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    { id: 1, name: 'Producto 1', price: 10 },
-    { id: 2, name: 'Producto 2', price: 20 },
-    { id: 3, name: 'Producto 3', price: 30 }
-  ]);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    const storedCart = sessionStorage.getItem('cart');
+    if (storedCart) {
+      setCartItems(JSON.parse(storedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      sessionStorage.setItem('cart', JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
 
   const clearCart = () => {
-    setCartItems([]);
+    sessionStorage.removeItem('cart'); 
+    setCartItems([]); 
+    window.location.reload();
   };
 
   const handleCheckout = () => {
@@ -33,8 +47,15 @@ const ShoppingCart: React.FC = () => {
         ) : (
           cartItems.map((item) => (
             <div key={item.id} className="flex justify-between items-center border-b py-2">
-              <span className="text-lg">{item.name}</span>
-              <span className="text-lg font-semibold">${item.price}</span>
+              <div className="flex">
+                <img src={item.imagenUrl} alt={item.titulo} className="w-16 h-16 mr-4" />
+                <div>
+                  <p className="text-lg font-semibold">{item.titulo}</p>
+                  <p className="text-sm text-gray-500">{item.descripcion}</p>
+                  <p className="text-sm text-gray-500">Autor: {item.autor}</p>
+                </div>
+              </div>
+              <span className="text-lg font-semibold">${item.precio}</span>
             </div>
           ))
         )}
