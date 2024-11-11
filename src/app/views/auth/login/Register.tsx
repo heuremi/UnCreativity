@@ -43,7 +43,7 @@ export const Register = () => {
             console.log('Respuesta del backend:', createCliente);
             console.log("REspoue: ", errors)
 
-            if (response.success) {
+            if (createCliente) {
               // Redirigir al dashboard si el registro fue exitoso
               history.push("/dashboard/home");
             } else {
@@ -88,7 +88,7 @@ export const Register = () => {
             <MyTextInput label="Contraseña" name="password1" type="password" placeholder="*****" />
             <MyTextInput label="Confirmar contraseña" name="password2" type="password" placeholder="*****" />
 
-            <div className="d-grid gap-2">
+            <div className="d-grid gap-1 my-2">
               <button type="submit" className="btn btn-primary">
                 Registrarse
               </button>
@@ -96,7 +96,7 @@ export const Register = () => {
 
             <div className="mt-3 mb-3 text-center">
               <h6>¿Ya tienes una cuenta?</h6>
-              <Link to="/auth/login">Iniciar Sesión</Link>
+              <Link to="/auth/login" className="text-blue-600 underline">Iniciar Sesión</Link>
             </div>
           </Form>
         </AuthCard>

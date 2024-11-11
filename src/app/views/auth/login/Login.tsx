@@ -47,25 +47,28 @@ export function Login(){
               <div className="text-center mb-2">
       </div>
 
-      <div className="mb-2 p-1 d-flex border rounded">
-        <div className="mx-2 mt-1"> 
+      <div className="flex-1 mb-2 p-1 d-flex border rounded items-center">
+        <div className="mx-2 mt-0 content-center"> 
           <img 
             className="img-fluid"
             src={accountIcon}
             alt="iconUser" />
         </div>
-        <input
-          autoFocus
-          className="form-control txt-input"
-          name="email"
-          type="email"
-          placeholder="pepito@alumnos.com"
-          onChange={ e => handleChange(e) }
-        />
+        <div className="flex w-full justify-center items-center">
+          <input
+            autoFocus
+            className="form-control txt-input mx-auto"
+            name="email"
+            type="email"
+            placeholder="pepito@alumnos.com"
+            onChange={(e) => handleChange(e)}
+          />
+        </div>
+
       </div>
 
       <div className="mb-2 p-1 d-flex border rounded">
-        <div className="mx-2 mt-1"> 
+        <div className="mx-2 mt-1 content-center"> 
           <img 
             className="img-fluid"
             src={passwordIcon}
@@ -103,12 +106,12 @@ export function Login(){
 
       <div className="mt-3 mb-3 text-center">
         <h6>¿Olvidaste la contraseña?</h6>
-        <Link to="/auth/recover">Recuperar contraseña</Link>
+        <Link to="/auth/recover" className="text-blue-700 underline">Recuperar contraseña</Link>
       </div>
 
       <div className="mt-3 mb-3 text-center">
           <h6>¿No tienes una cuenta?</h6>
-        <Link to="/auth/register">Registrar</Link>
+        <Link className="text-blue-600 underline" to="/auth/register">Registrar</Link>
       </div>
 
       </form>   

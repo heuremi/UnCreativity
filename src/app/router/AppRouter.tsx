@@ -37,11 +37,11 @@ export function AppRouter() {
                     {(user?.loggedIn || user) && (
                         <>
                             <Navbar />
-                            <Container className="mb-4">
+                            <div className="mb-4 w-4/5 flex flex-row min-h-screen justify-center items-center justify-self-center">
                                 <Route path='/dashboard/home' component={Home} />
                                 <Route path='/dashboard/profile' component={Profile} />
                                 <Route path='/dashboard/cart' component={ShoppingCart} /> {/* Nueva ruta del carrito */}
-                            </Container>
+                            </div>
                         </>
                     )}
 

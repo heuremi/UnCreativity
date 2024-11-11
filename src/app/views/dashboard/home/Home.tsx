@@ -111,16 +111,17 @@ export function Home() {
     );
 
   return (
-    <div>
+    <div className='w-100'>
+
       <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <Container>
-        <div className="d-flex align-items-center mb-3">
-          <Dropdown className="me-2">
-            <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+      <div className='w-100 flex-1 flex-col justify-center items-center content-center'>
+        <div className="d-flex align-items-center mb-3 justify-self-start">
+          <Dropdown className="me-2" drop='down'>
+            <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic" className="d-flex align-items-center px-3 py-2">
               <Filter size={20} /> {selectedCategory} <ChevronDown size={20} />
             </Dropdown.Toggle>
 
-            <Dropdown.Menu>
+            <Dropdown.Menu flip={false}> 
               {localCategorias.map((categorias) => (
                 <Dropdown.Item key={categorias} onClick={() => setSelectedCategory(categorias)}>
                   {categorias}
@@ -138,32 +139,33 @@ export function Home() {
         </div>
 
         {/* Listado de cursos */}
-        <Row>
-          {filteredAndSortedCourses.map((course) => (
-            <Col key={course.id} xs={12} md={4} className="mb-4">
-              <Card>
-                <Card.Body>
-                  <Card.Title>{course.titulo}</Card.Title>
-                  <Card.Text>{course.subtitulo}</Card.Text>
-                  <Card.Text>Categorías: {course.categorias.join(", ")}</Card.Text>
-                  <Card.Text>Autor: {course.autor}</Card.Text>
-                  <Card.Text>Lenguaje: {course.idioma}</Card.Text>
-                  <Card.Text>Calificación: {course.calificacion.toFixed(1)}</Card.Text>
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      setSelectedCourse(course);
-                      setShowModal(true);
-                    }}
-                  >
-                    Ver Detalles
-                  </Button>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
-        </Row>
-
+        <div>
+          <Row className='justify-stretch items-center'>
+            {filteredAndSortedCourses.map((course) => (
+              <Col key={course.id} lg={4} md={6} sm={6} className="justify-self-center items-center justify-center">
+                <Card className='mb-4 justify-self-center w-full'>
+                  <Card.Body className='w-full'>
+                    <Card.Title>{course.titulo}</Card.Title>
+                    <Card.Text>{course.subtitulo}</Card.Text>
+                    <Card.Text>Categorías: {course.categorias.join(", ")}</Card.Text>
+                    <Card.Text>Autor: {course.autor}</Card.Text>
+                    <Card.Text>Lenguaje: {course.idioma}</Card.Text>
+                    <Card.Text>Calificación: {course.calificacion.toFixed(1)}</Card.Text>
+                    <Button
+                      variant="primary"
+                      onClick={() => {
+                        setSelectedCourse(course);
+                        setShowModal(true);
+                      }}
+                    >
+                      Ver Detalles
+                    </Button>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
         {/* Detalle de los cursos */}
         {selectedCourse && (
           <Modal show={showModal} onHide={() => setShowModal(false)}>
@@ -216,7 +218,7 @@ export function Home() {
             </Button>
           </Modal.Footer>
         </Modal>
-      </Container>
+      </div>
     </div>
   );
 }
