@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ShoppingCart.css';
+import { useHistory } from 'react-router-dom';
 
 interface CartItem {
   id: number;
@@ -13,6 +14,7 @@ interface CartItem {
 
 const ShoppingCart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     const storedCart = sessionStorage.getItem('cart');
@@ -35,6 +37,7 @@ const ShoppingCart: React.FC = () => {
 
   const handleCheckout = () => {
     alert('Procediendo al pago...');
+    history.push('/dashboard/resume'); 
   };
 
   return (

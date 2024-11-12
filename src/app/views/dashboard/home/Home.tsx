@@ -165,6 +165,7 @@ export function Home() {
                   <Card className='mb-4 justify-self-center w-full'>
                     <Card.Body className='w-full'>
                       <Card.Title>{course.titulo}</Card.Title>
+                      <img src={course.imagenUrl} alt={course.titulo} width={500} height={300} ></img>
                       <Card.Text>{course.subtitulo}</Card.Text>
                       <Card.Text>Categorías: {course.categorias.join(', ')}</Card.Text>
                       <Card.Text>Autor: {course.autor}</Card.Text>

@@ -24,7 +24,7 @@
 
 .card {
     width: 300px; /* Establece un ancho fijo */
-    height: 400px; /* Establece una altura fija */
+    height: 700px; /* Establece una altura fija */
     overflow: hidden; /* Oculta el contenido que exceda el tamaño */
     display: flex; /* Usar flexbox para alinear el contenido */
     flex-direction: column; /* Organizar el contenido en columnas */
