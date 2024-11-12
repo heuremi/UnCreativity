@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './ShoppingCart.css';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 interface CartItem {
   id: number;
@@ -15,6 +16,7 @@ interface CartItem {
 const ShoppingCart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const history = useHistory();
+  var total = 0;
 
   useEffect(() => {
     const storedCart = sessionStorage.getItem('cart');
@@ -36,9 +38,25 @@ const ShoppingCart: React.FC = () => {
   };
 
   const handleCheckout = () => {
-    alert('Procediendo al pago...');
-    history.push('/dashboard/resume'); 
+    if(cartItems.length == 0) {
+      alert('Carrito vacio')
+      return;
+    } else { 
+      alert('Procediendo al pago...');
+      const user = JSON.parse(sessionStorage.getItem('user') || '{}'); 
+      console.log(user)
+      hanldePagoPrueba(user?.id, Math.round(total))
+    }
   };
+
+  const hanldePagoPrueba = async (idUsuario : number, monto : number) => { // (cristian: solo para probar el webpay
+    const url = 'http://localhost:3002/webpay-plus/create'
+    const resp = await axios.post(url, {
+      amount: monto,
+      cliente_id: idUsuario, 
+    })
+    window.location.replace(resp?.data?.urlWebpay);
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -48,19 +66,22 @@ const ShoppingCart: React.FC = () => {
         {cartItems.length === 0 ? (
           <p className="text-gray-500">El carrito está vacío</p>
         ) : (
-          cartItems.map((item) => (
-            <div key={item.id} className="flex justify-between items-center border-b py-2">
-              <div className="flex">
-                <img src={item.imagenUrl} alt={item.titulo} className="w-16 h-16 mr-4" />
-                <div>
-                  <p className="text-lg font-semibold">{item.titulo}</p>
-                  <p className="text-sm text-gray-500">{item.descripcion}</p>
-                  <p className="text-sm text-gray-500">Autor: {item.autor}</p>
+          cartItems.map((item) => {
+            total += item.precio
+            return (
+              <div key={item.id} className="flex justify-between items-center border-b py-2">
+                <div className="flex">
+                  <img src={item.imagenUrl} alt={item.titulo} className="w-16 h-16 mr-4" />
+                  <div>
+                    <p className="text-lg font-semibold">{item.titulo}</p>
+                    <p className="text-sm text-gray-500">{item.descripcion}</p>
+                    <p className="text-sm text-gray-500">Autor: {item.autor}</p>
+                  </div>
                 </div>
+                <span className="text-lg font-semibold">${item.precio}</span>
               </div>
-              <span className="text-lg font-semibold">${item.precio}</span>
-            </div>
-          ))
+            )
+            })
         )}
       </div>
       

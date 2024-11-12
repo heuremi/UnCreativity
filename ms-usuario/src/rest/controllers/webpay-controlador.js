@@ -122,7 +122,8 @@ export const commit = asyncHandler(async (req, res) => {
     const commitResponse = await (new WebpayPlus.Transaction()).commit(token)
     if (commitResponse.response_code === 0) { // Logica para avisar que la compra fue efectiva
         emitCompraValida(commitResponse) 
-        res.status(200).json(commitResponse)
+        res.redirect("http://localhost:3000/dashboard/resume")
+        //res.status(200).json(commitResponse)
     } else { // No acepatada por el banco?
         res.status(402).json({
           message : "cancelado por el banco"
