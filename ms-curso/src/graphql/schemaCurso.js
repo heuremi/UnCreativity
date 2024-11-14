@@ -38,6 +38,7 @@ export const schemaCurso = buildSchema(`
     type Query {
         cursos(filtro: SearchCursoInput): [Curso]
         curso(id: ID!): Curso
+        cursosById(ids: [Int!]!): [Curso]
     }
 
     type Mutation {

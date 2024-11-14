@@ -4,7 +4,7 @@ export const schemaCliente = buildSchema(`
 
     type Cliente {
         id: ID!
-        email: String!
+        email: String
         nombre: String
         apellido: String
         rut: String
@@ -24,7 +24,7 @@ export const schemaCliente = buildSchema(`
     }
 
     input ClienteInput {
-        email: String!
+        email: String
         nombre: String
         apellido: String
         rut: String

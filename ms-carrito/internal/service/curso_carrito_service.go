@@ -22,6 +22,7 @@ type CursoCarritoService interface {
 	Add(cursoCarrito request.CreateCursoCarritoRequest) error
 	DeleteCursoCarrito(cursoCarrito request.DeleteCursoCarritoRequest) error
 	DeleteAllCursosByCarritoId(carritoId int) error
+	GetCantidadCursos(carritoId int) (int, error)
 }
 
 type CursoCarritoServiceImpl struct {
@@ -39,6 +40,15 @@ func NewCursoCarritoServiceImpl(cursoCarritoRepository repository.CursoCarritoRe
 	}, err
 }
 
+// GetCantidadCursos implements CursoCarritoService.
+func (c *CursoCarritoServiceImpl) GetCantidadCursos(carritoId int) (int, error) {
+	data, err := c.FindByCarrito(carritoId)
+	if err != nil {
+		return 0, err
+	}
+	return len(data), nil
+}
+
 // Add implements CursoCarritoService.
 func (c *CursoCarritoServiceImpl) Add(cursoCarrito request.CreateCursoCarritoRequest) (err error) {
 	err = c.Validate.Struct(cursoCarrito)
@@ -49,6 +59,7 @@ func (c *CursoCarritoServiceImpl) Add(cursoCarrito request.CreateCursoCarritoReq
 	ctx, cancel := context.WithTimeout(context.Background(), 4*time.Second)
 	defer cancel()
 	valido, err := validatecurso.SendCursoValidation(ctx, cursoCarrito.CursoId)
+	log.Printf("error aca en cursos : %v", err)
 	if err != nil {
 		return err
 	}

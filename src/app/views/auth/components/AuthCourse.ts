@@ -59,4 +59,17 @@ export class AuthCourse{
         return (await unCreaticourse.post<RegisterResponse>('/usuario', { query }));
 
     }   
+
+    public static async registerUserInvited(): Promise<ApiResponse<RegisterResponse>> {
+
+        const query = `
+          mutation {
+            createCliente(datosCliente: {
+            }) {
+                id
+            }
+          }
+        `;
+        return (await unCreaticourse.post<RegisterResponse>('/usuario', { query }));
+    }   
 }

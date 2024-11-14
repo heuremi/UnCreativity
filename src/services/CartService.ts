@@ -1,10 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { enviroment } from "../enviroments/enviroment";
-import { number } from "yup";
 
 
 export interface ApiCartErrorResponse {
-    Code?: number, 
+    Code: number, 
     Message?: string
 }
 
@@ -45,6 +44,26 @@ export class CartService {
             const { data } = await axios.get(
                 `${this.cartUrl}/cliente/${idCliente}/carrito/curso`,
             )
+            const objCursos = data.data
+            const cursos = Object.keys(objCursos).map(function (key) { return objCursos[key]['curso_id']; });
+            return {
+                Code: data.code,
+                Status: data.Status,
+                Data: cursos
+            }
+        } catch (error: any) {
+            return {
+                Code: error?.response?.data?.code,
+                Message: error?.response?.data?.message,
+            }
+        }
+    }
+
+    public static async GetAmountCoursesCart(idCliente : number): Promise<ApiCartErrorResponse | ApiCartResponse<number>> {
+        try {
+            const { data } = await axios.get(
+                `${this.cartUrl}/cliente/${idCliente}/carrito/curso/all`,
+            )
             return {
                 Code: data.code,
                 Status: data.Status,
@@ -61,7 +80,10 @@ export class CartService {
     public static async AddCourse(idCliente : number, idCurso : number): Promise<ApiCartErrorResponse | ApiCartResponse > {
         try {
             const { data } = await axios.post(
-                `${this.cartUrl}/cliente/${idCliente}/carrito/curso/${idCurso}`,
+                `${this.cartUrl}/cliente/${idCliente}/carrito/curso/${idCurso}`,{},
+                {
+                    timeout: 5000,
+                }
             )
             const ApiCartResponse = {
                 Code: data.code,

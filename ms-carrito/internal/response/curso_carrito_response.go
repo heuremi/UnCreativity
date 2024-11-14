@@ -7,6 +7,7 @@ type CursoCarritoResponse struct {
 	CursoId   int `json:"curso_id"`
 }
 
+type GetCantidadCursos = Response[int]
 type CursoCarritoFindAllResponse = Response[[]CursoCarritoResponse]
 type CursoCarritoFindbyResponse = Response[[]CursoResponse]
 type CursoCarritoCreateResponse = Response[request.CreateCursoCarritoRequest]

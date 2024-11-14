@@ -34,7 +34,7 @@ export const create = asyncHandler(async (req, res) => {
         });
         return
     }
-
+    console.log(cliente_id)
     const response = await emitValidarCarrito({ cliente_id }) 
     console.log(response)
     if (response === null) { // No se pudo conectar con ms-carrito

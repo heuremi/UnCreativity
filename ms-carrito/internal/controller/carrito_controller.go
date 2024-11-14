@@ -111,6 +111,21 @@ func (controller *CarritoController) FindById(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, res)
 }
 
+func (controller *CarritoController) CreateCarritoMiddle(ctx *gin.Context) {
+	clienteIdString := ctx.Param("cliente_id")
+	clienteId, _ := strconv.Atoi(clienteIdString)
+
+	err := controller.CarritoService.Create(clienteId)
+	if err != nil {
+		ctx.Abort()
+		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
+			Code:    500,
+			Message: err.Error(),
+		})
+		return
+	}
+}
+
 // @BasePath /clientes
 // @Summary Crea un carrito
 // @Description Agrega un carrito a la base de datos
@@ -120,7 +135,7 @@ func (controller *CarritoController) FindById(ctx *gin.Context) {
 // @Success 200 {object} response.CarritoCreateResponse
 // @Failure 500 {object} response.ErrorResponse
 // @Router /cliente/{cliente_id}/carrito [post]
-func (controller *CarritoController) Create(ctx *gin.Context) {
+func (controller *CarritoController) CreateCarrito(ctx *gin.Context) {
 	clienteIdString := ctx.Param("cliente_id")
 	clienteId, err := strconv.Atoi(clienteIdString)
 	if err != nil {
@@ -131,10 +146,9 @@ func (controller *CarritoController) Create(ctx *gin.Context) {
 		return
 	}
 
-	
-
 	err = controller.CarritoService.Create(clienteId)
 	if err != nil {
+		ctx.Abort()
 		ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
 			Code:    500,
 			Message: err.Error(),

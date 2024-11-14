@@ -4,13 +4,22 @@ import (
 	"carrito/internal/env"
 	"context"
 	"encoding/json"
+	"net"
+	"time"
 
 	"github.com/google/uuid"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 func SendCursoValidation(ctx context.Context, CursoId int) (bool, error) {
-	conn, err := amqp.Dial(env.GetString("RabbitMQ_URL", "amqp://guest:guest@localhost:5672/"))
+
+	config := amqp.Config{
+		Dial: func(network, addr string) (net.Conn, error) {
+			return net.DialTimeout(network, addr, 5*time.Second)
+		},
+	}
+
+	conn, err := amqp.DialConfig(env.GetString("RabbitMQ_URL", "amqp://guest:guest@localhost:5672/"), config)
 	if err != nil {
 		return false, err
 	}

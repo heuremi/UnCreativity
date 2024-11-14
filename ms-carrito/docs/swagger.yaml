@@ -129,6 +129,15 @@ definitions:
       message:
         type: string
     type: object
+  response.GetCantidadCursos:
+    properties:
+      code:
+        type: integer
+      data:
+        type: integer
+      status:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -365,6 +374,32 @@ paths:
           schema:
             $ref: '#/definitions/response.ErrorResponse'
       summary: Elimina todos los cursos a partir del id cliente
+      tags:
+      - cliente
+    get:
+      description: cantidad cursos
+      parameters:
+      - description: Cliente ID
+        in: path
+        name: cliente_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.GetCantidadCursos'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/response.ErrorResponse'
+      summary: catnid cursos
       tags:
       - cliente
 swagger: "2.0"

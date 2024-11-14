@@ -233,6 +233,45 @@ const docTemplate = `{
             }
         },
         "/cliente/{cliente_id}/carrito/curso/all": {
+            "get": {
+                "description": "cantidad cursos",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "cliente"
+                ],
+                "summary": "catnid cursos",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Cliente ID",
+                        "name": "cliente_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.GetCantidadCursos"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/response.ErrorResponse"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "description": "Elimina todos los cursos de un cliente",
                 "produces": [
@@ -568,6 +607,20 @@ const docTemplate = `{
                     "type": "integer"
                 },
                 "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.GetCantidadCursos": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "integer"
+                },
+                "status": {
                     "type": "string"
                 }
             }

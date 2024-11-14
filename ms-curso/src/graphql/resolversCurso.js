@@ -10,6 +10,10 @@ export const resolvers = {
         return servicioCurso.findCursoById(id)
     },
 
+    cursosById: async ({ ids }) => {
+        return servicioCurso.findAllCursosByIds(ids)
+    },
+    
     createCurso: async ({ inputCurso }) => {
         return servicioCurso.createCurso(inputCurso)
     },

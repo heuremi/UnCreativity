@@ -17,12 +17,16 @@ func CarritoRouter(service *gin.Engine, carritoController *controller.CarritoCon
 	router := service.Group("/cliente/:cliente_id/carrito")
 
 	router.GET("", carritoController.FindByClienteId)
-	router.POST("", carritoController.Create)
+	router.POST("", carritoController.CreateCarrito)
 	router.DELETE("", carritoController.Delete)
+	router.GET("/curso/all", cursoCarritoController.GetCantidadCursos)
 
-	router.GET("/curso", cursoCarritoController.FindAllByClienteId)
-	router.POST("/curso/:curso_id", cursoCarritoController.Create)
-	router.DELETE("/curso/:curso_id", cursoCarritoController.DeleteCursoCarrito)
-	router.DELETE("/curso/all", cursoCarritoController.DeleteAllCursosByClienteId)
+	routercursos := service.Group("/cliente/:cliente_id/carrito")
+
+	routercursos.Use(carritoController.CreateCarritoMiddle)
+	routercursos.GET("/curso", cursoCarritoController.FindAllByClienteId)
+	routercursos.POST("/curso/:curso_id", cursoCarritoController.Create)
+	routercursos.DELETE("/curso/:curso_id", cursoCarritoController.DeleteCursoCarrito)
+	routercursos.DELETE("/curso/all", cursoCarritoController.DeleteAllCursosByClienteId)
 
 }

@@ -72,6 +72,19 @@ export class ServicioCurso {
         }
     }
 
+    async findAllCursosByIds(ids) {
+        console.log(ids)
+        try {
+            return await Curso.findAll({
+                where: {
+                    id: [...ids]
+                }
+            })
+        } catch (error) {
+            throw new Error(`Error inesperado: ${error.message}`)
+        }
+    }
+
     async updateCurso(id, inputCurso) {
         Object.keys(inputCurso).forEach(key => inputCurso[key] === undefined ? delete inputCurso[key] : {});
         try {
