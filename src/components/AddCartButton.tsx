@@ -10,9 +10,12 @@ export default function CustomButton({ courseId, handleAddToCart, inCart} : {cou
     const [loading, setLoading] = useState(false)
     
     const handleOnClickButton = async () => {
-        setLoading(true)
-        await handleAddToCart(courseId)
-        setTimeout(() => { setLoading(false)}, 300)
+        if(!loading) {
+            console.log("bloqueado")
+            setLoading(true)
+            await handleAddToCart(courseId)
+            setTimeout(() => { setLoading(false); console.log("libre")}, 900)
+        }
     }
 
     return (
