@@ -73,12 +73,19 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
                 <div className={"px-3 pt-0 no-underline aspect-square overflow-hidden rounded-full justify-center items-center " + (cart.length === 0 ? "" : "hover:bg-slate-100 duration-200")}>
                     <Nav.Link className="hover:no-underline" to="/dashboard/cart" disabled={cart.length === 0 ? true : false} as={NavLink}>
                         { cart.length === 0 ? <></> :
-                            <div className="w-6 h-6 bg-red-500 border-white border-2
+                            <div className={`w-6 h-6 bg-red-500 border-white border-2
                                 rounded-full overflow-hidden 
                                 text-center justify-self-end relative top-3 left-2
-                                no-underline justify-center items-center content-center">
-                                <p className="hover:no-underline text-xs text-white self-center">{cart.length}</p>
+                                no-underline justify-center items-center content-center
+                                transform transition-transform duration-700 ease-in-out
+                                animate-bounce`}
+                            >
+                                <p className="hover:no-underline text-xs text-white self-center">
+                                    {cart.length}
+                                </p>
                             </div>
+                            
+                            
                         }
                             <div className={cart.length === 0 ? "text-center justify-self-end relative top-6 no-underline justify-center items-center content-center opacity-50" : ""}>
                                 <FontAwesomeIcon icon={faCartShopping} size={'2x'} />

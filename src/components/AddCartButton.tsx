@@ -14,7 +14,7 @@ export default function CustomButton({ courseId, handleAddToCart, inCart} : {cou
             console.log("bloqueado")
             setLoading(true)
             await handleAddToCart(courseId)
-            setTimeout(() => { setLoading(false); console.log("libre")}, 900)
+            setTimeout(() => { setLoading(false); console.log("libre")}, 500)
         }
     }
 
