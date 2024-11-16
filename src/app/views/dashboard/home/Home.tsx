@@ -9,7 +9,9 @@ import useSessionStore from '../../../../stores/useSessionStore';
 import { AuthCourse } from '../../auth/components/AuthCourse';
 import Curso from '../../../interfaces/Curso';
 import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../../../services/CourseService';
-
+import { ClipLoader } from 'react-spinners';
+import AddCartButton from '../../../../components/AddCartButton';
+import CursoCard from '../../../../components/CursoCard';
 
 
 export function Home() {
@@ -24,7 +26,6 @@ export function Home() {
   const [localCategorias, setCategorias] = useState<string[]>(["All"]);
   const [userEmail, setUserEmail] = useState<string | null>(null); 
   const { usuarioId, nombre, email, setUsuarioId, setEmail, cart, setCart } = useSessionStore();
-
 
   useEffect(() => {
     async function fetchCursos() {
@@ -48,21 +49,6 @@ export function Home() {
     fetchCursos();
   }, [])
 
-
-  const handleAddToCart = async (course: Curso) => {
-    if (usuarioId) {
-      const resp = await CartService.AddCourse(usuarioId, course.id)
-      if( resp.Code >= 200 && resp.Code < 300) {
-        setCart([...cart, course.id])
-        //alert('Curso agregado al carrito');
-      } else {
-        const err = resp as ApiCartErrorResponse
-        alert(err.Message)
-      } 
-    } else {
-      setShowLoginPrompt(true);
-    }
-  };
 
   const handleGuestLogin = async () => {
     const guestEmail = userEmail || 'correo@example.com';
@@ -118,43 +104,11 @@ export function Home() {
           {/* List of courses */}
           <div>
             <Row className='justify-stretch items-center'>
-              {filteredAndSortedCourses.map((course) => (
-                <Col key={course.id} lg={4} md={6} sm={6} className="justify-self-center items-center justify-center">
-                  <Card className='mb-4 justify-self-center w-full'>
-                    <Card.Body className='w-full'> {course.imagenUrl && (
-                      <img
-                      src={course.imagenUrl}
-                      alt="Course Image"
-                      className="card-img-top sm:max-h-[155px] md:max-h-[155px] lg:max-h-[225px] object-cover"
-                      //style={{ maxHeight: '225px', objectFit: 'cover' }}
-                      /> )}
-                      <Card.Title>{course.titulo}</Card.Title>
-                      <Card.Text>{course.subtitulo}</Card.Text>
-                      <Card.Text>Categorías: {course.categorias.join(', ')}</Card.Text>
-                      <Card.Text>Autor: {course.autor}</Card.Text>
-                      <Card.Text>Lenguaje: {course.idioma}</Card.Text>
-                      <Card.Text>Calificación: {course.calificacion.toFixed(1)}</Card.Text>
-                      <div className='flex flex-col gap-1'>
-                        <Button
-                          variant="primary"
-                          onClick={() => {
-                            setSelectedCourse(course);
-                            setShowModal(true);
-                          }}
-                        >
-                          Ver Detalles
-                        </Button>
-                        <Button
-                          variant="success"
-                          onClick={() => handleAddToCart(course)} 
-                        >
-                          Agregar al Carrito
-                        </Button>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              ))}
+              {filteredAndSortedCourses.map((course, _) => {
+                return (
+                  <CursoCard key={course.id} course={course} setSelectedCourse={setSelectedCourse} setShowModal={setShowModal} setShowLoginPrompt={setShowLoginPrompt}/>
+                )
+              })}
             </Row>
           </div>
   
