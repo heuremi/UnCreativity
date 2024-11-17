@@ -6,6 +6,7 @@ import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../..
 import useSessionStore from '../../../../stores/useSessionStore';
 import Curso from '../../../interfaces/Curso';
 import { ApiCartErrorResponse, CartService } from '../../../../services/CartService';
+import { ApiCompraResponse, CompraService, CreateResponse } from '../../../../services/CompraService';
 
 export interface CartItem {
   id: number;
@@ -67,19 +68,20 @@ const ShoppingCart: React.FC = () => {
       return;
     } else { 
       alert('Procediendo al pago...');
-      const user = JSON.parse(sessionStorage.getItem('user') || '{}'); 
-      console.log(user)
       hanldePagoPrueba(usuarioId as number, Math.round(total))
     }
   };
 
   const hanldePagoPrueba = async (idUsuario : number, monto : number) => { // (cristian: solo para probar el webpay
-    const url = 'http://localhost:3002/webpay-plus/create'
-    const resp = await axios.post(url, {
-      amount: monto,
-      cliente_id: idUsuario, 
-    })
-    window.location.replace(resp?.data?.urlWebpay);
+    const resp = await CompraService.CreateCompra(idUsuario, monto)
+    console.log(resp)
+    if(resp.Code >= 200 && resp.Code < 300) {
+      const { urlWebpay } = (resp as ApiCompraResponse<CreateResponse>).Data
+      window.location.replace(urlWebpay)
+    } else {
+      alert('Error al intentar redireccionar la compra')
+      console.log(resp)
+    }
   }
 
   if(!usuarioId) {

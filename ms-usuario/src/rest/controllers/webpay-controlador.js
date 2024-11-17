@@ -14,6 +14,7 @@ export const create = asyncHandler(async (req, res) => {
     const { amount, cliente_id } = req.body
     if (!amount || !cliente_id) {
         res.status(400).json({
+          code: 400,
           success: false,
           message: `${!amount ? 'amount' : 'cliente_id'} is required`,
         });
@@ -21,6 +22,7 @@ export const create = asyncHandler(async (req, res) => {
     }
     if((typeof(cliente_id) !== 'number') || (typeof(amount) !== 'number')) {
       res.status(400).json({
+        code: 400,
         success: false,
         message: `${(typeof(cliente_id) !== 'number') ? cliente_id : amount} debe ser de tipo int`,
       });
@@ -29,6 +31,7 @@ export const create = asyncHandler(async (req, res) => {
 
     if(!isPositiveInteger(amount) || !isPositiveInteger(cliente_id)) {
         res.status(400).json({
+          code: 400,
           success: false,
           message: `${!isPositiveInteger(amount) ? 'amount' : 'cliente_id'} debe ser un entero positivo`,
         });
@@ -39,6 +42,7 @@ export const create = asyncHandler(async (req, res) => {
     console.log(response)
     if (response === null) { // No se pudo conectar con ms-carrito
         res.status(500).json({
+            code: 500,
             success: false,
             message: "Internal error"
         })
@@ -46,6 +50,7 @@ export const create = asyncHandler(async (req, res) => {
     }
     if ( response.valid == false ) { // Se pudo conectar con ms-carrito, pero sesion_id invalido (no se encontro)
         res.status(404).json({
+            code: 404,
             success: false,
             message: "cliente_id not found in ms-carrito"
         })
@@ -53,6 +58,7 @@ export const create = asyncHandler(async (req, res) => {
     }
     if ( response.cantidad_cursos < 1) { // Carrito vacio
         res.status(404).json({
+            code: 404,
             success: false,
             message: `carrito vacio`
         })
@@ -65,6 +71,7 @@ export const create = asyncHandler(async (req, res) => {
 
     if (buyOrder.length >= 26) { 
       res.status(500).json({
+        code: 500,
         success: false,
         message: "INTERNAL ERROR, buy_order excede los 26 caracteres"
       })
@@ -72,6 +79,7 @@ export const create = asyncHandler(async (req, res) => {
     }
     if (sessionId.length >= 61) {
       res.status(500).json({
+        code: 500,
         success: false,
         message: "INTERNAL ERROR, sessionId excede los 26 caracteres"
       })
@@ -90,10 +98,13 @@ export const create = asyncHandler(async (req, res) => {
     const paymentUrl = `${url}?token_ws=${token}`
 
     res.status(200).json({
-        success: true,
-        returnUrl: returnUrl,
-        urlWebpay: paymentUrl,
-        token: token
+        code: 200,
+        status: "OK",
+        data: {
+          returnUrl: returnUrl,
+          urlWebpay: paymentUrl,
+          token: token
+        }
     })
 })  
 
@@ -109,7 +120,7 @@ export const commit = asyncHandler(async (req, res) => {
   console.log("================================================================================");
   const params = req.method === 'GET' ? req.query : req.body;
 
-  const token = params.token_ws
+  const token = params.token_ws ?? '-1'
   const tbkToken = params.TBK_TOKEN
   const tbkOrdenCompra = params.TBK_ORDEN_COMPRA
   const tbkIdSesion = params.TBK_ID_SESION
@@ -122,22 +133,46 @@ export const commit = asyncHandler(async (req, res) => {
     const commitResponse = await (new WebpayPlus.Transaction()).commit(token)
     if (commitResponse.response_code === 0) { // Logica para avisar que la compra fue efectiva
         emitCompraValida(commitResponse) 
-        res.redirect("http://localhost:3000/dashboard/resume?success=true")
+        res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
         //res.status(200).json(commitResponse)
     } else { // No acepatada por el banco?
-        res.redirect("http://localhost:3000/dashboard/resume?success=false")
+        res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
     }
   } 
   else if (!tbkToken && tbkIdSesion && tbkOrdenCompra) { // Flujo 2
     // Logica para avisar pago anulado por tiempo de espera
-    res.redirect("http://localhost:3000/dashboard/resume?success=false")
+    res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
   }
   else if (tbkToken && tbkOrdenCompra && tbkIdSesion) { // Flujo 3 
     // Logica para avisar pago anulado por el usuario
-    res.redirect("http://localhost:3000/dashboard/resume?success=false")
+    res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
   }
   else { // Flujo 4 error inesperado
-    res.redirect("http://localhost:3000/dashboard/resume?success=false")
+    res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
   }
+})
+
+export const checkToken = asyncHandler(async (req, res) => {
+  const params = req.method === 'GET' ? req.query : req.body;
+  const token = params.token
+
+  try {
+    const tx = await (new WebpayPlus.Transaction()).status(token)
+    res.status(200).json({
+      data: tx,
+      code: 200,
+      status: "OK",
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      code: 500,
+      message: error?.message ?? "TOKEN NOT VALID"
+    })
+  }
+  
+
+  //res.redirect(`http://localhost:3000/dashboard/resume?success=false?status=${tx.status}`)
+
 })
 

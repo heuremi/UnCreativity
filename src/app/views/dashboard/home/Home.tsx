@@ -12,6 +12,7 @@ import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../..
 import { ClipLoader } from 'react-spinners';
 import AddCartButton from '../../../../components/AddCartButton';
 import CursoCard from '../../../../components/CursoCard';
+import { ApiCompraResponse, CompraService, GetComprasResponse } from '../../../../services/CompraService';
 
 
 export function Home() {
@@ -25,7 +26,25 @@ export function Home() {
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [localCategorias, setCategorias] = useState<string[]>(["All"]);
   const [userEmail, setUserEmail] = useState<string | null>(null); 
-  const { usuarioId, nombre, email, setUsuarioId, setEmail, cart, setCart } = useSessionStore();
+  const { usuarioId, setUsuarioId, setEmail, compras, setCompras} = useSessionStore();
+
+
+  useEffect(() => {
+    async function fetchCompras() {
+      if(!usuarioId) {setCompras([]); return}
+      const resp = await CompraService.GetCompras(usuarioId)
+            if(resp.Code < 300 && resp.Code >= 200) {
+                setCompras((resp as ApiCompraResponse<number[]>).Data)
+            } else if (resp.Code === 404) { // vacio
+                setCompras([])
+            } else {
+                setCompras([])
+                alert('hubo un problema con el carrito')
+                console.log((resp as ApiCartErrorResponse).Message)
+            }            
+        }
+      fetchCompras()
+  }, [])
 
   useEffect(() => {
     async function fetchCursos() {

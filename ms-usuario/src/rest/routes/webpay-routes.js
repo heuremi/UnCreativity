@@ -1,5 +1,5 @@
 import  express  from 'express'
-import { create, commit } from '../controllers/webpay-controlador.js'
+import { create, commit, checkToken } from '../controllers/webpay-controlador.js'
 
 
 
@@ -16,6 +16,7 @@ const webpayPlusRouter = express.Router()
 webpayPlusRouter.post("/create", create)
 webpayPlusRouter.get("/commit", commit)
 webpayPlusRouter.post("/commit", commit)
+webpayPlusRouter.get('/status', checkToken)
 
 
 export default webpayPlusRouter

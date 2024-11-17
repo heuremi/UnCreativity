@@ -23,7 +23,7 @@ export const schemaCurso = buildSchema(`
     }
 
     type Curso {
-        id: ID!
+        id: Int!
         titulo: String!
         subtitulo: String
         descripcion: String!
