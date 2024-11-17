@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './ShoppingCart.css';
-import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../../../services/CourseService';
 import useSessionStore from '../../../../stores/useSessionStore';
 import Curso from '../../../interfaces/Curso';
 import { ApiCartErrorResponse, CartService } from '../../../../services/CartService';
 
-interface CartItem {
+export interface CartItem {
   id: number;
   titulo: string;
   descripcion: string;
@@ -19,7 +18,6 @@ interface CartItem {
 
 const ShoppingCart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const history = useHistory();
   var total = 0;
   const { usuarioId, cart, setCart } = useSessionStore()
 

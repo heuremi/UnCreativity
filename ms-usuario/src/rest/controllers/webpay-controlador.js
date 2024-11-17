@@ -122,30 +122,22 @@ export const commit = asyncHandler(async (req, res) => {
     const commitResponse = await (new WebpayPlus.Transaction()).commit(token)
     if (commitResponse.response_code === 0) { // Logica para avisar que la compra fue efectiva
         emitCompraValida(commitResponse) 
-        res.redirect("http://localhost:3000/dashboard/resume")
+        res.redirect("http://localhost:3000/dashboard/resume?success=true")
         //res.status(200).json(commitResponse)
     } else { // No acepatada por el banco?
-        res.status(402).json({
-          message : "cancelado por el banco"
-        })
+        res.redirect("http://localhost:3000/dashboard/resume?success=false")
     }
   } 
   else if (!tbkToken && tbkIdSesion && tbkOrdenCompra) { // Flujo 2
     // Logica para avisar pago anulado por tiempo de espera
-    res.status(408).json({
-      message: 'transaccion anulada por tiempo de espera máximo'
-    }) 
+    res.redirect("http://localhost:3000/dashboard/resume?success=false")
   }
   else if (tbkToken && tbkOrdenCompra && tbkIdSesion) { // Flujo 3 
     // Logica para avisar pago anulado por el usuario
-    res.status(499).json({
-      message: 'transaccion anulada por el usuario'
-    })
+    res.redirect("http://localhost:3000/dashboard/resume?success=false")
   }
   else { // Flujo 4 error inesperado
-    res.status(500).json({
-      message: 'Internal Error'
-    })
+    res.redirect("http://localhost:3000/dashboard/resume?success=false")
   }
 })
 

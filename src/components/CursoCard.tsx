@@ -36,8 +36,7 @@ export default function CursoCard({course, setSelectedCourse, setShowModal, setS
         if (usuarioId) {
             const resp = await CartService.DeleteCourse(usuarioId, courseId)
             if (resp.Code >= 200 && resp.Code < 300) {
-                const newCart = cart.filter((cursoId) => cursoId !== courseId)
-                setCart([...newCart])
+                setCart([...cart.filter((cursoId) => cursoId !== courseId)]);
                 return true;
             } else {
                 const err = resp as ApiCartErrorResponse

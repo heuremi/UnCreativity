@@ -7,10 +7,12 @@ interface UseState {
     nombre?: string;
     email?: string;
     cart: number[];
+    compras: number[];
     setUsuarioId: (usuarioId?: number) => void;
     setNombre: (nombre?: string) => void;
     setEmail: (email?: string) => void;
     setCart: (cart: number[]) => void;
+    setCompras: ((compras: number[]) => void);
 }
 
 const useSessionStore = create<UseState>()(
@@ -21,10 +23,12 @@ const useSessionStore = create<UseState>()(
                 nombre: undefined,
                 email: undefined,
                 cart: [],
+                compras: [],
                 setNombre: (nombre?: string) => set(() => ({nombre})),
                 setEmail: (email?: string) => set(() => ({email})),
                 setUsuarioId: (usuarioId?: number) => set(() => ({usuarioId})),
-                setCart: (cart: number[]) => set(() => ({cart}))
+                setCart: (cart: number[]) => set(() => ({cart})),
+                setCompras: (compras: number[]) => set(() => ({compras})),
             }), 
             {
                 name: 'user-session',
