@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import { ApiResponse } from "../../../interfaces/AppResponse";
+import { ApiResponse } from "../../../../interfaces/AppResponse";
 import { LoginResponse, RegisterResponse, unCreaticourse } from "./UnCreaticourse";
 
 interface RegisterData {

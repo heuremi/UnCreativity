@@ -11,15 +11,15 @@ export const schemaCurso = buildSchema(`
     }
 
     input CursoInput {
-        titulo: String!
+        titulo: String
         subtitulo: String
-        descripcion: String!
+        descripcion: String
         calificacion: Float
-        autor: String!
-        idioma: String!
-        categorias: [String!]!
-        precio: Float!
-        imagenUrl: String!
+        autor: String
+        idioma: String
+        categorias: [String]
+        precio: Float
+        imagenUrl: String
     }
 
     type Curso {

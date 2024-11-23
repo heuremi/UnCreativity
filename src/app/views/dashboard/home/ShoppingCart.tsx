@@ -4,7 +4,7 @@ import './ShoppingCart.css';
 import axios from 'axios';
 import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../../../services/CourseService';
 import useSessionStore from '../../../../stores/useSessionStore';
-import Curso from '../../../interfaces/Curso';
+import Curso from '../../../../interfaces/Curso';
 import { ApiCartErrorResponse, CartService } from '../../../../services/CartService';
 import { ApiCompraResponse, CompraService, CreateResponse } from '../../../../services/CompraService';
 

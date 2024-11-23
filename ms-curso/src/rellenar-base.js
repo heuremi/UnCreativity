@@ -2,6 +2,7 @@ import axios from "axios";
 import { Variable } from "lucide-react";
 import * as fs from 'fs';
 import { options } from "babel";
+import { randomInt } from "crypto";
 
 
 function readJSONFile() {
@@ -16,7 +17,9 @@ function readJSONFile() {
 }
 
 const data = readJSONFile();
-
+data.forEach(element => {
+    element.calificacion = randomInt(0, 5) + Math.random();
+});
 axios({
     url: 'http://localhost:3001/graphql',
     method: 'post',

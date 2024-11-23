@@ -1,6 +1,6 @@
 import axios from "axios";
 import { enviroment } from "../enviroments/enviroment";
-import Curso from "../app/interfaces/Curso";
+import Curso from "../interfaces/Curso";
 
 
 

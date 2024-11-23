@@ -7,10 +7,8 @@ import { Navbar } from '../../auth/components/Navbar';
 import './Home.css';
 import useSessionStore from '../../../../stores/useSessionStore';
 import { AuthCourse } from '../../auth/components/AuthCourse';
-import Curso from '../../../interfaces/Curso';
+import Curso from '../../../../interfaces/Curso';
 import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../../../services/CourseService';
-import { ClipLoader } from 'react-spinners';
-import AddCartButton from '../../../../components/AddCartButton';
 import CursoCard from '../../../../components/CursoCard';
 import { ApiCompraResponse, CompraService, GetComprasResponse } from '../../../../services/CompraService';
 

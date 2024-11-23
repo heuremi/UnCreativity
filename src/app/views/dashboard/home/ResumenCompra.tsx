@@ -3,7 +3,7 @@ import './ShoppingCart.css';
 import { Button } from 'react-bootstrap';
 import { AlertCircle, CheckCircle, CircleAlert } from 'lucide-react';
 import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../../../services/CourseService';
-import Curso from '../../../interfaces/Curso';
+import Curso from '../../../../interfaces/Curso';
 import useSessionStore from '../../../../stores/useSessionStore';
 import { ApiCartErrorResponse, CartService } from '../../../../services/CartService';
 import { useHistory, useLocation  } from 'react-router-dom';

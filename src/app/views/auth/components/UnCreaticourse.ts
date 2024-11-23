@@ -1,6 +1,6 @@
 import axios, { Axios, AxiosResponse } from "axios";
 import { enviroment } from "../../../../enviroments/enviroment"
-import { ApiResponse } from "../../../interfaces/AppResponse";
+import { ApiResponse } from "../../../../interfaces/AppResponse";
 import { string } from "yup";
 
 export interface LoginResponse {

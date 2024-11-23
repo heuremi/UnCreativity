@@ -1,10 +1,10 @@
 import { Button, Card, Col } from "react-bootstrap";
 import AddCartButton from "./AddCartButton";
-import Curso from "../app/interfaces/Curso";
+import Curso from "../interfaces/Curso";
 import { SetStateAction, useState } from "react";
 import useSessionStore from "../stores/useSessionStore";
 import { ApiCartErrorResponse, CartService } from "../services/CartService";
-
+import { Rating } from '@mui/material'
 
 
 export default function CursoCard({course, setSelectedCourse, setShowModal, setShowLoginPrompt } : 
@@ -80,7 +80,10 @@ export default function CursoCard({course, setSelectedCourse, setShowModal, setS
                 <Card.Text>Categorías: {course.categorias.join(', ')}</Card.Text>
                 <Card.Text>Autor: {course.autor}</Card.Text>
                 <Card.Text>Lenguaje: {course.idioma}</Card.Text>
-                <Card.Text>Calificación: {course.calificacion.toFixed(1)}</Card.Text>
+                <Card.Text>
+                  <Card.Text>Clasificación: </Card.Text>
+                  <Rating name="Calificación" defaultValue={course.calificacion} readOnly precision={0.5}/>
+                </Card.Text>
                 <div className='flex flex-col gap-1'>
                   <Button
                     variant="primary"
