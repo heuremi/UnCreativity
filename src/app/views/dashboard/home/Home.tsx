@@ -10,7 +10,7 @@ import { AuthCourse } from '../../auth/components/AuthCourse';
 import Curso from '../../../../interfaces/Curso';
 import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from '../../../../services/CourseService';
 import CursoCard from '../../../../components/CursoCard';
-import { ApiCompraResponse, CompraService, GetComprasResponse } from '../../../../services/CompraService';
+import { ApiCompraResponse, CompraService } from '../../../../services/CompraService';
 
 
 export function Home() {
@@ -81,7 +81,7 @@ export function Home() {
         (course.titulo && course.titulo.toLowerCase().includes(searchTerm.toLowerCase())) ||
         (course.subtitulo && course.subtitulo.toLowerCase().includes(searchTerm.toLowerCase()));
 
-      const matchesCategory = selectedCategory === "All" || course.categorias.includes(selectedCategory); //probando
+      const matchesCategory = selectedCategory === "All" || course.categorias.includes(selectedCategory.toLowerCase()); //probando
 
       return matchesSearchTerm && matchesCategory;
     })

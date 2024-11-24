@@ -72,7 +72,7 @@ export default function CursoCard({course, setSelectedCourse, setShowModal, setS
                 <img
                 src={course.imagenUrl}
                 alt="Course Image"
-                className="card-img-top sm:max-h-[155px] md:max-h-[155px] lg:max-h-[225px] object-cover"
+                className="card-img-top card-img-bottom sm:max-h-[155px] md:max-h-[155px] lg:max-h-[225px] object-cover"
                 //style={{ maxHeight: '225px', objectFit: 'cover' }}
                 /> )}
                 <Card.Title>{course.titulo}</Card.Title>
