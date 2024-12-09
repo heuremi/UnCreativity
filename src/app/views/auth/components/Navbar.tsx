@@ -14,8 +14,8 @@ interface NavbarProps {
 
 export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const {usuarioId, setUsuarioId, cart, setCart} = useSessionStore();
-    const [isChatVisible, setIsChatVisible] = useState<boolean>(false); // Nuevo estado
+    const {usuarioId, setUsuarioId, cart, setCart, email ,setEmail} = useSessionStore();
+    const [isChatVisible, setIsChatVisible] = useState<boolean>(false);
 
     useEffect(() => {
         const getIdsCursosCarrito = async () => {
@@ -24,7 +24,7 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
             const resp = await CartService.GetCourses(usuarioId) 
             if(resp.Code < 300 && resp.Code >= 200) {
                 setCart((resp as ApiCartResponse<number[]>).Data)
-            } else if (resp.Code === 404) { // vacio
+            } else if (resp.Code === 404) {
                 setCart([])
             } else {
                 setCart([])
@@ -41,6 +41,7 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
 
     const handleLogout = () => {
         setUsuarioId(undefined)
+        setEmail(undefined)
         setCart([])
         window.location.reload()
     }
@@ -55,12 +56,14 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
             <div className="flex flex-1 w-full justify-between items-center">
                 <div>
                     <Nav className="px-3">
-                    <Nav.Link to="/dashboard/home" as={NavLink}>
-                        Inicio
-                    </Nav.Link>
-                    <Nav.Link to="/dashboard/profile" as={NavLink}>
-                        Editar Perfil
-                    </Nav.Link>
+                        <Nav.Link to="/dashboard/home" as={NavLink}>
+                            Inicio
+                        </Nav.Link>
+                        {(email && email !== 'correo@example.com') && (
+                            <Nav.Link to="/dashboard/profile" as={NavLink}>
+                                Editar Perfil
+                            </Nav.Link>
+                        )}
                     </Nav>
                 </div>
                 <div className="flex items-center">
@@ -116,10 +119,11 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
             <FontAwesomeIcon icon={faMessage} size={'2x'} color="white" />
         </div>
         {isChatVisible && (
-            <div className="fixed bottom-28 right-4 w-80 h-96 rounded-lg">
+            <div className="fixed bottom-28 right-4 w-[30%] h-[80vh] md:w-[25%] md:h-[70vh] rounded-lg">
                 <iframe
                     src="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/12/09/21/20241209211920-S1VWBLNV.json"
                     height="100%"
+                    width="100%"
                     allow="microphone; clipboard-read; clipboard-write"
                 ></iframe>
             </div>

@@ -11,7 +11,7 @@ export function Login(){
     
   const { dispatchUser } : any = useContext(AuthContext);
   const [ auth, setAuth ] = useState({ email: '', password: ''})
-  const {usuarioId, setUsuarioId} = useSessionStore();
+  const {usuarioId, setUsuarioId, setEmail} = useSessionStore();
   const history = useHistory();
 
   const handleSubmit =async (e:React.ChangeEvent<HTMLFormElement>) =>{
@@ -30,6 +30,7 @@ export function Login(){
         if (resp.data.login.success) {
           sessionStorage.setItem('user', JSON.stringify({ id: login.id, email:auth.email, loggedIn: true })); // (cristian) cambie esto pero no se si esta bueno
           setUsuarioId(login.id)
+          setEmail(auth.email)
           dispatchUser({ type: 'login', payload: login.id });
           history.replace('/dashboard/home');
       } else if (login.id !== -1) {
