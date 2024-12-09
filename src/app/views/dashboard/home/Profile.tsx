@@ -83,7 +83,7 @@ export function Profile() {
         <Container className="profile-container-5">
             <Row className="justify-content-center">
                 <Col md={10}>
-                    <Card className="card-4">
+                    <Card className="card-4" style={{ maxHeight: '500px', overflowY: 'auto' }}>
                         <Card.Body>
                             <h2 className="text-center perfil-1">Perfil de Usuario</h2>
                             <Form onSubmit={updateProfile}>
