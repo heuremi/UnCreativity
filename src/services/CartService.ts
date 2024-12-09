@@ -95,8 +95,8 @@ export class CartService {
         } catch (error: any) {
             console.log(error)
             const ErrorResponse = {
-                Code: error.response.data.code,
-                Message: error.response.data.message,
+                Code: error?.response?.data?.code,
+                Message: error?.response?.data?.message,
             }
             return ErrorResponse
         }

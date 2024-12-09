@@ -69,7 +69,8 @@ export function Home() {
 
   const handleGuestLogin = async () => {
     const guestEmail = userEmail || 'correo@example.com';
-    const id = (await AuthCourse.registerUserInvited()).data.createCliente.id; 
+    const id = parseInt((await AuthCourse.registerUserInvited()).data.createCliente.id); 
+    console.log(typeof(id))
     setEmail(guestEmail)
     setUsuarioId(id)
     setShowLoginPrompt(false);

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"log"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -66,12 +67,15 @@ func ConsumeCursoValidation(ch *amqp.Channel, ctx context.Context, correlationId
 				return false, errors.New("cannot connect with channel")
 			}
 			if msg.CorrelationId == correlationId {
+				log.Printf("%v cordd: %s", msg, correlationId)
 				var buf Buffer
 				var data Body
 				json.Unmarshal(msg.Body, &buf)
 				json.Unmarshal(buf.Data, &data)
 				return data.Valid, nil
 			}
+			log.Printf("%v cordd: %s", msg, correlationId)
+
 		case <-ctx.Done():
 			return false, errors.New("timeout for RPC response, no se pudo validar en ms-curso")
 		}

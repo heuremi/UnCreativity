@@ -12,7 +12,7 @@ export interface LoginResponse {
 
 export interface RegisterResponse {
     createCliente: {
-        id: number
+        id: string
     }
     errors?: string[]
 }
