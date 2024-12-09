@@ -24,7 +24,7 @@ const handleLogout = () => {
 
 export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const {usuarioId, setUsuarioId, cart, setCart} = useSessionStore();
+    const {usuarioId, setUsuarioId, cart, setCart, email, setEmail} = useSessionStore();
 
     useEffect(() => {
         const getIdsCursosCarrito = async () => {
@@ -51,10 +51,10 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
 
     const handleLogout = () => {
         setUsuarioId(undefined)
+        setEmail('correo@example.com')
         setCart([])
         window.location.reload()
     }
-
 
     return (
         <NavbarBs sticky="top" className="bg-white shadow-sm mb-3">
@@ -62,12 +62,16 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
             <div className="flex flex-1 w-full justify-between items-center">
                 <div>
                     <Nav className="px-3">
-                    <Nav.Link to="/dashboard/home" as={NavLink}>
-                        Inicio
-                    </Nav.Link>
-                    <Nav.Link to="/dashboard/profile" as={NavLink}>
-                        Editar Perfil
-                    </Nav.Link>
+                        <Nav.Link to="/dashboard/home" as={NavLink}>
+                            Inicio
+                        </Nav.Link>
+                        {
+                            isLoggedIn ? (
+                                <Nav.Link to="/dashboard/profile" as={NavLink}>
+                                Editar Perfil
+                                </Nav.Link>
+                            ) : null
+                        }
                     </Nav>
                 </div>
                 <div className={"px-3 pt-0 no-underline aspect-square overflow-hidden rounded-full justify-center items-center " + (cart.length === 0 ? "" : "hover:bg-slate-100 duration-200")}>
