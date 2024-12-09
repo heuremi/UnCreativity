@@ -118,8 +118,7 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
         {isChatVisible && (
             <div className="fixed bottom-28 right-4 w-80 h-96 rounded-lg">
                 <iframe
-                    src="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/12/09/20/20241209202920-2XT3JQAI.json"
-                    width="100%"
+                    src="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/12/09/21/20241209211920-S1VWBLNV.json"
                     height="100%"
                     allow="microphone; clipboard-read; clipboard-write"
                 ></iframe>
