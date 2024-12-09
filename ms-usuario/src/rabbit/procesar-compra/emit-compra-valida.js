@@ -37,7 +37,8 @@ export async function emitCompraValida(commitResponse)  {
             })
         }
         emitDeleteCursosPorCarrito( {carrito_id: carrito_id} )
-        sendEmail(email)
+        console.log(cursos.cursos_id)
+        sendEmail(email, cursos.cursos_id)
     }catch(err) {
         console.log(err.message)
     }
