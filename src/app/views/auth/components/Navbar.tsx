@@ -3,7 +3,7 @@ import { Button, Container, Nav, Navbar as NavbarBs, InputGroup, FormControl } f
 import { NavLink } from "react-router-dom";
 import { Search } from 'lucide-react'; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faMessage } from "@fortawesome/free-solid-svg-icons"; 
 import useSessionStore from "../../../../stores/useSessionStore";
 import { ApiCartErrorResponse, ApiCartResponse, CartService } from "../../../../services/CartService";
 
@@ -12,19 +12,10 @@ interface NavbarProps {
     setSearchTerm: (term: string) => void;
 }
 
-
-/*
-const handleLogout = () => {
-    //Al cerrar sesion se elimina el usuario actual y su carrito
-    sessionStorage.removeItem('user');
-    sessionStorage.removeItem('cart');
-    window.location.reload();
-};
-*/
-
 export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const {usuarioId, setUsuarioId, cart, setCart, email, setEmail} = useSessionStore();
+    const {usuarioId, setUsuarioId, cart, setCart} = useSessionStore();
+    const [isChatVisible, setIsChatVisible] = useState<boolean>(false); // Nuevo estado
 
     useEffect(() => {
         const getIdsCursosCarrito = async () => {
@@ -45,15 +36,17 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
     }, [])
 
     useEffect(() => {
-        // Revisa si existe usuario con sesión iniciada para mostrar botón de iniciar/cerrar sesión
         usuarioId ? setIsLoggedIn(true) : setIsLoggedIn(false);
     }, [usuarioId]);
 
     const handleLogout = () => {
         setUsuarioId(undefined)
-        setEmail('correo@example.com')
         setCart([])
         window.location.reload()
+    }
+
+    const toggleChat = () => {
+        setIsChatVisible(!isChatVisible);
     }
 
     return (
@@ -62,39 +55,35 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
             <div className="flex flex-1 w-full justify-between items-center">
                 <div>
                     <Nav className="px-3">
-                        <Nav.Link to="/dashboard/home" as={NavLink}>
-                            Inicio
-                        </Nav.Link>
-                        {
-                            isLoggedIn ? (
-                                <Nav.Link to="/dashboard/profile" as={NavLink}>
-                                Editar Perfil
-                                </Nav.Link>
-                            ) : null
-                        }
+                    <Nav.Link to="/dashboard/home" as={NavLink}>
+                        Inicio
+                    </Nav.Link>
+                    <Nav.Link to="/dashboard/profile" as={NavLink}>
+                        Editar Perfil
+                    </Nav.Link>
                     </Nav>
                 </div>
-                <div className={"px-3 pt-0 no-underline aspect-square overflow-hidden rounded-full justify-center items-center " + (cart.length === 0 ? "" : "hover:bg-slate-100 duration-200")}>
-                    <Nav.Link className="hover:no-underline" to="/dashboard/cart" disabled={cart.length === 0 ? true : false} as={NavLink}>
-                        { cart.length === 0 ? <></> :
-                            <div className={`w-6 h-6 bg-red-500 border-white border-2
-                                rounded-full overflow-hidden 
-                                text-center justify-self-end relative top-3 left-2
-                                no-underline justify-center items-center content-center
-                                transform transition-transform duration-700 ease-in-out
-                                animate-bounce`}
-                            >
-                                <p className="hover:no-underline text-xs text-white self-center">
-                                    {cart.length}
-                                </p>
-                            </div>
-                            
-                            
-                        }
+                <div className="flex items-center">
+                    <div className={"px-3 pt-0 no-underline aspect-square overflow-hidden rounded-full justify-center items-center " + (cart.length === 0 ? "" : "hover:bg-slate-100 duration-200")}>
+                        <Nav.Link className="hover:no-underline" to="/dashboard/cart" disabled={cart.length === 0 ? true : false} as={NavLink}>
+                            { cart.length === 0 ? <></> :
+                                <div className={`w-6 h-6 bg-red-500 border-white border-2
+                                    rounded-full overflow-hidden 
+                                    text-center justify-self-end relative top-3 left-2
+                                    no-underline justify-center items-center content-center
+                                    transform transition-transform duration-700 ease-in-out
+                                    animate-bounce`}
+                                >
+                                    <p className="hover:no-underline text-xs text-white self-center">
+                                        {cart.length}
+                                    </p>
+                                </div>
+                            }
                             <div className={cart.length === 0 ? "text-center justify-self-end relative top-6 no-underline justify-center items-center content-center opacity-50" : ""}>
                                 <FontAwesomeIcon icon={faCartShopping} size={'2x'} />
                             </div>
-                    </Nav.Link>
+                        </Nav.Link>
+                    </div>
                 </div>
             </div>
 
@@ -118,12 +107,24 @@ export function Navbar({ searchTerm, setSearchTerm }: NavbarProps) {
                 </NavLink>
             )}
 
-            {/* Render logout button if the user is logged in */}
             {isLoggedIn && (
                 <button onClick={handleLogout}>Cerrar sesión</button>
             )}
             </div>
         </div>
+        <div className="fixed bottom-4 right-4 rounded-full bg-blue-500 p-4 shadow-lg" onClick={toggleChat}>
+            <FontAwesomeIcon icon={faMessage} size={'2x'} color="white" />
+        </div>
+        {isChatVisible && (
+            <div className="fixed bottom-28 right-4 w-80 h-96 rounded-lg">
+                <iframe
+                    src="https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/12/09/20/20241209202920-2XT3JQAI.json"
+                    width="100%"
+                    height="100%"
+                    allow="microphone; clipboard-read; clipboard-write"
+                ></iframe>
+            </div>
+        )}
         </NavbarBs>
     );
 }
