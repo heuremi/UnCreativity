@@ -4,37 +4,33 @@
     justify-content: center;
 }
 
-/* Ajustar ancho de la tarjeta */
 .card-profile {
     background-color: #f8f9fa;
     padding: 30px;
     border-radius: 15px;
-    width: 100%; /* Ancho completo dentro de la columna */
-    max-width: 900px; /* Límite de ancho */
+    width: 100%;
+    max-width: 900px; 
 }
 
-/* Espaciado entre campos y botón */
 .mb-3,
 .mb-4 {
     margin-bottom: 20px !important;
 }
 
-/* Botón de acción */
 button[type="submit"] {
     padding: 12px;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 5px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
-/* Centrar título */
 .text-center {
     margin-bottom: 20px;
     font-weight: bold;
     font-size: 28px;
 }
 
-/* Responsive: mayor altura para pantallas pequeñas */
 @media (max-width: 767px) {
     .card-profile {
         padding: 20px;

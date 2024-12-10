@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import './Profile.css'; 
 import { ProfileData } from '../../../../interfaces/ProfileData';
+import { useHistory } from 'react-router-dom';
 import useSessionStore from '../../../../stores/useSessionStore';
 
 async function obtenerPerfil(id: string): Promise<ProfileData | null> {
@@ -55,6 +56,7 @@ export function Profile() {
     });
     const { usuarioId } = useSessionStore();
     const id = usuarioId ? usuarioId.toString() : '';
+    const history = useHistory();
 
     useEffect(() => {
         if (id) {
@@ -67,6 +69,10 @@ export function Profile() {
             console.log('ID no encontrado en localStorage');
         }
     }, [id]); 
+
+    const handleBackClick = () => {
+        history.push('/dashboard/home');
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -97,6 +103,7 @@ export function Profile() {
             if (response.data && response.data.data) {
                 console.log('Respuesta de actualización:', response.data);
                 alert('Perfil actualizado con éxito');
+                history.goBack();
             } else {
                 console.error("Respuesta de la API no contiene datos válidos:", response.data);
                 alert('Hubo un error al actualizar el perfil');
@@ -192,6 +199,9 @@ export function Profile() {
                                     <Col>
                                         <Button type="submit" className="btn btn-primary w-100">
                                             Guardar cambios
+                                        </Button>
+                                        <Button onClick={handleBackClick} className="btn btn-primary w-100">
+                                            Volver atrás
                                         </Button>
                                     </Col>
                                 </Row>
