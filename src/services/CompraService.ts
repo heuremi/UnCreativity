@@ -13,6 +13,7 @@ export interface ApiCompraResponse<T = any> {
     Data: T,
 }
 
+
 export interface CommitResponse {
     vci: string,
     amount: number,
@@ -41,6 +42,15 @@ export interface GetComprasResponse {
     compras: {
         cursoId: number
     }[]
+}
+
+export interface GetComprasWithDateResponse {
+    compras: Compra[]
+} 
+
+export type Compra  = {
+    cursoId : number,
+    fecha: string
 }
 
 export class CompraService {
@@ -94,6 +104,7 @@ export class CompraService {
                     clienteId: ${usuarioId}
                 }) {
                     cursoId
+                    fecha
                 }
             }
         `;
@@ -112,6 +123,40 @@ export class CompraService {
                 Code: 200,
                 Status: "OK",
                 Data: comprasNumeros
+            }
+        } catch (error: any) {
+            console.log(error)
+            return {
+                Code: error?.response?.data?.code,
+                Message: error?.response?.data?.message,
+            }
+        }
+    }
+
+    public static async GetComprasWithDate(usuarioId : number ): Promise<ApiCompraErrorResponse | ApiCompraResponse<Compra[]>> {
+        const query = `
+            {
+                compras(filtro: {
+                    clienteId: ${usuarioId}
+                }) {
+                    cursoId
+                    fecha
+                }
+            }
+        `;
+
+        try {
+            const { data } = await axios.post(
+                `${this.baseUrl}/compra`,
+                {
+                    query
+                }
+            )
+            const resp = data.data as GetComprasWithDateResponse
+            return {
+                Code: 200,
+                Status: "OK",
+                Data: resp.compras
             }
         } catch (error: any) {
             console.log(error)

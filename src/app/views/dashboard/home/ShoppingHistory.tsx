@@ -4,25 +4,12 @@ import { Button } from 'react-bootstrap';
 import axios from 'axios';
 import useSessionStore from "../../../../stores/useSessionStore";
 import { enviroment } from "../../../../enviroments/enviroment";
+import { ApiCompraResponse, Compra, CompraService } from "../../../../services/CompraService";
+import { ApiCartErrorResponse } from "../../../../services/CartService";
+import Curso from "../../../../interfaces/Curso";
+import { ApiCursoErrorResponse, ApiCursoResponse, CourseService } from "../../../../services/CourseService";
 
-interface Compra {
-  cursoId: string;
-  fecha: string;
-}
 
-interface Curso {
-  id: string;
-  titulo: string;
-  autor: string;
-  precio: number;
-  fecha: string;
-  imagenUrl: string;
-  descripcion: string;
-}
-
-interface GetComprasResponse {
-  compras: Compra[];
-}
 
 export function ShoppingHistory() {
   const history = useHistory()
@@ -31,52 +18,50 @@ export function ShoppingHistory() {
   const [cursos, setCursos] = useState<Curso[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const baseUrl = enviroment.baseUrl;
   const cursoBaseUrl = enviroment.cursoBaseUrl;
 
+
   useEffect(() => {
-    if (usuarioId) {
-      fetchCompras(usuarioId);
-    } else {
-      setLoading(false);
-      setError("Usuario no autenticado.");
-    }
-  }, [usuarioId]);
-
-  async function fetchCompras(usuarioId: number) {
-    const query = `
-      {
-          compras(filtro: {
-              clienteId: ${usuarioId}
-          }) {
-              cursoId
-              fecha
-          }
+    async function fetchCompras() {
+      if(!usuarioId) {
+        setCompras([]); 
+        setLoading(false)
+        setError("Usuario no autenticado")
+        return
       }
-    `;
-
-    try {
-      const { data } = await axios.post(`${baseUrl}/compra/`, { query }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const resp = data.data as GetComprasResponse;
-      setCompras(resp.compras);
-
-      if (resp.compras.length > 0) {
-        const cursoIds = resp.compras.map((compra) => parseInt(compra.cursoId));
-        await fetchCursos(cursoIds);
+      const resp = await CompraService.GetComprasWithDate(usuarioId)
+      if(resp.Code < 300 && resp.Code >= 200) {
+          setCompras((resp as ApiCompraResponse<Compra[]>).Data)
+      } else if (resp.Code === 404) { // vacio
+          setCompras([])
       } else {
-        setCursos([]);
-      }
-    } catch (error: any) {
-      console.error("Error al obtener las compras:", error);
-      setError(error?.response?.data?.message || "Error al obtener las compras.");
-    } finally {
-      setLoading(false);
+          setCompras([])
+          alert('hubo un problema con el carrito')
+          console.log((resp as ApiCartErrorResponse).Message)
+      }            
     }
-  }
+    fetchCompras()
+  }, [])
+
+
+  useEffect(() => {
+    async function fetchCursos() {
+      console.log("Compras: ", compras)
+      const resp = await CourseService.getCursosPorIds(compras.map((compra) => (compra.cursoId)))
+      if(resp.Code >= 200 && resp.Code < 300) {
+        const { Data } = resp as ApiCursoResponse<Curso[]>
+        setCursos(Data)
+        setLoading(false)
+      } else {
+        alert('Hubo un error intentando conectar con ms-curso')
+        console.error("Error al obtener los cursos:", error);
+        setError((resp as ApiCursoErrorResponse).Message || "Error al obtener los cursos.");
+        console.log(resp.Code)
+        console.log((resp as ApiCursoErrorResponse).Message)
+      }
+    }
+    fetchCursos();
+  }, [compras])
 
   async function fetchCursos(cursoIds: number[]) {
     try {
@@ -138,7 +123,7 @@ export function ShoppingHistory() {
                   />
                   <div>
                     <p className="text-lg font-semibold">{curso.titulo}</p>
-                    <p className="text-sm text-gray-500">Fecha de compra: {compra ? formatDate(compra.fecha) : "N/A"}</p>
+                    <p className="text-sm text-gray-500">Fecha de compra: {compra ? (new Date(parseInt(compra.fecha))).toLocaleDateString() : "N/A"}</p>
                   </div>
                 </div>
                 <span className="text-lg font-semibold">${curso.precio.toFixed(2)}</span>
