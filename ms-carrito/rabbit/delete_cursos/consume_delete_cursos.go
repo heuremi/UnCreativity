@@ -23,7 +23,7 @@ func ConsumeDeleteCursos(cursoCarritoService service.CursoCarritoService) error 
 	}
 
 	err = ch.ExchangeDeclare(
-		"cursos_carrito", // Exchange
+		env.GetString("EXCHANGE_CURSOS_CARRITO", "cursos_carrito"), // Exchange
 		"direct",
 		false,
 		false,

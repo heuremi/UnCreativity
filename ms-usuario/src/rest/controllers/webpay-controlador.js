@@ -1,6 +1,6 @@
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
-
+import 'dotenv/config'
 var validator = require('validator');
 const { WebpayPlus } = require('transbank-sdk');
 
@@ -67,7 +67,7 @@ export const create = asyncHandler(async (req, res) => {
 
     const buyOrder = response.carrito_id.toString()
     const sessionId = cliente_id.toString()
-    const returnUrl = "http://localhost:3002/webpay-plus/commit"
+    const returnUrl = process.env?.WEBPAY_RETURN_URL || "http://localhost:3002/webpay-plus/commit"
 
     if (buyOrder.length >= 26) { 
       res.status(500).json({
@@ -133,22 +133,22 @@ export const commit = asyncHandler(async (req, res) => {
     const commitResponse = await (new WebpayPlus.Transaction()).commit(token)
     if (commitResponse.response_code === 0) { // Logica para avisar que la compra fue efectiva
         emitCompraValida(commitResponse) 
-        res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
+        res.redirect(`${process.env?.FRONT_URL}/dashboard/resume?token=${token}`)
         //res.status(200).json(commitResponse)
     } else { // No acepatada por el banco?
-        res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
+      res.redirect(`${process.env?.FRONT_URL}/dashboard/resume?token=${token}`)
     }
   } 
   else if (!tbkToken && tbkIdSesion && tbkOrdenCompra) { // Flujo 2
     // Logica para avisar pago anulado por tiempo de espera
-    res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
+    res.redirect(`${process.env?.FRONT_URL}/dashboard/resume?token=${token}`)
   }
   else if (tbkToken && tbkOrdenCompra && tbkIdSesion) { // Flujo 3 
     // Logica para avisar pago anulado por el usuario
-    res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
+    res.redirect(`${process.env?.FRONT_URL}/dashboard/resume?token=${token}`)
   }
   else { // Flujo 4 error inesperado
-    res.redirect(`http://localhost:3000/dashboard/resume?token=${token}`)
+    res.redirect(`${process.env?.FRONT_URL}/dashboard/resume?token=${token}`)
   }
 })
 

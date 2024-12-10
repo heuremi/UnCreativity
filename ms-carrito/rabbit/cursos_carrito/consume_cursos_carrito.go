@@ -23,7 +23,7 @@ func ConsumeCursosCarrito(cursoCarritoService service.CursoCarritoService) error
 	}
 
 	err = ch.ExchangeDeclare(
-		"cursos_carrito",
+		env.GetString("EXCHANGE_CURSOS_CARRITO", "cursos_carrito"),
 		"direct",
 		false,
 		false,
@@ -36,7 +36,7 @@ func ConsumeCursosCarrito(cursoCarritoService service.CursoCarritoService) error
 	}
 
 	q, err := ch.QueueDeclare(
-		"rpc_cursos_carrito",
+		env.GetString("QUEUE_RPC_CURSOS_CARRITO", "rpc_cursos_carrito"),
 		false,
 		false,
 		false,

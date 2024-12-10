@@ -1,6 +1,8 @@
+import 'dotenv/config'
+
 export function sendCursoValidation(channel, data, correlationId, replyTo) {
   
-  const exchange = 'curso_exist';
+  const exchange = process.env?.EXCHANGE_CURSO_VALIDATION || 'curso_exist';
   channel.assertExchange(exchange, 'direct', {
     durable: false
   });

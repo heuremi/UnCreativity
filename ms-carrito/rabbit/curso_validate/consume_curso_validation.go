@@ -1,6 +1,7 @@
 package validatecurso
 
 import (
+	"carrito/internal/env"
 	"context"
 	"encoding/json"
 	"errors"
@@ -12,7 +13,7 @@ import (
 func ConsumeCursoValidation(ch *amqp.Channel, ctx context.Context, correlationId string) (bool, error) {
 
 	err := ch.ExchangeDeclare(
-		"curso_exist",
+		env.GetString("EXCHANGE_CURSO_EXIST", "curso_exist"),
 		"direct",
 		false, // durable
 		false, // autoDelete
@@ -25,7 +26,7 @@ func ConsumeCursoValidation(ch *amqp.Channel, ctx context.Context, correlationId
 	}
 
 	q, err := ch.QueueDeclare(
-		"reply_curso_exist", // name
+		env.GetString("QUEUE_REPLY_CURSO_EXIST","reply_curso_exist"), // name
 		false,               // durable
 		false,               // delete when unused
 		false,               // exclusive
@@ -39,7 +40,7 @@ func ConsumeCursoValidation(ch *amqp.Channel, ctx context.Context, correlationId
 	err = ch.QueueBind(
 		q.Name,
 		"reply_curso_exist",
-		"curso_exist",
+		env.GetString("EXCHANGE_CURSO_EXIST","curso_exist"),
 		false,
 		nil,
 	)
