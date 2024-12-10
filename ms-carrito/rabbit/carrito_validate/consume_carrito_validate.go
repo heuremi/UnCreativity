@@ -24,7 +24,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 	}
 
 	err = ch.ExchangeDeclare(
-		"carrito_exist", // Exchange
+		env.GetString("EXCHANGE_CARRITO_EXIST","carrito_exist"), // Exchange
 		"direct",
 		false,
 		false,
@@ -37,7 +37,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 	}
 
 	q, err := ch.QueueDeclare(
-		"rpc_carrito_exist",
+		env.GetString("QUEUE_RPC_CARRITO_EXIST","rpc_carrito_exist"),
 		false,
 		false,
 		false,
@@ -51,7 +51,7 @@ func ConsumeCarritoValidate(carritoService service.CarritoService, cursoCarritoS
 	err = ch.QueueBind(
 		q.Name,
 		"rpc_carrito_exist", // key
-		"carrito_exist",     // Exchange
+		env.GetString("EXCHANGE_CARRITO_EXIST","carrito_exist"),     // Exchange
 		false,
 		nil,
 	)

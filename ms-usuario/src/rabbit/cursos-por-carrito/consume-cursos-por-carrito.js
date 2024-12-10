@@ -1,3 +1,4 @@
+import 'dotenv/config'
 
 export async function consumeCursosCarrito(channel, correlationId, replyTo) {
 
