@@ -1,21 +1,22 @@
 import nodemailer from 'nodemailer'
 import axios from 'axios'
-import 'dotenv/config'
+
+
 
 export async function sendEmail(email, cursosIds) {
     
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-        user: process.env?.EMAIL_NAME || 'uncreativity0@gmail.com',
-        pass: process.env?.EMAIL_PASSWORD
+        user: 'uncreativity0@gmail.com',
+        pass: 'owdd zjlq ojuc owwn'
         }
     });
 
     var mailOptions = {
-        from: process.env?.EMAIL_NAME || 'uncreativity0@gmail.com' ,
+        from: 'uncreativity0@gmail.com',
         to: email,
-        subject: 'UnCreativity: Transaccion completada',
+        subject: 'Transaccion completada // Mostrar resumen de compra',
         html: await resumenHTML(email, cursosIds)
     };
     
@@ -42,7 +43,7 @@ async function getCursosPorIds(ids) {
     `;
     try {
         const resp = await axios.post(
-            process.env?.MS_CURSO_URL || `http://localhost:3001/graphql`, { query }
+            `http://localhost:3001/graphql`, { query }
         )
         console.log("La respuesta del backend: ", resp)
         return {

@@ -32,7 +32,7 @@ func SendCursoValidation(ctx context.Context, CursoId int) (bool, error) {
 	defer ch.Close()
 
 	err = ch.ExchangeDeclare(
-		env.GetString("","curso_exist"),
+		"curso_exist",
 		"direct",
 		false, // durable
 		false, // autoDelete

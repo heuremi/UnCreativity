@@ -4,14 +4,11 @@ import (
 	"carrito/docs"
 	"carrito/internal/controller"
 	"carrito/internal/db"
-	"carrito/internal/env"
 	"carrito/internal/repository"
 	"carrito/internal/service"
 	"carrito/internal/utils"
 	"carrito/rabbit"
-	"log"
 
-	"github.com/joho/godotenv"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
@@ -26,13 +23,6 @@ import (
 )
 
 func main() {
-
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalf("Error cargando el archivo .env: %v", err)
-	}
-
-	log.Printf("%s", env.GetString("RABBITMQ_URL", ""))
 
 	db := db.DatabaseConnection()
 	validate := validator.New()
@@ -66,7 +56,7 @@ func main() {
 	*/
 
 	server := &http.Server{
-		Addr:           env.GetString("PORT", ":8080"),
+		Addr:           ":8080",
 		Handler:        routes,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,

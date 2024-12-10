@@ -1,7 +1,9 @@
 import axios from "axios";
+import { Variable } from "lucide-react";
 import * as fs from 'fs';
+import { options } from "babel";
 import { randomInt } from "crypto";
-import 'dotenv/config'
+
 
 function readJSONFile() {
     try {
@@ -19,7 +21,7 @@ data.forEach(element => {
     element.calificacion = randomInt(0, 5) + Math.random();
 });
 axios({
-    url: process.env?.MS_CURSO_URL ||'http://localhost:3001/graphql',
+    url: 'http://localhost:3001/graphql',
     method: 'post',
     data: {
         query: `mutation createCursos($inputCursos: [CursoInput!]!) {

@@ -1,15 +1,13 @@
 import amqp from 'amqplib'
-import 'dotenv/config'
 import { sendCursoValidation } from '../emit/emit_curso_validation.js'
 import { ServicioCurso } from '../../services/servicio-curso.js'
 
 
 export async function consumeCursoValidation() {
-    
-    const exchange = process.env?.EXCHANGE_CURSO_VALIDATION || 'curso_exist'
+    const exchange = 'curso_exist'
     const servicioCurso = new ServicioCurso()
     try {
-        const connection = await amqp.connect(process.env?.RABBIT_URL || "amqp://guest:guest@localhost:5672/", {
+        const connection = await amqp.connect("amqp://guest:guest@localhost:5672/", {
             timeout: 5000
         })
         const channel = await connection.createChannel()
@@ -19,8 +17,7 @@ export async function consumeCursoValidation() {
             {
                 durable: false,
         })
-        const queue = process.env?.QUEUE_RPC_CURSO_VALIDATION || 'rpc_curso_exist'
-        
+        const queue = 'rpc_curso_exist'
         await channel.assertQueue(queue, {exclusive: false})
         await channel.bindQueue(queue, exchange, 'rpc_curso_exist')
         console.log("[Y] Escuchando mensajes en la cola: ", queue)

@@ -1,12 +1,12 @@
 import amqp from 'amqplib'
-import 'dotenv/config'
+
 
 export async function emitDeleteCursosPorCarrito(data) {
     const exchange = 'cursos_carrito'
     var connection, channel
     try {
 
-        connection = await amqp.connect(process.env?.RABBIT_URL || 'amqp://guest:guest@localhost:5672/',
+        connection = await amqp.connect('amqp://guest:guest@localhost:5672/',
             {timeout : 5000}
         )
         channel = await connection.createChannel() 

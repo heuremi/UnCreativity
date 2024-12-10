@@ -5,7 +5,7 @@
 import amqp from 'amqplib'
 import { consumeValidarCarrito } from './consume-validar-carrito.js'
 import { v4 } from 'uuid'
-import 'dotenv/config'
+
 
 export async function emitValidarCarrito(data) {
     console.log("Entra")
@@ -15,7 +15,7 @@ export async function emitValidarCarrito(data) {
     var connection, channel
     try {
 
-        connection = await amqp.connect(process.env?.RABBIT_URL || 'amqp://guest:guest@localhost:5672/',
+        connection = await amqp.connect('amqp://guest:guest@localhost:5672/',
             {timeout : 5000}
         )
         

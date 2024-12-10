@@ -34,7 +34,7 @@ func SendCursosCarrito(correlationId, replyTo string, data []byte) error {
 	}
 	log.Printf("corrId: %s", correlationId)
 	err = ch.Publish(
-		env.GetString("EXCHANGE_CARRITO_EXIST", "carrito_exist"),
+		"carrito_exist",
 		replyTo,
 		false,
 		false,

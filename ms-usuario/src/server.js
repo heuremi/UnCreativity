@@ -7,7 +7,6 @@ import { resolversCliente } from './graphql/resolvers/resolversCliente.js'
 import { resolversCompra } from './graphql/resolvers/resolversCompra.js'
 import webpayPlusRouter from './rest/routes/webpay-routes.js'
 import bodyParser from 'body-parser'
-import 'dotenv/config'
 
 const app = express();
 
@@ -15,9 +14,6 @@ const corsOptions = {
     origin: 'http://localhost:3000', 
     credentials: true, 
 };
-
-
-console.log(process.env?.FRONT_URL)
 
 app.use(cors(corsOptions)); 
 
