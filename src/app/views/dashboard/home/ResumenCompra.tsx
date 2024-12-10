@@ -113,7 +113,7 @@ export default function ResumenCompraPago() {
             {cursos.length === 0 ? (
                 <p className="text-gray-500">El carrito está vacío</p>
             ) : (
-                <div className="scrollable-container"> {/* Make this container scrollable */}
+                <div className="scrollable-container">
                 {cursos.map((curso) => (
                   <div key={curso.id} className="flex justify-between items-center border-b py-2">
                     <div className="flex items-center justify-center">

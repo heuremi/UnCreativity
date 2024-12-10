@@ -10,6 +10,7 @@ import { Profile } from "../views/dashboard/home/Profile";
 import { Recover } from "../views/auth/login/Recover";
 import ShoppingCart from "../views/dashboard/home/ShoppingCart";
 import ResumenCompra from "../views/dashboard/home/ResumenCompra"; 
+import { ShoppingHistory } from "../views/dashboard/home/ShoppingHistory"; 
 
 interface Context {
     dispachUser?: any;
@@ -40,6 +41,7 @@ export function AppRouter() {
                             <div className="mb-4 w-4/5 flex flex-row min-h-screen justify-center items-center justify-self-center">
                                 <Route path='/dashboard/home' component={Home} />
                                 <Route path='/dashboard/profile' component={Profile} />
+                                <Route path='/dashboard/history' component={ShoppingHistory} />
                                 <Route path='/dashboard/cart' component={ShoppingCart} />
                                 <Route path="/dashboard/resume" component={ResumenCompra} />
                             </div>

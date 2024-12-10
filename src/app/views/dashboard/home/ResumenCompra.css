@@ -118,10 +118,9 @@
     background-color: #45a049;
   }
   
-  /* NEW STYLE FOR SCROLLABLE CONTAINER */
   .scrollable-container {
-    max-height: 400px; /* Adjust the height as per your requirements */
-    overflow-y: auto;  /* Enable vertical scroll */
+    max-height: 400px;
+    overflow-y: auto;
     padding-right: 10px;
   }
   

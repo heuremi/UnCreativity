@@ -1,0 +1,126 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.bg-white {
+  background-color: #ffffff;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.transition {
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  filter: brightness(0.9);
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.card-header {
+  padding-bottom: 1rem;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+}
+
+.card-content {
+  padding: 1rem 0;
+}
+
+.card-footer {
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+.curso-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1rem;
+}
+
+.curso-item .curso-info {
+  display: flex;
+  align-items: center;
+}
+
+.curso-item .curso-info img {
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.curso-item .curso-info h3 {
+  margin-left: 1rem;
+  font-weight: 600;
+}
+
+.curso-item .precio {
+  text-align: right;
+}
+
+.total-pago {
+  text-align: right;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.success-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4CAF50;
+  margin-top: 1rem;
+}
+
+.success-message svg {
+  margin-right: 8px;
+}
+
+.success-message span {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.scrollable-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+  
