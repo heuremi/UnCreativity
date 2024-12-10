@@ -6,7 +6,7 @@ export const initializeDataBase = async () => {
     try {
         await connection.authenticate();
         await Cliente.sync({ alter: true});
-        await Compra.sync({ force: false});
+        await Compra.sync({ force: true});
 
         console.log('Los modelos ORM se establecieron y se sincronizaron correctamente');
     } catch (error) {
