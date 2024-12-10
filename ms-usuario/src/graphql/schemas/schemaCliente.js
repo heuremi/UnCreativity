@@ -34,7 +34,8 @@ export const schemaCliente = buildSchema(`
     }
     
     input UpdateClienteInput {
-        email: String!
+        id: ID!,
+        email: String,
         nombre: String,
         apellido: String,
         telefono: String,

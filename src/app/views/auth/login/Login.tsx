@@ -20,15 +20,9 @@ export function Login(){
     try{
         const resp = await AuthCourse.login(auth.email, auth.password);
         const { login } = resp.data;
-        
-        //print sessionStorage, pa probar
-        Object.keys(sessionStorage).forEach(key => {
-          console.log(`${key}: ${sessionStorage.getItem(key)}`);
-        });
-        
-        console.log(resp)
+
         if (resp.data.login.success) {
-          sessionStorage.setItem('user', JSON.stringify({ id: login.id, email:auth.email, loggedIn: true })); // (cristian) cambie esto pero no se si esta bueno
+          sessionStorage.setItem('user', JSON.stringify({ id: login.id, email:auth.email, loggedIn: true }));
           setUsuarioId(login.id)
           setEmail(auth.email)
           dispatchUser({ type: 'login', payload: login.id });

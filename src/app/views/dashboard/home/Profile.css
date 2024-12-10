@@ -1,34 +1,46 @@
-/* Profile.css */
-
 .profile-container {
-    max-width: 1200px; /* Aumenta el ancho máximo */
-    margin: 0 auto; /* Centramos el contenedor */
-    padding: 40px; /* Espaciado interno */
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
 }
 
-.profile-card {
-    border-radius: 10px; /* Esquinas redondeadas */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
-    padding: 40px; /* Espaciado interno del card */
+/* Ajustar ancho de la tarjeta */
+.card-profile {
+    background-color: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    width: 100%; /* Ancho completo dentro de la columna */
+    max-width: 900px; /* Límite de ancho */
 }
 
-.profile-title {
-    font-size: 2rem; /* Tamaño del título */
-    color: #333; /* Color del texto */
-    margin-bottom: 20px; /* Espaciado inferior */
+/* Espaciado entre campos y botón */
+.mb-3,
+.mb-4 {
+    margin-bottom: 20px !important;
 }
 
-.profile-input {
-    border-radius: 5px; /* Esquinas redondeadas para entradas */
-    border: 1px solid #ccc; /* Bordes suaves */
+/* Botón de acción */
+button[type="submit"] {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
 }
 
-.profile-button {
-    background-color: #8dc03b; /* Color del botón */
-    color: #fff; /* Color del texto del botón */
-    transition: background-color 0.3s; /* Transición suave para el hover */
+/* Centrar título */
+.text-center {
+    margin-bottom: 20px;
+    font-weight: bold;
+    font-size: 28px;
 }
 
-.profile-button:hover {
-    background-color: #5fa933; /* Color en hover */
+/* Responsive: mayor altura para pantallas pequeñas */
+@media (max-width: 767px) {
+    .card-profile {
+        padding: 20px;
+    }
+
+    .text-center {
+        font-size: 24px;
+    }
 }
